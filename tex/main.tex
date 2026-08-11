@@ -1833,7 +1833,9 @@ the opposite assignment.
 what is true is exactly Proposition~\ref{prop:limits}: the strange bilocals are the
 edge-crossing family (finite AdS$\leftrightarrow$dS amplitudes, vanishing
 AdS$\leftrightarrow$AdS ones, the reverse for discrete bilocals) --- with the selectivity
-against principal-series bilocals still open (issue \#13, Remark~\ref{rem:degenerate}).
+refined on the complex-weight family by the transition of Theorem~\ref{thm:transition}
+(Section~\ref{sec:transition}), and still open only for the non-spherical bilocals
+(issue \#13, Remark~\ref{rem:degenerate}).
 Under centre-dS, the strange AdS$\leftrightarrow$dS amplitude vanishes
 (Remark~\ref{rem:dsdependence}) and no spectral statement singles out the band centre: the
 claim fails in every class.
@@ -1873,15 +1875,118 @@ grading-breaking structure whose absence drives Theorem~\ref{thm:verdict}, and w
 reopen Claim~\ref{claim:cgeo}.
 \end{claim}
 
+\subsection{The complex-weight bilocal family: an exact edge-connectivity transition}
+\label{sec:transition}
+
+% Issue #27 (sub-issue of #13). Numerical verification:
+% src/check_principal_bilocals.py (results/check_principal_bilocals.out, all checks pass;
+% cited as (P1)-(P5)).
+
+The selectivity load on Theorem~\ref{thm:verdict}(iii) can be discharged for the largest
+family the framework makes computable: the \emph{complex-weight} spherical-power bilocals.
+
+\begin{lemma}[complex-weight bilocals; exact reflection]\label{lem:complexweight}
+\PROVED\ (checks (P1).) For $w\in\C$ with $\operatorname{Re}w>0$, the operator
+$(2q\hat\rho_{st})^{-w}$ is a bounded diagonal bilocal with chord weights $t^{k}$,
+$t\coloneqq q^{2w}$, $0<|t|<1$, and its equal-time kernel between principal states is the
+$q$-Mehler kernel \eqref{eq:qmehler} at complex $t$ (absolutely convergent; both sides of
+\eqref{eq:qmehler} are analytic in $t$ on the unit disk). The reflection identity holds for
+\emph{all} such $t$: $\K_{q}(t;\theta_{1},\theta_{2})=\K_{q}(-t;\theta_{1},\pi-\theta_{2})$,
+by the proof of Lemma~\ref{lem:reflection} verbatim; hence the normalisation-free
+edge ratio
+\begin{equation}\label{eq:edgeratio}
+  \mathrm{Rat}(t)\coloneqq
+  \frac{\K_{q}(t;\theta^{L}_{q}(k_1),\theta^{U}_{q}(k_2))}
+       {\K_{q}(t;\theta^{L}_{q}(k_1),\theta^{L}_{q}(k_2))}
+  =\prod_{j=1}^{4}
+  \frac{(t e^{i\varphi_{j}};q^{2})_{\infty}}{(-t e^{i\varphi_{j}};q^{2})_{\infty}},
+  \qquad \varphi_{j}\in\{\pm\lambda_2(k_1{+}k_2),\pm\lambda_2(k_1{-}k_2)\},
+\end{equation}
+$\lambda_2=|\ln q^{2}|$, satisfies $\mathrm{Rat}(t)\,\mathrm{Rat}(-t)=1$ identically. On
+the principal-weight circle $t=q^{1+2ib}$ ($\Delta=\tfrac12+ib$;
+$b\in[0,b_{\max}]$, $b_{\max}=-\pi/(2\ln q)$, the parameter window of the principal
+series), the reflection $b\mapsto b_{\max}-b$ sends $t\mapsto-\bar t$, so
+$|\mathrm{Rat}|(b_{\max}-b)=1/|\mathrm{Rat}|(b)$: the family is exactly antisymmetric
+about its midpoint.
+\end{lemma}
+
+\begin{theorem}[the edge-connectivity transition]\label{thm:transition}
+Fix $k_{1},k_{2}\ge0$ and $\delta\in(0,\tfrac\pi2)$; let $t=\rho_{0}e^{i\alpha}$ with
+$\rho_{0}\in[\tfrac12+\delta,\,1)$, and let $q\to1^{-}$.
+\begin{enumerate}[label=(\roman*)]
+\item \PROVED\ \emph{(suppressed half-disk.)} If $|\alpha|+\lambda_2(k_{1}+k_{2})\le
+\tfrac\pi2-\delta$, then $|\mathrm{Rat}(t)|\to0$: each factor of \eqref{eq:edgeratio} obeys
+the counting bound of Proposition~\ref{prop:limits}(iv) with
+$c_{0}=\cos(|\alpha|+\lambda_2(k_1{+}k_2))\ge\sin\delta$ in place of $\tfrac12$ (the
+per-factor ratio $g_{c}(\rho)=(1-2\rho c+\rho^{2})/(1+2\rho c+\rho^{2})$ is decreasing in
+$\rho$ for $c>0$, derivative numerator $2c(\rho^{2}-1)<0$, so $g_{c_0}(\rho_{n})\le
+g_{c_0}(\tfrac12)<1$ on the $\to\infty$ many sites with $\rho_{n}=\rho_{0}q^{2n}\ge\tfrac12$).
+Quantitatively, $\ln|\mathrm{Rat}|=\sum_{j}\mathrm{Re}\bigl[\mathrm{Li}_2(-te^{i\varphi_j})
+-\mathrm{Li}_2(te^{i\varphi_j})\bigr]/\lambda_2+\tfrac12\sum_{j}
+\ln\bigl|\tfrac{1-te^{i\varphi_j}}{1+te^{i\varphi_j}}\bigr|+O(\lambda_2^{2})$; at
+$|t|\to1$ the leading exponent per factor is $-(\tfrac{\pi^{2}}{4}-\tfrac{\pi|\alpha|}{2})
+/\lambda_2$. Measured at $\alpha=\pi/4$, $\rho_0=q$: $\ln|\mathrm{Rat}|=-23.4186$, $-81.0067$,
+$-245.504$ against predictions $-23.3979$, $-81.0058$, $-245.504$ at $q=0.9,0.97,0.99$;
+residual scaling exponent measured $\approx2$ in $\lambda_2$ (checks (P2)).
+\item \PROVED\ \emph{(enhanced half-disk.)} If $|\alpha|-\lambda_2(k_1{+}k_2)\ge\tfrac\pi2
++\delta$, then $|\mathrm{Rat}(t)|\to\infty$, reciprocally to the mirror point:
+$\mathrm{Rat}(t)=1/\mathrm{Rat}(-t)$ exactly. (Measured: $|\mathrm{Rat}|=1.5\times10^{10}$
+at $q=0.9$, $4.2\times10^{106}$ at $q=0.99$ for $\alpha=3\pi/4$; checks (P3).) The strange
+ray $\alpha=\pi$ ($t=-q^{2\ell}$) is the boundary ray of maximal enhancement at given
+$|t|$.
+\item \PROVED\ \emph{(the marginal line is exact.)} For $t=i\rho$, $\rho\in(0,1)$,
+\emph{at every} $q$:
+$|\mathrm{Rat}(i\rho)|=1$ --- the cross-edge and same-edge kernels have exactly equal
+modulus. Proof: the phase set $\{\varphi_{j}\}$ is symmetric, and for each pair
+$(\varphi,-\varphi)$ and each $n\ge0$,
+$|1\mp\rho_{n}e^{i(\pi/2+\varphi)}|^{2}\,|1\mp\rho_{n}e^{i(\pi/2-\varphi)}|^{2}
+=(1\pm2\rho_{n}\sin\varphi+\rho_{n}^{2})(1\mp2\rho_{n}\sin\varphi+\rho_{n}^{2})$ is the
+same for both signs, so numerator and denominator products in \eqref{eq:edgeratio} have
+equal modulus factor by factor. (Verified to $5\times10^{-41}$; checks (P4).)
+\item \PROVED\ \emph{(dictionary: the crossing sits exactly at the band centre.)} On the
+principal-weight circle $t=q^{1+2ib}$ the point $b=b_{\max}/2$ has $t=-iq$, on the marginal
+line; hence $|\mathrm{Rat}|=1$ there \emph{exactly}, with
+$\ln|\mathrm{Rat}|<0$ below and $>0$ above (antisymmetric by
+Lemma~\ref{lem:complexweight}; measured $\mp9.367$, $\mp32.4$, $\mp98.2$ at
+$0.4\,b_{\max}$/$0.6\,b_{\max}$ for $q=0.9,0.97,0.99$; checks (P5)). The $\theta$-image of
+the crossing weight ($\theta=\pi+2b\ln q$ at $b=b_{\max}/2$) is
+$\theta=\pi/2$ --- \emph{the band centre, at every $q$}. (A first version of check (P5)
+searched for an asymptotic drift of the crossing towards the midpoint and found none:
+the measured drift equalled bisection precision at every $q$; the crossing is exact,
+not asymptotic. Recorded per \texttt{CONTRIBUTING.md} \S5.)
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[reading of the transition]\label{rem:transitionreading}
+\ARGUED\ Three consequences.
+(1) \emph{Binary selectivity fails for the extended family}: the edge-connecting set of
+the weight disk is the open half $|\arg t|>\pi/2$, with the strange ray as its extreme;
+Claim~\ref{claim:camp}'s selectivity statement is exact for DSSYK's standard matter
+content (real positive weights and their strange partners) and becomes the
+\emph{transition} of Theorem~\ref{thm:transition} on the full family. Theorem
+\ref{thm:verdict}(iii) is refined accordingly.
+(2) \emph{The transition locus is the $\Pi$-fixed locus, and its $\theta$-image is the
+band centre} --- the locus of the centre-dS identification
+(Definition~\ref{def:ds}(b)). Under edge-dS, edge-connectivity switches on exactly at the
+weight whose spectral image is the rival proposal's ``dS point''. We record this
+structural coincidence linking the two dS proposals without interpreting it.
+(3) \emph{What remains outside this family}: bilocals transforming in $\pi_{b,\epsilon}$
+as genuine non-spherical corepresentation intertwiners --- the operators SI describe
+below their (4.14) as spanned by $\Lambda^{-1}(\delta^{\epsilon,(st)})$-elements, whose
+action they found ``impractical'' to compute --- are not powers of the spherical element
+and are not covered; issue \#13 remains open for them.
+\end{remark}
+
 \begin{remark}[what remains open after this section]\label{rem:criterionopen}
 The verdict is unconditional on the radial side but leaves three loads on other issues:
-the selectivity of C-amp against principal-series bilocals (issue \#13); the rescaled
+the selectivity of C-amp beyond the spherical-power family
+(issue \#13; partially resolved by Theorem~\ref{thm:transition}, issue \#27); the rescaled
 Plancherel theory (issue \#14) for any statement summing over strange labels; and the
 extension selection (issue \#26), which affects only \emph{which} locked tower pair is
 realised, not the verdict (every extension is obstructed the same way, and the conjectured
 canonical extension is itself $\Pi$-invariant). The centre-dS quantitative comparison
 deferred from Remark~\ref{rem:dsdependence} is subsumed by
-Theorem~\ref{thm:verdict}(iii).
+Theorem~\ref{thm:verdict}(iii) and Theorem~\ref{thm:transition}.
 \end{remark}
 
 \section{Limits and verification}

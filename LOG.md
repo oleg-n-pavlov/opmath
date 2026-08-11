@@ -496,3 +496,34 @@ computation.
 This is admissible outcome 3 (well-argued negative with explicit obstruction) plus 2
 (sharpened falsifiable statement) of PROBLEM.md §6 for the epic's core question; #9-#12
 (limits consolidation, verification section, cross-checks, final write-up) remain.
+
+## 2026-08-11 — issue #27 (sub-issue of #13): the edge-connectivity transition
+
+New subsection of tex §6 (`sec:transition`); numerics `src/check_principal_bilocals.py`
+(`results/check_principal_bilocals.out`, all pass, deterministic). The complex-weight
+spherical-power bilocals (2qρ̂)^{-w}, Re w > 0, t = q^{2w}: the largest computable family
+(SI's genuinely non-spherical operators stay open with #13).
+
+- PROVED (lem:complexweight): kernels = q-Mehler at complex t; the reflection identity holds
+  for ALL |t|<1; Rat(t)·Rat(-t) = 1 identically; on the principal circle t = q^{1+2ib} the
+  family is exactly antisymmetric about its midpoint (b ↦ b_max - b ⟺ t ↦ -t̄).
+- PROVED (thm:transition): the cross/same-edge ratio has a phase transition in α = arg t:
+  suppressed for |α| < π/2 (counting bound, generalising prop:limits(iv) to c₀ = cos(...);
+  measured ln|Rat| = -23.4186/-81.0067/-245.504 vs two-term Li₂-predictions
+  -23.3979/-81.0058/-245.504 at q = 0.9/0.97/0.99); enhanced reciprocally for |α| > π/2
+  (1.5e10 at q=0.9, 4.2e106 at q=0.99 at α=3π/4); and the marginal line t ∈ iR is EXACT:
+  |Rat(iρ)| = 1 at every q (per-n cancellation of the symmetric phase pairs, verified to
+  5e-41). On the principal circle the crossing sits EXACTLY at b = b_max/2, whose θ-image
+  is the band centre θ = π/2 at every q.
+- Consequences (rem:transitionreading, ARGUED): binary selectivity fails on the extended
+  family (the edge-connecting set is the open half-disk with the strange ray as extreme);
+  the transition locus is the Π-fixed locus and its spectral image is the centre-dS point —
+  a structural coincidence linking the two dS proposals, recorded without interpretation.
+  thm:verdict(iii) refined accordingly.
+
+Failed first attempts, recorded per CONTRIBUTING.md §5 (both were checks weaker than the
+mathematics): (P5) first searched for an asymptotic drift of the crossing towards b_max/2
+and FAILED to find one — measured drift ~1e-19 = bisection precision at every q; the
+crossing is exact, and the check now asserts exactness. (P2) first asserted residual
+scaling O(λ₂) and FAILED with measured exponent ≈ 2.07 — the O(λ₂) Euler–Maclaurin
+corrections cancel in the symmetric phase combination; the check now asserts O(λ₂²).

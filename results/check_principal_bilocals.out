@@ -1,0 +1,28 @@
+check_principal_bilocals.py -- issue #27 (mpmath, 40 digits)
+==============================================================================
+(P1) K(t;L,U) == K(-t;L,L) at complex t; Rat(t)*Rat(-t) == 1
+  [PASS] q=0.8, t=(0.3824 + 0.3221j): reflection rel dev = 8.71e-41; |Rat(t)Rat(-t)-1| = 1.96e-40
+  [PASS] q=0.9, t=(-0.5297 + 0.7276j): reflection rel dev = 2.28e-40; |Rat(t)Rat(-t)-1| = 2.1e-40
+  [PASS] q=0.6, t=(-0.3 + 0.45j): reflection rel dev = 1.13e-40; |Rat(t)Rat(-t)-1| = 6.99e-41
+
+(P2) suppressed region arg t = pi/4 (|t| = q): counting bound and rate
+  [PASS] q=0.9: c0=0.3362 > 0; 12 per-factor ratios all <= g(1/2)=0.5761; |Rat|=6.75e-11; ln|Rat| meas/pred = -23.4186/-23.3979 (resid 0.0207)
+  [PASS] q=0.97: c0=0.6111 > 0; 44 per-factor ratios all <= g(1/2)=0.3433; |Rat|=6.6e-36; ln|Rat| meas/pred = -81.0067/-81.0058 (resid 0.000917)
+  [PASS] q=0.99: c0=0.6766 > 0; 136 per-factor ratios all <= g(1/2)=0.2976; |Rat|=2.39e-107; ln|Rat| meas/pred = -245.504/-245.504 (resid 9.57e-5)
+  [PASS] residual scaling: (resid ratio)/(lam2 ratio)^2 = 1.043 (O(lam2^2) predicted ~ 1)
+
+(P3) enhanced region arg t = 3pi/4: |Rat| = 1/|Rat(mirror)| -> infinity
+  [PASS] q=0.9: |Rat| = 1.481e+10 (mirror 6.75e-11; |product-1| = 6.89e-41)
+  [PASS] q=0.99: |Rat| = 4.18e+106 (mirror 2.39e-107; |product-1| = 1.84e-40)
+
+(P4) marginal line arg t = pi/2: |Rat| == 1 EXACTLY (per-n pair cancellation)
+  [PASS] q=0.6, t=i*0.6: | |Rat| - 1 | = 2.3e-41
+  [PASS] q=0.9, t=i*0.9: | |Rat| - 1 | = 4.59e-41
+  [PASS] q=0.97, t=i*0.5: | |Rat| - 1 | = 2.3e-41
+
+(P5) principal circle t = q^(1+2ib): the crossing is EXACTLY at b_max/2
+  [PASS] q=0.9: |ln|Rat|| at b_max/2 = 9.18e-41 (exact zero); sign change across: F(0.4 b_max) = -9.367 < 0 < F(0.6 b_max) = 9.367
+  [PASS] q=0.97: |ln|Rat|| at b_max/2 = 1.19e-39 (exact zero); sign change across: F(0.4 b_max) = -32.4 < 0 < F(0.6 b_max) = 32.4
+  [PASS] q=0.99: |ln|Rat|| at b_max/2 = 2.02e-39 (exact zero); sign change across: F(0.4 b_max) = -98.2 < 0 < F(0.6 b_max) = 98.2
+
+ALL CHECKS PASSED
