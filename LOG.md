@@ -237,6 +237,19 @@ title "Quantum Symmetry and Geometry in Double-Scaled SYK" (van der Heijden, E. 
 J. Xu) — was already correct; arXiv id added so the reference is checkable. No other
 PROBLEM.md changes.
 
+## 2026-08-11 — issue #20: bit-for-bit reproducible committed outputs
+
+`results/check_conventions.out` did not reproduce across machines: the (C2)-(C5) sections
+used numpy float64, whose ~1e-17 residuals depend on BLAS summation order (committed
+1.787e-18 for "K F = q^{-1} F K" reran as 3.490e-21 elsewhere). Ported run_C234 and run_C5
+to pure mpmath (60 digits, software arithmetic, platform-independent), with the checks
+semantically unchanged (same operators, truncation N=40, interior window, tolerances).
+Numpy dependency dropped from the script. Deviations now ~1e-61. Verified: the (C1) section
+of the regenerated output is bit-identical to the committed one, and an immediate rerun of
+the regenerated script is bit-identical to its own output. Policy now holding for all four
+check scripts (all pure mpmath): a committed output is exactly what the committed script
+emits, reproducible bit-for-bit.
+
 ## 2026-08-11 — issue #6: matrix coefficients of the strange series
 
 Section 4 of `tex/main.tex`. Sub-issues opened rather than solved inline: #13 (principal-series

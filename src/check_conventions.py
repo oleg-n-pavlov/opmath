@@ -27,9 +27,14 @@ Claims tested (all statements refer to CONVENTIONS.md and its sources):
 
 Run:  python3 src/check_conventions.py
 Output: results/check_conventions.out (committed).  Deterministic, no seeds needed.
+
+Reproducibility note (issue #20): the (C2)-(C5) checks were originally written in numpy
+float64, whose tiny residuals depend on BLAS summation order and hence on the machine (the
+committed 1.787e-18 for "K F = q^{-1} F K" reran as 3.490e-21 elsewhere). They are now pure
+mpmath (fixed 60-digit software arithmetic), so the committed output reproduces bit-for-bit.
+The checks themselves (operators, truncation, interior window, tolerances) are unchanged.
 """
 
-import numpy as np
 import mpmath as mp
 
 mp.mp.dps = 60  # (C1) involves exact cancellations between terms of size q^{-2N}; use 60 digits
@@ -147,56 +152,114 @@ def run_C1(q):
 # truncated products agree with the untruncated ones (band width of all operators <= 2).
 # ----------------------------------------------------------------------------------------------
 
+def _zeros(dim):
+    return [[mp.mpf(0)] * dim for _ in range(dim)]
+
+
+def _matmul(A, B):
+    dim = len(A)
+    C = _zeros(dim)
+    for i in range(dim):
+        Ai = A[i]
+        Ci = C[i]
+        for k in range(dim):
+            a = Ai[k]
+            if a == 0:
+                continue
+            Bk = B[k]
+            for j in range(dim):
+                if Bk[j] != 0:
+                    Ci[j] += a * Bk[j]
+    return C
+
+
+def _lincomb(*terms):
+    """sum of (coeff, matrix) pairs."""
+    dim = len(terms[0][1])
+    C = _zeros(dim)
+    for coeff, M in terms:
+        for i in range(dim):
+            for j in range(dim):
+                if M[i][j] != 0:
+                    C[i][j] += coeff * M[i][j]
+    return C
+
+
+def _transpose(A):
+    dim = len(A)
+    return [[A[j][i] for j in range(dim)] for i in range(dim)]
+
+
 def run_C234(q):
     ok = True
-    N, b, eps = 40, 0.4, 0.0
-    n = np.arange(-N, N + 1)
-    dim = len(n)
+    N, b, eps = 40, mp.mpf('0.4'), mp.mpf(0)
+    q = mp.mpf(q)
+    ns = list(range(-N, N + 1))
+    dim = len(ns)
     print(f"\n== (C2)-(C4) operator identities on truncated principal series "
-          f"(N={N}, b={b}, eps={eps}, q={q})")
+          f"(N={N}, b={float(b)}, eps={float(eps)}, q={float(q)})")
 
-    K = np.diag(q ** (n + eps))
-    Kinv = np.diag(q ** -(n + eps))
-    prod = (1 - q ** (2 * n + 1 + 2 * eps) * np.exp(2j * b * np.log(q))) * \
-           (1 - q ** (2 * n + 1 + 2 * eps) * np.exp(-2j * b * np.log(q)))
-    c = q ** (-0.5 - n - eps) * np.sqrt(prod.real) / (q ** -1 - q)
-    E_gkk = np.zeros((dim, dim))
-    for i in range(dim - 1):
-        E_gkk[i + 1, i] = c[i]          # E e_n = c_n e_{n+1}
-    F_gkk = E_gkk.T                     # GKK *-structure: E^* = F
+    K = _zeros(dim)
+    Kinv = _zeros(dim)
+    Id = _zeros(dim)
+    for i, n in enumerate(ns):
+        K[i][i] = q ** (n + eps)
+        Kinv[i][i] = q ** -(n + eps)
+        Id[i][i] = mp.mpf(1)
+    E_gkk = _zeros(dim)
+    for i, n in enumerate(ns[:-1]):
+        u = q ** (2 * n + 1 + 2 * eps)
+        prod = 1 - 2 * u * mp.cos(2 * b * mp.log(q)) + u * u   # (1-ue^{2ib ln q})(1-ue^{-2ib ln q})
+        E_gkk[i + 1][i] = q ** (-mp.mpf(1) / 2 - n - eps) * mp.sqrt(prod) / (q ** -1 - q)
+    F_gkk = _transpose(E_gkk)           # GKK *-structure: E^* = F (real entries)
 
     # SI generators via the map E_SI = E_GKK, F_SI = -F_GKK, K_SI = K_GKK
-    E_si, F_si, K_si, Kinv_si = E_gkk, -F_gkk, K, Kinv
+    E_si = E_gkk
+    F_si = _lincomb((mp.mpf(-1), F_gkk))
+    K_si, Kinv_si = K, Kinv
 
-    interior = slice(2, dim - 2)
-    scale = max(np.max(np.abs(E_gkk)), np.max(np.abs(K)), np.max(np.abs(Kinv))) ** 2
+    scale = max(max(abs(x) for row in E_gkk for x in row),
+                max(K[i][i] for i in range(dim)),
+                max(Kinv[i][i] for i in range(dim))) ** 2
 
     def dev_int(X):
         """Deviation on the interior block, relative to the largest entry scale of the
         operators involved (entries grow like q^{-2N}; the identities cancel exactly)."""
-        return np.max(np.abs(X[interior, interior])) / scale
+        return float(max(abs(X[i][j]) for i in range(2, dim - 2)
+                         for j in range(2, dim - 2)) / scale)
 
     # SI relations (arXiv:2512.10101v2, eq. (quantums2lrelations))
-    ok &= report("SI relation K E = q E K", dev_int(K_si @ E_si - q * E_si @ K_si))
-    ok &= report("SI relation K F = q^{-1} F K", dev_int(K_si @ F_si - q ** -1 * F_si @ K_si))
-    comm = E_si @ F_si - F_si @ E_si - (K_si @ K_si - Kinv_si @ Kinv_si) / (q - q ** -1)
+    ok &= report("SI relation K E = q E K",
+                 dev_int(_lincomb((1, _matmul(K_si, E_si)), (-q, _matmul(E_si, K_si)))))
+    ok &= report("SI relation K F = q^{-1} F K",
+                 dev_int(_lincomb((1, _matmul(K_si, F_si)), (-q ** -1, _matmul(F_si, K_si)))))
+    comm = _lincomb((1, _matmul(E_si, F_si)), (-1, _matmul(F_si, E_si)),
+                    (-1 / (q - q ** -1), _matmul(K_si, K_si)),
+                    (1 / (q - q ** -1), _matmul(Kinv_si, Kinv_si)))
     ok &= report("SI relation EF - FE = (K^2-K^{-2})/(q-q^{-1})", dev_int(comm))
-    ok &= report("SI *-structure E^* = -F", dev_int(E_si.T.conj() + F_si))
+    ok &= report("SI *-structure E^* = -F", dev_int(_lincomb((1, _transpose(E_si)), (1, F_si))))
 
-    Om_si = (q ** -1 * Kinv_si @ Kinv_si + q * K_si @ K_si - 2 * np.eye(dim)) / (q - q ** -1) ** 2 \
-        + F_si @ E_si
-    Om_tilde_si = 0.5 * ((q - q ** -1) ** 2 * Om_si + 2 * np.eye(dim))
-    Om_gkk = 0.5 * ((q ** -1 - q) ** 2 * F_gkk @ E_gkk - q * K @ K - q ** -1 * Kinv @ Kinv)
+    Om_si = _lincomb((q ** -1 / (q - q ** -1) ** 2, _matmul(Kinv_si, Kinv_si)),
+                     (q / (q - q ** -1) ** 2, _matmul(K_si, K_si)),
+                     (-2 / (q - q ** -1) ** 2, Id),
+                     (1, _matmul(F_si, E_si)))
+    Om_tilde_si = _lincomb(((q - q ** -1) ** 2 / 2, Om_si), (1, Id))
+    Om_gkk = _lincomb(((q ** -1 - q) ** 2 / 2, _matmul(F_gkk, E_gkk)),
+                      (-q / 2, _matmul(K, K)),
+                      (-q ** -1 / 2, _matmul(Kinv, Kinv)))
 
-    ok &= report("(C2) Omega~_SI == -Omega_GKK", dev_int(Om_tilde_si + Om_gkk))
+    ok &= report("(C2) Omega~_SI == -Omega_GKK", dev_int(_lincomb((1, Om_tilde_si), (1, Om_gkk))))
     ok &= report("(C4) Omega~_SI == (1/2)((q-q^{-1})^2 Omega_SI + 2)",
-                 dev_int(Om_tilde_si - 0.5 * ((q - q ** -1) ** 2 * Om_si + 2 * np.eye(dim))))
+                 dev_int(_lincomb((1, Om_tilde_si), (-(q - q ** -1) ** 2 / 2, Om_si),
+                                  (-1, Id))))
 
     # BINN (arXiv:2212.13668) Casimir with A=K, B=E, C=F, D=K^{-1}, qhat = q:
     # Omega_BINN = (qhat^{-1} A^2 + qhat D^2 - 2)/(qhat^{-1}-qhat)^2 + B C
-    Om_binn = (q ** -1 * K_si @ K_si + q * Kinv_si @ Kinv_si - 2 * np.eye(dim)) / (q ** -1 - q) ** 2 \
-        + E_si @ F_si
-    ok &= report("(C3) Omega_BINN == Omega_SI", dev_int(Om_binn - Om_si))
+    Om_binn = _lincomb((q ** -1 / (q ** -1 - q) ** 2, _matmul(K_si, K_si)),
+                       (q / (q ** -1 - q) ** 2, _matmul(Kinv_si, Kinv_si)),
+                       (-2 / (q ** -1 - q) ** 2, Id),
+                       (1, _matmul(E_si, F_si)))
+    ok &= report("(C3) Omega_BINN == Omega_SI", dev_int(_lincomb((1, Om_binn), (-1, Om_si))))
     return ok
 
 
@@ -206,30 +269,36 @@ def run_C234(q):
 
 def cont_q_hermite(kmax, x, q):
     """H_k(x; q) via H_{k+1} = 2 x H_k - (1 - q^k) H_{k-1}, H_0 = 1, H_1 = 2x."""
-    H = [1.0, 2 * x]
+    H = [mp.mpf(1), 2 * x]
     for k in range(1, kmax):
         H.append(2 * x * H[k] - (1 - q ** k) * H[k - 1])
-    return np.array(H[: kmax + 1])
+    return H[: kmax + 1]
 
 
 def run_C5(q):
     ok = True
-    print(f"\n== (C5) chord-sector Casimir action diagonalised by continuous q^2-Hermite, q={q}")
+    q = mp.mpf(q)
+    print(f"\n== (C5) chord-sector Casimir action diagonalised by continuous q^2-Hermite, "
+          f"q={float(q)}")
     q2 = q * q
     kmax = 80
-    for theta in [0.3, 1.2, np.pi / 2, 2.6]:
-        x = np.cos(theta)
+    for theta in [mp.mpf('0.3'), mp.mpf('1.2'), mp.pi / 2, mp.mpf('2.6')]:
+        x = mp.cos(theta)
         H = cont_q_hermite(kmax, x, q2)
-        pochh = np.cumprod(np.concatenate(([1.0], 1 - q2 ** np.arange(1, kmax + 1))))
-        v = H / np.sqrt(pochh)
+        pochh = [mp.mpf(1)]
+        for k in range(1, kmax + 1):
+            pochh.append(pochh[-1] * (1 - q2 ** k))
+        v = [H[k] / mp.sqrt(pochh[k]) for k in range(kmax + 1)]
         # (Omega~ v)_k = (1/2) sqrt(1-q^{2k}) v_{k-1} + (1/2) sqrt(1-q^{2k+2}) v_{k+1}
-        k = np.arange(1, kmax - 1)
-        lhs = 0.5 * np.sqrt(1 - q2 ** k) * v[k - 1] + 0.5 * np.sqrt(1 - q2 ** (k + 1)) * v[k + 1]
-        # relative deviation, normalised by the local sup of |v| (at x = cos(pi/2) ~ 0 the odd
-        # components v_k vanish identically; dividing by |v_k| alone would be 0/0 noise)
-        local = np.maximum.reduce([np.abs(v[k - 1]), np.abs(v[k]), np.abs(v[k + 1])])
-        dev = np.max(np.abs(lhs - x * v[k]) / np.maximum(local, 1e-300))
-        ok &= report(f"theta={theta:.3f}: Omega~ v = cos(theta) v (relative)", dev, tol=1e-9)
+        dev = mp.mpf(0)
+        for k in range(1, kmax - 1):
+            lhs = mp.sqrt(1 - q2 ** k) * v[k - 1] / 2 + mp.sqrt(1 - q2 ** (k + 1)) * v[k + 1] / 2
+            # relative deviation, normalised by the local sup of |v| (at x = cos(pi/2) ~ 0 the
+            # odd components v_k vanish identically; dividing by |v_k| alone would be 0/0 noise)
+            local = max(abs(v[k - 1]), abs(v[k]), abs(v[k + 1]), mp.mpf(10) ** -300)
+            dev = max(dev, abs(lhs - x * v[k]) / local)
+        ok &= report(f"theta={float(theta):.3f}: Omega~ v = cos(theta) v (relative)",
+                     float(dev), tol=1e-9)
     return ok
 
 

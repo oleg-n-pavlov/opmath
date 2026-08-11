@@ -68,18 +68,18 @@ check_conventions.py -- issue #3 verification
 [PASS] complementary(lambda=-0.45): Omega_GKK == -mu(q^(1+2lambda)): max deviation 3.797e-19 (tol 1.0e-12)
 
 == (C2)-(C4) operator identities on truncated principal series (N=40, b=0.4, eps=0.0, q=0.6)
-[PASS] SI relation K E = q E K: max deviation 7.148e-18 (tol 1.0e-12)
-[PASS] SI relation K F = q^{-1} F K: max deviation 1.787e-18 (tol 1.0e-12)
-[PASS] SI relation EF - FE = (K^2-K^{-2})/(q-q^{-1}): max deviation 4.289e-17 (tol 1.0e-12)
+[PASS] SI relation K E = q E K: max deviation 1.002e-62 (tol 1.0e-12)
+[PASS] SI relation K F = q^{-1} F K: max deviation 1.002e-62 (tol 1.0e-12)
+[PASS] SI relation EF - FE = (K^2-K^{-2})/(q-q^{-1}): max deviation 4.946e-62 (tol 1.0e-12)
 [PASS] SI *-structure E^* = -F: max deviation 0.000e+00 (tol 1.0e-12)
-[PASS] (C2) Omega~_SI == -Omega_GKK: max deviation 1.411e-17 (tol 1.0e-12)
+[PASS] (C2) Omega~_SI == -Omega_GKK: max deviation 4.939e-63 (tol 1.0e-12)
 [PASS] (C4) Omega~_SI == (1/2)((q-q^{-1})^2 Omega_SI + 2): max deviation 0.000e+00 (tol 1.0e-12)
-[PASS] (C3) Omega_BINN == Omega_SI: max deviation 4.289e-17 (tol 1.0e-12)
+[PASS] (C3) Omega_BINN == Omega_SI: max deviation 4.006e-62 (tol 1.0e-12)
 
 == (C5) chord-sector Casimir action diagonalised by continuous q^2-Hermite, q=0.7
-[PASS] theta=0.300: Omega~ v = cos(theta) v (relative): max deviation 1.763e-16 (tol 1.0e-09)
-[PASS] theta=1.200: Omega~ v = cos(theta) v (relative): max deviation 1.685e-16 (tol 1.0e-09)
-[PASS] theta=1.571: Omega~ v = cos(theta) v (relative): max deviation 1.414e-16 (tol 1.0e-09)
-[PASS] theta=2.600: Omega~ v = cos(theta) v (relative): max deviation 1.903e-16 (tol 1.0e-09)
+[PASS] theta=0.300: Omega~ v = cos(theta) v (relative): max deviation 1.926e-61 (tol 1.0e-09)
+[PASS] theta=1.200: Omega~ v = cos(theta) v (relative): max deviation 1.355e-61 (tol 1.0e-09)
+[PASS] theta=1.571: Omega~ v = cos(theta) v (relative): max deviation 9.908e-62 (tol 1.0e-09)
+[PASS] theta=2.600: Omega~ v = cos(theta) v (relative): max deviation 1.447e-61 (tol 1.0e-09)
 
 ALL CHECKS PASSED
