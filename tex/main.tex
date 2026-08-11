@@ -32,11 +32,20 @@
 \newtheorem{corollary}[definition]{Corollary}
 \newtheorem{claim}[definition]{Claim}
 
-%% Notation placeholders -- to be fixed by issue #3 and mirrored in CONVENTIONS.md
+%% Notation -- fixed by issue #3; mirrored in CONVENTIONS.md
 \newcommand{\Uq}{U_q(\mathfrak{su}(1,1))}
 \newcommand{\SUq}{\mathrm{SU}_q(1,1)}
 \newcommand{\AdSq}{\mathrm{AdS}_{2,q}}
-\newcommand{\Cas}{\mathcal{C}}
+\newcommand{\Cas}{\Omega}                       % Casimir, SI (3.5)
+\newcommand{\tCas}{\tilde\Omega}                % symmetrised Casimir, SI Sec. 3.3/3.5
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+\renewcommand{\P}{P}                            % principal-series eigenvector symbol, SI (4.10)
+\renewcommand{\O}{\mathcal{O}}                  % discrete-series bilocal, SI (4.14)
 
 \title{Strange series representations of $\Uq$ and the\\
        AdS$_2\leftrightarrow$dS$_2$ structure of the DSSYK bulk dual}
@@ -67,7 +76,148 @@ was only derived or argued, and what was left open, in that order.
 % Issue #3. Must agree with CONVENTIONS.md exactly. Any deviation from the conventions of a cited
 % source is stated here and at the point of citation.
 
-\emph{To be written under issue \#3.}
+This section fixes all conventions once; it agrees with \texttt{CONVENTIONS.md} exactly, and all
+sections below cite it. We follow the reference paper \cite{Schouten:2025dssyk} (arXiv:2512.10101v2,
+henceforth ``SI'') verbatim unless stated; ``GKK'' is Groenevelt--Koelink--Kustermans
+\cite{Groenevelt:2009gkk} (arXiv:0905.2830v2), ``BINN'' is \cite{Berkooz:2022qgroup}, ``BK'' is
+Burban--Klimyk \cite{Burban:1993bk}, ``MMNNSU'' is Masuda et al.\ \cite{Masuda:1990mmnnsu}.
+Equation numbers of SI refer to the compiled v2.
+The numerical verification of every convention statement marked \DERIVED{} below is in
+\texttt{src/check\_conventions.py} (63/63 checks pass; output committed as
+\texttt{results/check\_conventions.out}).
+
+\begin{convention}[Deformation parameter; DSSYK dictionary]\label{conv:q}
+$q$ is real, $0<q<1$. The DSSYK chord parameter is $q_{\mathrm{SYK}}\coloneqq q^{2}$
+[SI \S4.2: ``under the redefinition $q^2\to q$'']; $q=e^{-\lambda/2}$, $q_{\mathrm{SYK}}
+=e^{-\lambda}$ with $\lambda=2p^{2}/N$ the DSSYK coupling [SI \S4.1]. The energy of the
+principal-series eigenstate $\theta\in[0,\pi]$ is $E(\theta)=2\cos\theta/\sqrt{1-q^{2}}$
+[SI \S4.2]. The lower spectral edge is $\theta=\pi$, the upper $\theta=0$; the Schwarzian/AdS$_2$
+regime is $\theta=\pi-|{\ln q^{2}}|k$, $q\to1$ [SI (4.17)]; the de Sitter identifications
+appearing in the claim under test are recorded in Section~\ref{sec:intro}.
+\end{convention}
+
+\begin{convention}[$\Uq$]\label{conv:Uq}
+Generators $E,F,K^{\pm1}$ with [SI (3.3)--(3.4)]
+\begin{equation}\label{eq:ourUq}
+  KK^{-1}=K^{-1}K=1,\quad KE=qEK,\quad KF=q^{-1}FK,\quad
+  EF-FE=\frac{K^{2}-K^{-2}}{q-q^{-1}},
+\end{equation}
+$*$-structure $K^{*}=K$, $E^{*}=-F$; Hopf structure $\Delta(K)=K\otimes K$,
+$\Delta(E)=K\otimes E+E\otimes K^{-1}$, $\Delta(F)=K\otimes F+F\otimes K^{-1}$,
+$S(K)=K^{-1}$, $S(E)=-q^{-1}E$, $S(F)=-qF$, $\epsilon(K)=1$, $\epsilon(E)=\epsilon(F)=0$.
+Classically $K=q^{H/2}$.
+\end{convention}
+
+\begin{convention}[Casimir and transfer matrix]\label{conv:casimir}
+\begin{equation}\label{eq:ourCasimir}
+  \Cas \coloneqq \frac{q^{-1}K^{-2}+qK^{2}-2}{(q-q^{-1})^{2}}+FE,
+  \qquad
+  \tCas \coloneqq \tfrac12\big((q-q^{-1})^{2}\Cas+2\big)
+  =\tfrac12\big(qK^{2}+q^{-1}K^{-2}\big)+\tfrac12 (q-q^{-1})^{2}FE
+\end{equation}
+[SI (3.5) and \S3.3, \S3.5]. The DSSYK transfer matrix is $T=2\tCas/\sqrt{1-q^{2}}$
+[SI \S4.2], acting on chord states by
+$\tCas\ket{k}=\tfrac12\sqrt{1-q^{2k+2}}\,\ket{k+1}+\tfrac12\sqrt{1-q^{2k}}\,\ket{k-1}$
+[SI (4.9)], with eigenvectors
+$\ket{\P^{\theta}}=\sum_{k\ge0}H_{k}(\cos\theta;q^{2})/\sqrt{(q^{2};q^{2})_{k}}\,\ket{k}$
+of eigenvalue $\cos\theta$ [SI (4.10)]. \DERIVED{} (check C5). We write
+$\mu(y)\coloneqq\tfrac12(y+y^{-1})$ and $[z]_{q}\coloneqq(q^{z}-q^{-z})/(q-q^{-1})$
+[SI (A.1)].
+\end{convention}
+
+\begin{convention}[Coordinate algebra and the normaliser extension]\label{conv:normaliser}
+$\A_q(\mathrm{SU}(1,1))$: generators $\alpha,\gamma$ with relations, coproduct, counit, antipode
+as in SI (3.1)--(3.2). By Woronowicz's no-go theorem there is no locally compact quantum group
+$\SUq$; the extension $\SUq\rtimes\Z_2$ adds a central group-like self-adjoint $e$, $e^{2}=1$,
+with $\alpha\alpha^{*}-q^{2}\gamma^{*}\gamma=e=\alpha^{*}\alpha-\gamma^{*}\gamma$ and the
+$e$-twisted coproduct [SI (3.14)--(3.15)]; its irreducible $*$-representations $\pi_{\theta}$ act
+on $L^{2}_{q^{2}}(I_{q^{2}})$, $I_{q}=(-\infty,-1)_{q}\cup[0,\infty)_{q}$, with position operator
+$e\gamma^{*}\gamma$ [SI (3.18)]. The $\Z_2$ is the deck transformation between the two components
+$\mathrm{SU}(1,1)$ and $\mathrm{SU}(1,1)v$ of the classical normaliser of $\mathrm{SU}(1,1)$ in
+$\mathrm{SL}(2,\C)$ [SI (2.25)]; the extension is needed because only for the normaliser do the
+self-adjoint extensions of $\Delta(e\gamma^{*}\gamma)$ admit coproduct-stable domains
+(``smoothness conditions'', SI (3.19)), making a von Neumann algebraic quantum group possible.
+\end{convention}
+
+\begin{convention}[Representation series; the strange series]\label{conv:series}
+Admissible $*$-representations have $K$-eigenvalues in $q^{\frac12\Z}$ with finite
+multiplicities [GKK \S4.4]. The irreducible admissible unitary $*$-representations, in our
+conventions (dictionary of Convention~\ref{conv:translation}):
+\begin{center}
+\begin{tabular}{llll}
+\hline
+series & labels & $K$-spectrum & $\tCas$ eigenvalue\\
+\hline
+principal $\pi_{b,\epsilon}$ & $b\in[0,-\tfrac{\pi}{2\ln q}]$, $\epsilon\in\{0,\tfrac12\}$,
+$(b,\epsilon)\neq(0,\tfrac12)$ & $q^{\Z+\epsilon}$ & $\cos\theta$, $\theta=\pi+2b\ln q$\\
+discrete $D^{\pm}_{\ell}$ & $\ell\in\tfrac12\Z_{>0}$ & $q^{\pm(\ell+\Z_{\ge0})}$ &
+$+\mu(q^{2\ell-1})\in[1,\infty)$\\
+complementary & $\lambda\in(-\tfrac12,0)$, $\epsilon=0$ & $q^{\Z}$ &
+$+\mu(q^{1+2\lambda})\in(1,\mu(q))$\\
+\textbf{strange} $\pi^{S}_{a,\epsilon}$ & $a>0$, $\epsilon\in\{0,\tfrac12\}$ & $q^{\Z+\epsilon}$ &
+$-\mu(q^{2a})\in(-\infty,-1)$\\
+\hline
+\end{tabular}
+\end{center}
+Strange-series matrix elements on $\ell^{2}(\Z)$ [GKK, eq.\ (strangeserrep)]:
+\begin{equation}\label{eq:strangematrixelements}
+  K e_{n}=q^{n+\epsilon}e_{n},\qquad
+  (q^{-1}-q)\,E_{\mathrm{GKK}}\,e_{n}
+  =q^{-n-\epsilon-\frac12}\sqrt{(1+q^{2n+2\epsilon+1+2a})(1+q^{2n+2\epsilon+1-2a})}\;e_{n+1},
+\end{equation}
+unitary for \emph{all} $a>0$. SI generate the strange series from the discrete label by
+$\ell\to\ell+\tfrac{i\pi}{2\ln q}$ [SI \S4.3]; the label map is $a=\ell-\tfrac12$
+(so $\ell=\tfrac12$, i.e.\ $a=0$, is the degenerate principal edge point, not a strange
+representation). \emph{Decidability:} among irreducible admissible unitary $*$-representations,
+$\tCas<-1$ holds exactly on the strange series. \DERIVED{} (checks C1--C2; GKK \S4.4 for
+completeness of the list).
+\end{convention}
+
+\begin{convention}[Regular representation and Plancherel decomposition]\label{conv:plancherel}
+By GKK Thms.\ (decompKp$\pm\mp$/$\pm\pm$), the GNS space of the Haar weight of
+$L^{\infty}_{q}(\mathrm{SU}(1,1)\rtimes\Z_2)$ decomposes as a $\Uq$-module, per sector
+$(p\in q^{\Z},\varepsilon,\eta)$, into the full principal integral
+$\int_{0}^{-\pi/2\ln q}\pi_{b,\epsilon(p)}\,db$ plus discrete sums of discrete-series and of
+\emph{strange-series} representations, the latter at $q^{2a}=pq^{1+2l}$ (hence $a\in\tfrac12\Z_{>0}$);
+the complementary series is absent. $\epsilon(p)=\tfrac12\chi(p)\bmod 1$, $\chi(p)=\log_{q}p$.
+\PROVED{} (in GKK; not re-derived here).
+\end{convention}
+
+\begin{convention}[Chord sector; homogeneous-space objects]\label{conv:chord}
+Chord states $\ket{k}_{\eta,\xi}=\lim_{r\to\infty}\delta^{-,(st)}_{q^{r}\eta,q^{2r}y,q^{r}\xi}$,
+$y=q\eta\xi q^{2k}$, $k\in\Z_{\ge0}$ [SI (4.5)]; the chord subsector sits at $\epsilon=-1$, the
+non-identity component of the normaliser. Rescaled spherical element
+$\hat\rho_{st}\ket{k}=\tfrac12 q^{-1}q^{-2k}\ket{k}$ [SI (4.13)]. Bilocal operators:
+discrete $\O^{\ell}(\tau)=e^{\tau T}(2q\hat\rho_{st})^{-\ell}e^{-\tau T}$ [SI (4.14)]; strange
+$\mathcal{S}^{\ell}(\tau)=e^{\tau T}(2q\hat\rho_{st})^{-\ell-\frac{i\pi}{2\ln q}}e^{-\tau T}$,
+$\ell\in\tfrac12\Z_{>0}$ [SI (4.18)]. Discrete-series overlap [SI (4.15)]:
+\begin{equation}\label{eq:discreteoverlap}
+  \bra{\P^{\theta_1}}\O^{\ell}(0)\ket{\P^{\theta_2}}
+  =\frac{(q^{4\ell};q^{2})_{\infty}}{(q^{2\ell}e^{i(\pm\theta_1\pm\theta_2)};q^{2})_{\infty}},
+\end{equation}
+and the strange-series overlap is \eqref{eq:discreteoverlap} with $q^{2\ell}\to -q^{2\ell}$
+[SI \S4.3]. We write $\ell$ for the series label and $\ell_{\mathrm{length}}$ for the bulk
+geodesic length (deviation from SI, who use $\ell$ for both; stated here once).
+The identification of the quantum homogeneous space itself is the subject of
+Section~\ref{sec:space}.
+\end{convention}
+
+\begin{convention}[Translation table]\label{conv:translation}
+$E_{\mathrm{SI}}=E_{\mathrm{GKK}}$, $F_{\mathrm{SI}}=-F_{\mathrm{GKK}}$,
+$K_{\mathrm{SI}}=K_{\mathrm{GKK}}$, and $\tCas=-\Omega_{\mathrm{GKK}}$ with
+$\Omega_{\mathrm{GKK}}=\tfrac12((q^{-1}-q)^{2}F_{\mathrm{GKK}}E_{\mathrm{GKK}}
+-qK^{2}-q^{-1}K^{-2})$ \DERIVED{} (check C2). BINN \cite{Berkooz:2022qgroup}: $A=K$, $B=E$,
+$C=F$, $D=K^{-1}$, $\hat q_{\mathrm{BINN}}=q$, $\Omega_{\mathrm{BINN}}=\Cas$ \DERIVED{} (check
+C3). MMNNSU: $\Omega_{\mathrm{GKK}}=-\tfrac12(q-q^{-1})^{2}C_{\mathrm{MMNNSU}}-1$ [GKK, after
+their eq.\ (Casimir)], hence $C_{\mathrm{MMNNSU}}=\Cas$. Askey--Wilson parameters of the Casimir
+action in the quantum Gauss decomposition: $(a,b,c,d)=(qs\eta,\,qt^{-1}\xi,\,qt\xi,\,qs^{-1}\eta)$
+[SI \S4.1]; the DSSYK sector is the $a,b,c,d\to0$ (continuous $q^{2}$-Hermite) limit.
+\emph{Known printing discrepancy:} GKK state $\pi_{b,\epsilon}(\Omega_{\mathrm{GKK}})
+=\mu(q^{2ib})$; their printed matrix elements give $-\mu(q^{2ib})=-\cos(2b\ln q)$. Resolved in
+favour of the matrix elements \DERIVED{} (check C1, 60-digit arithmetic; the discrete- and
+strange-series values as printed \emph{are} reproduced). The complementary-series value (unstated
+in GKK) is $\Omega_{\mathrm{GKK}}=-\mu(q^{1+2\lambda})$, same check.
+\end{convention}
 
 \section{The quantum homogeneous space}
 \label{sec:space}

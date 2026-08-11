@@ -1,16 +1,23 @@
-# LaTeX build artefacts
-*.aux
-*.bbl
-*.blg
-*.fdb_latexmk
-*.fls
-*.log
-*.out
-*.synctex.gz
-*.toc
-*.nav
-*.snm
-*.vrb
+# LaTeX build artefacts (scoped to tex/ so that numerical outputs in results/ are never
+# swallowed; results/*.out is explicitly un-ignored below)
+tex/*.aux
+tex/*.bbl
+tex/*.blg
+tex/*.fdb_latexmk
+tex/*.fls
+tex/*.log
+tex/*.out
+tex/*.synctex.gz
+tex/*.toc
+tex/*.nav
+tex/*.snm
+tex/*.vrb
+!results/*.out
+
+# Deliberate choice (issue #3, coordinator note): the compiled PDF is NOT tracked during
+# development to avoid a large binary diff on every commit; issue #12 will remove this line and
+# commit the final PDF, as its acceptance criteria require.
+tex/main.pdf
 
 # Python
 __pycache__/

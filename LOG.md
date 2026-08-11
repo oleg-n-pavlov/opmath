@@ -36,3 +36,40 @@ classical precursor arXiv:2601.22171 by de Groot). Isachenkov's SCGP talk (15 Ma
 associated preprint found. arXiv/Semantic Scholar searches for strange-series work in math.QA/OA:
 nothing new. Deliverable: `lit/README.md`. Failed/limited checks recorded there (no full-text
 check possible for one record without arXiv id; math-journal coverage weaker).
+
+## 2026-08-11 — issue #3: conventions
+
+Filled `CONVENTIONS.md` and the mirrored Conventions section of `tex/main.tex` (Conventions
+2.1–2.8), following arXiv:2512.10101v2 verbatim, with the GKK (arXiv:0905.2830v2), BINN
+(arXiv:2212.13668) and MMNNSU dictionaries worked out explicitly. Every dictionary row that could
+be checked numerically was checked: `src/check_conventions.py`, 63/63 checks pass
+(`results/check_conventions.out`); largest deviation among passing checks 5.2e-14, most below
+1e-45 (60-digit arithmetic where exact cancellations of size q^{-2n} occur).
+
+Findings worth recording:
+- Generator map SI↔GKK is E_SI = E_GKK, F_SI = -F_GKK, K equal; symmetrised Casimir
+  Ω̃_SI = -Ω_GKK. BINN's Casimir equals SI's Ω exactly (A=K, B=E, C=F, q̂=q); MMNNSU's C equals
+  SI's Ω.
+- In SI conventions the series are separated by the Ω̃ eigenvalue: principal [-1,1]; discrete and
+  complementary > 1 (distinguished by one- vs two-sided K-spectrum); **strange < -1, and Ω̃ < -1
+  happens only for the strange series** — "this representation is strange" is decidable from
+  (Ω̃, spec K). Strange labels: a > 0 continuous in the abstract classification; a = ℓ - 1/2 with
+  SI's ℓ; **in the Plancherel decomposition of the regular representation the strange series
+  occurs only at discrete labels a ∈ ½Z_{>0}** (GKK Thms 4.6–4.9 analogues).
+- GKK's stated principal-series Casimir eigenvalue μ(q^{2ib}) disagrees by a sign with their own
+  printed matrix elements; settled numerically (check C1) in favour of the matrix elements:
+  Ω_GKK(π_{b,ε}) = -cos(2b ln q). No effect at the level of the series family. The
+  complementary-series eigenvalue (unstated in GKK) computed the same way: -μ(q^{1+2λ}).
+- First run of check (C1) in float64 FAILED with deviations up to 1e46 at q=0.3 — catastrophic
+  cancellation between q^{-2n}-sized terms, not a mathematics error; re-run in 60-digit mpmath
+  passes. Recorded as required by CONTRIBUTING.md §5 (failed checks reported).
+- Also fixed `.gitignore`: a bare `*.out` was silently excluding `results/*.out` from version
+  control; LaTeX artefact patterns are now scoped to `tex/`.
+
+Carried forward (flagged for issues #4 and #8, per coordinator note):
+1. "dS region" is not agreed in the literature — upper spectral edge θ = |ln q²|k
+   (arXiv:2411.16922, arXiv:2505.08116) vs middle of the band θ = π/2 (arXiv:2310.16994 line).
+   If the claim's truth value depends on the choice, that is itself the finding for #8.
+2. The strange series enters the Plancherel formula only at discrete labels a ∈ ½Z_{>0}, while
+   "interpolates" is prima facie a continuous notion; #4 must confront whether a discretely
+   indexed family can interpolate at all.
