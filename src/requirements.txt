@@ -1,9 +1,4 @@
-# Pinned to the exact versions of the working environment (issue #22).
-# The check scripts in src/ depend only on mpmath (pure-software arbitrary precision,
-# hence bit-for-bit reproducible outputs, issue #20); the remaining packages are pinned
-# as the research environment used for exploratory numerics.
+# What the committed check scripts actually import (issue #24; previously #22).
+# Pure-software arbitrary precision => bit-for-bit reproducible outputs (issue #20).
+# Exploratory extras live in requirements-dev.txt and are NOT needed to verify results.
 mpmath==1.3.0
-numpy==2.5.2
-scipy==1.18.0
-sympy==1.14.0
-matplotlib==3.11.1

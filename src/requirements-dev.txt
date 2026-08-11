@@ -1,0 +1,9 @@
+# Non-essential exploratory stack (issue #24). No committed check depends on any of
+# these; they are recorded only as the environment used for scratch numerics. The exact
+# pins recorded under #22 (numpy==2.5.2 etc.) did not resolve on a clean index, so loose
+# bounds are used here; do NOT tighten them back to unresolvable pins.
+-r requirements.txt
+numpy>=2.4,<3
+scipy>=1.14,<2
+sympy>=1.13,<2
+matplotlib>=3.9,<4

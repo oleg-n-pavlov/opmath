@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.14'
-      - name: Install pinned dependencies
+      - name: Install pinned dependencies (checks need only mpmath; issue #24)
         run: python -m pip install -r src/requirements.txt
       - name: tex integrity (labels/refs/cites/environments/phrases/paths)
         run: python src/check_tex_integrity.py
@@ -33,10 +33,14 @@ jobs:
         run: |
           python src/check_normaliser_grading.py > /tmp/check_normaliser_grading.out
           diff /tmp/check_normaliser_grading.out results/check_normaliser_grading.out
-      - name: check_claim_kernels (exit 0 and output reproduces; ~2 min)
+      - name: check_claim_kernels (exit 0 and output reproduces; minutes)
         run: |
           python src/check_claim_kernels.py > /tmp/check_claim_kernels.out
           diff /tmp/check_claim_kernels.out results/check_claim_kernels.out
+      - name: check_radial_casimir (exit 0 and output reproduces; minutes)
+        run: |
+          python src/check_radial_casimir.py > /tmp/check_radial_casimir.out
+          diff /tmp/check_radial_casimir.out results/check_radial_casimir.out
 
   latex-build:
     # Non-blocking by design (see header comment). The local toolchain cannot build the
