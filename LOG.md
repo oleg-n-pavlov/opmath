@@ -548,3 +548,16 @@ deterministic, first run clean). The four acceptance limits of PROBLEM.md §5:
   edge (gap a²λ₂²/2) + expulsion of the mirror (4/λ²); no label-range collapse, no unitarity
   failure; the alternating profile has no continuum limit. SI's missing classical-normaliser
   computation is not needed for any of these limits (recorded in rem:otherlimits).
+
+## 2026-08-11 — issue #10: the verification map
+
+Subsection 7.2 of tex: the consolidated claim→script→check table (eight scripts, checks
+C/K/G/S/R/P/L/T), the failures ledger organised by type (analysis errors caught before
+commitment; the recurring absolute-tolerance trap — six instances; implementation errors;
+checks weaker than the mathematics), the reproducibility statement (pure mpmath,
+bit-for-bit outputs, CI diffs), and the map of the issue's five tasks to where each was
+executed — including the record that task 5's "scan across the AdS/dS boundary" is
+realised by the (R6) grid scans and (P2)-(P5) transition scans, since by thm:verdict(iv)
+no boundary is crossed by the representation label. Honesty note kept explicit: no
+committed mathematical claim was falsified by a check; all failures were in check design,
+implementation, or pre-commitment drafts.

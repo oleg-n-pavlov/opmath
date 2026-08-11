@@ -2076,6 +2076,80 @@ $\mathrm{SL}(2,\R)\rtimes\Z_2$ matrix-element computation flagged by SI as missi
 \S2.3 footnote) is not needed for any of these limits and remains open in the literature.
 \end{remark}
 
+\subsection{The verification map}
+\label{sec:verificationmap}
+
+% Issue #10. The consolidated claim-to-check map; failures reported with the same
+% prominence as passes.
+
+Numerical verification in this project runs alongside every claim rather than as a
+separate phase; this subsection is the consolidated record. All scripts are pure
+\texttt{mpmath} (software arbitrary precision), so every committed output in
+\texttt{results/} reproduces \emph{bit-for-bit} (established under issue \#20, verified
+across two independent machines under issue's \#22 CI and the session-3 audit); each
+script header states the claims tested, the issue, and the run command.
+
+\begin{center}
+\small
+\begin{tabular}{lllll}
+\hline
+script (\texttt{src/}) & issue & checks & what is verified & sections\\
+\hline
+\texttt{check\_conventions} & \#3 & (C1)--(C5), 63 & dictionaries SI/GKK/BINN, series
+eigenvalues, $T$ & \ref{sec:conventions}\\
+\texttt{check\_claim\_kernels} & \#4,\#18 & (K1)--(K5) & kernels, reflection identity,
+limit ratios, bound & \ref{sec:intro}\\
+\texttt{check\_normaliser\_grading} & \#15 & (G1)--(G7), 72 & $\Pi$, factorisation, GKK
+grading/fusion blocks & \ref{sec:intro}\\
+\texttt{check\_strange\_coefficients} & \#6 & (S1)--(S5) & radial closed forms, Wronskian,
+connection & \ref{sec:matrixcoeffs}\\
+\texttt{check\_radial\_casimir} & \#7 & (R0)--(R7), 45 & slice reduction, classical limit,
+limit circle, grids & \ref{sec:radial}\\
+\texttt{check\_principal\_bilocals} & \#27 & (P1)--(P5) & complex-weight kernels,
+transition, exact marginal line & \ref{sec:transition}\\
+\texttt{check\_q1\_limits} & \#9 & (L1)--(L2) & density of states, Bessel-$K$
+wavefunctions & \ref{sec:q1dictionary}\\
+\texttt{check\_tex\_integrity} & \#22 & (T1)--(T7) & labels/refs/cites/environments/
+phrases/paths & ---\\
+\hline
+\end{tabular}
+\end{center}
+
+Worst deviations among passing checks are stated inline at each claim; representative
+scales: $10^{-60}$ for exact identities at 60-digit arithmetic, $10^{-30}$--$10^{-40}$ for
+closed-form checks at 40 digits, and measured-rate comparisons (never absolute tolerances)
+for all $q\to1$ limits.
+
+\emph{Failures ledger} (equal prominence, \texttt{CONTRIBUTING.md} \S5; details in
+\texttt{LOG.md} at the referenced issues). Checks or analyses that failed at first attempt,
+by type: (i) \emph{an analysis error caught before commitment}: the first deficiency-index
+analysis of $J_{-}$ concluded limit point; corrected by \cite{Koelink:2003oneparam} and the
+measured slopes (Remark~\ref{rem:deficiencyfirsttry}); also a sign slip in the
+$\mathrm{Li}_2$ asymptotics first suggested a divergent AdS$\leftrightarrow$centre
+amplitude, corrected by direct computation (Remark~\ref{rem:dsdependence}).
+(ii) \emph{The recurring tolerance trap}: absolute tolerances against quantities growing
+like $q^{-2m}$ or decaying like $q^{2\ell k}$ failed in (C1) (float64), the reflection
+check of (K), (S2), (G4), (G7), and the (R1) wall test; all were re-based on relative
+deviations at predicted correction scales. (iii) \emph{Implementation}: a truncated
+$(a;q)_{\infty}$ tail in (K1); an exponentially unstable upward recursion in (R6); two
+test-code bugs in (R1). (iv) \emph{Checks weaker than the mathematics}: (P5) hunted for an
+asymptotic drift where the crossing is exact; (P2) asserted $O(\lambda_2)$ residuals where
+the symmetric combination cancels to $O(\lambda_2^{2})$; (R2) compared in a gauge with an
+$O(\lambda)$ artifact. No committed mathematical claim was falsified by a check; every
+failure was in a check design, an implementation, or a pre-commitment analysis draft, and
+each fix is recorded.
+
+\emph{Issue \#10's task map}: (1) the radial $q$-difference equation solved numerically
+with spectra against analytic predictions --- (R5)/(R6); (2) orthogonality/Plancherel
+where known --- (C5), (L1), and the GKK theory cited (not re-derived); \emph{no}
+orthogonality exists for the strange family on the DSSYK space (gap \#14,
+Remark~\ref{rem:noplancherel}); (3) $q\to1$ numerics including the strange disappearance
+--- (R2), (R7), (L1)--(L2); (4) matrix coefficients against direct evaluation of the
+representations --- (C1)--(C4), (G6)--(G7), (S1)--(S5); (5) the ``scan across the AdS/dS
+boundary'': by Theorem~\ref{thm:verdict}(iv) no boundary is crossed by the label; the
+scans that exist are the extension-grid scans (R6) and the transition scans (P2)--(P5),
+which locate the one genuine crossing --- in the bilocal weight, at the exact midpoint.
+
 \section{Conclusion and open gaps}
 \label{sec:conclusion}
 
