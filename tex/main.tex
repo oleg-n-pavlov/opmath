@@ -230,24 +230,63 @@ Lemma~\ref{lem:reflection} the two ratios are equal, so it suffices to prove (iv
 factorisation, the ratio in (iv) is
 $\prod_{\pm\pm}(q^{2(\ell\pm ik_1\pm ik_2)};q^{2})_{\infty}
 /\prod_{\pm\pm}(-q^{2(\ell\pm ik_1\pm ik_2)};q^{2})_{\infty}$.
-For fixed $x$ with $\mathrm{Re}\,x=\ell>0$,
-$\bigl|(-q^{2x};q^{2})_{\infty}\bigr|=\prod_{n\ge0}\bigl|1+q^{2x+2n}\bigr|
-\ge\prod_{0\le n\le N(q)}\bigl(1+\tfrac12 q^{2\ell}\bigr)\to\infty$
-as $q\to1$, where $N(q)\coloneqq\lfloor |2\ln q|^{-1}\ln 2\rfloor\to\infty$ counts the factors
-with $q^{2n}\ge\tfrac12$ (and $|1+q^{2x+2n}|\ge 1+\cos(2k\ln q\cdots)q^{2\ell+2n}\ge
-1-q^{2\ell+2n}>0$ keeps all other factors bounded below away from $0$ uniformly in $q$ near
-$1$; the phases $q^{\pm2ik_i}\to1$), while the numerator tends to the finite nonzero limit
-$(1-q^2)$-renormalised in (i). A cleaner route to the same conclusion: the ratio equals
-$\prod_{\pm\pm}\Gamma_{q^{2}}(\tfrac{i\pi}{2\ln q}+\ell\pm ik_1\pm ik_2)
-/\Gamma_{q^{2}}(\ell\pm ik_1\pm ik_2)^{\vphantom{1}}$ up to a phase, and the half-period-shifted
-$q$-gamma tends to $0$; the elementary product bound above is verified numerically in
-\texttt{src/check\_claim\_kernels.py} (output \texttt{results/check\_claim\_kernels.out}: the
-ratio falls to $10^{-21419}$ by $q=0.9999$, the renormalised mixed-edge strange kernel agrees
+Fix one of the four sign choices and set $x\coloneqq\ell\pm ik_{1}\pm ik_{2}$, so that
+\[
+  q^{2x+2n}=\rho_{n}\,e^{i\varphi_{q}},\qquad
+  \rho_{n}\coloneqq q^{2\ell+2n}\in(0,1),\qquad
+  \varphi_{q}\coloneqq 2(\pm k_{1}\pm k_{2})\ln q ,
+\]
+the phase $\varphi_{q}$ being \emph{independent of $n$}. Both infinite products converge
+absolutely, and $|1+q^{2x+2n}|\ge1-\rho_{n}\ge1-q^{2\ell}>0$ for every $n$, so each factor
+$r_{x}(q)\coloneqq(q^{2x};q^{2})_{\infty}/(-q^{2x};q^{2})_{\infty}$ is a well-defined
+nonzero number with
+\[
+  |r_{x}(q)|^{2}
+  =\prod_{n\ge0}\frac{|1-\rho_{n}e^{i\varphi_{q}}|^{2}}{|1+\rho_{n}e^{i\varphi_{q}}|^{2}}
+  =\prod_{n\ge0}\frac{1-2\rho_{n}\cos\varphi_{q}+\rho_{n}^{2}}
+                     {1+2\rho_{n}\cos\varphi_{q}+\rho_{n}^{2}} .
+\]
+Assume $q$ close enough to $1$ that $2(k_{1}+k_{2})|\ln q|\le\pi/3$ (for $k_{1}=k_{2}=0$ no
+condition is needed); then $|\varphi_{q}|\le\pi/3$, hence $\cos\varphi_{q}\ge\tfrac12$, for
+all four sign choices. The per-factor ratio is decreasing in $\cos\varphi_{q}$ (its
+derivative in $c=\cos\varphi_{q}$ is $-4\rho_{n}(1+\rho_{n}^{2})$ divided by the squared
+denominator, hence negative), so for every $n$
+\[
+  \frac{1-2\rho_{n}\cos\varphi_{q}+\rho_{n}^{2}}{1+2\rho_{n}\cos\varphi_{q}+\rho_{n}^{2}}
+  \;\le\;\frac{1-\rho_{n}+\rho_{n}^{2}}{1+\rho_{n}+\rho_{n}^{2}}\eqqcolon g(\rho_{n})\;<\;1 .
+\]
+The function $g$ is strictly decreasing on $(0,1)$: the numerator of $g'$ is
+$(2\rho-1)(1+\rho+\rho^{2})-(1-\rho+\rho^{2})(2\rho+1)=2\rho^{2}-2<0$. Hence
+$g(\rho_{n})\le g(\tfrac12)=\tfrac37$ whenever $\rho_{n}\ge\tfrac12$, which happens exactly
+for $n\le N_{\ell}(q)\coloneqq\ln2/(2|\ln q|)-\ell$; the number of such lattice sites tends
+to $\infty$ as $q\to1^{-}$. Every remaining factor is $\le1$. Therefore
+\[
+  |r_{x}(q)|^{2}\;\le\;\Bigl(\tfrac37\Bigr)^{\lfloor N_{\ell}(q)\rfloor+1}
+  \xrightarrow[q\to1^{-}]{}0
+  \qquad\text{(for $q$ with $N_{\ell}(q)\ge0$),}
+\]
+so each of the four factors tends to $0$, and with it the ratio in (iv); (ii) then follows
+from the equality of the two ratios established above. The quantitative bound is verified
+numerically in \texttt{src/check\_claim\_kernels.py}, check (K5) (output
+\texttt{results/check\_claim\_kernels.out}): at $q=0.9,\,0.99,\,0.999$ (with $\ell=1$,
+$k_{1}=0.8$, $k_{2}=1.3$) the smallness hypothesis holds ($2(k_1+k_2)|\ln q|\le0.443$),
+every per-factor ratio with $\rho_{n}\ge\tfrac12$ is $\le\tfrac37$, and the worst measured
+$|r_{x}(q)|^{2}$ over the four sign choices is $2.2\times10^{-7}$ against the bound
+$7.9\times10^{-2}$ at $q=0.9$, $8.3\times10^{-103}$ against $3.1\times10^{-13}$ at
+$q=0.99$, and $3.2\times10^{-1066}$ against $4.8\times10^{-128}$ at $q=0.999$ (the bound is
+far from tight, as expected of a counting bound); the full ratio falls to
+$10^{-21419}$ by $q=0.9999$, the renormalised mixed-edge strange kernel agrees
 with $\Gamma(\ell\pm ik_1\pm ik_2)/\Gamma(2\ell)$ to $4.7\times10^{-4}$ relative at $q=0.9999$,
-and the reflection identity holds to better than $9\times10^{-37}$ relative at all sampled $q$),
-with further scans in issue~\#10. \emph{Note}: SI's printed (4.19) writes the shift as $i\pi/\ln q$ (the full period of
-$\Gamma_{q^{2}}$, which would \emph{not} vanish); consistency with their own (4.18) and \S4.3
-text requires $i\pi/(2\ln q)$; see \texttt{lit/notes/2512.10101.md} \S7.
+and the reflection identity holds to better than $9\times10^{-37}$ relative at all sampled $q$,
+with further scans in issue~\#10. \emph{Note}: SI's printed (4.19) writes the strange shift as
+$i\pi/\ln q$ (the full period of
+$\Gamma_{q^{2}}$, under which the corresponding $q$-gamma ratio would \emph{not} vanish);
+consistency with their own (4.18) and \S4.3
+text requires $i\pi/(2\ln q)$; see \texttt{lit/notes/2512.10101.md} \S7. \emph{Tag
+bookkeeping} (issue \#18): the vanishing in (ii)/(iv) is proved in full by the product
+bound above; the proposition as a whole keeps the tag \DERIVED{} because (i) and (iii) rest
+on the $q$-gamma limit $\Gamma_{q^{2}}\to\Gamma$ and on Lemma~\ref{lem:mehler}, which are
+complete calculations but not independently re-proved here.
 \end{proof}
 
 \subsection{Formalisations of the claim}

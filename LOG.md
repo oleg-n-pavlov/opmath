@@ -203,6 +203,28 @@ Environment facts recorded:
   tracked branch and will be pushed when access is granted; scope changes are recorded as
   explicit issue comments (done for #8); gap issues carry "Gap:" in the title.
 
+## 2026-08-11 — issue #18: the incomplete proof of Proposition 1.6(iv) finished
+
+The proof of parts (ii)/(iv) of `prop:limits` contained a literally unfinished formula
+(`|1+q^{2x+2n}| ≥ 1+cos(2k ln q⋯)q^{2ℓ+2n}` with an ellipsis) followed by a second,
+gestural argument ("A cleaner route..."). Replaced by ONE complete elementary proof: since
+the phase φ_q = 2(±k₁±k₂)ln q of q^{2x+2n} is independent of n, each per-factor modulus
+ratio is (1-2ρcosφ+ρ²)/(1+2ρcosφ+ρ²); under the explicit hypothesis 2(k₁+k₂)|ln q| ≤ π/3
+one has cosφ_q ≥ ½, giving per-factor bound g(ρ) = (1-ρ+ρ²)/(1+ρ+ρ²) (g strictly
+decreasing, derivative numerator 2ρ²-2 < 0), hence ≤ g(½) = 3/7 on the ⌊ln2/(2|ln q|)-ℓ⌋+1
+lattice sites with ρ_n ≥ ½ and ≤ 1 elsewhere; so |r_x(q)|² ≤ (3/7)^{⌊N_ℓ(q)⌋+1} → 0. The
+q-gamma "cleaner route" gesture dropped (the factual note on SI's (4.19) misprint kept).
+Tag bookkeeping: (ii)/(iv) vanishing now proved in full; prop:limits keeps DERIVED because
+(i)/(iii) rest on Γ_{q²}→Γ and the q-Mehler lemma.
+
+Numerics: new check (K5) in `src/check_claim_kernels.py` verifies the smallness hypothesis,
+every per-factor inequality, and the final bound at q = 0.9/0.99/0.999: worst |r_x|² =
+2.2e-7 vs bound 7.9e-2, 8.3e-103 vs 3.1e-13, 3.2e-1066 vs 4.8e-128 (bound valid, far from
+tight, as expected of a counting bound). Output regenerated exactly as emitted; the K1-K4
+portion is bit-identical to the previously committed file except that a trailing `EXIT=0`
+line, which the script never printed (a hand edit), is gone. The systematic
+committed-outputs policy is handled under the repository-integrity issue.
+
 ## 2026-08-11 — issue #6: matrix coefficients of the strange series
 
 Section 4 of `tex/main.tex`. Sub-issues opened rather than solved inline: #13 (principal-series

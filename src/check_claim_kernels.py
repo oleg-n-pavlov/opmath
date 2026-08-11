@@ -14,6 +14,15 @@ Checked here:
  (K4) Limit value (Proposition, parts (i)/(iii)):
       K^S(L(k1),U(k2)) * (1-q^2)^{3-2l} (q^2;q^2)_inf^3  ->  Gamma(l+-ik1+-ik2)/Gamma(2l)
       (product over 4 signs), and the SAME renormalised limit for K^O(L(k1),L(k2)).
+ (K5) The quantitative bound in the (rewritten, issue #18) proof of Proposition parts
+      (ii)/(iv): for each sign choice x = l +- i k1 +- i k2, writing q^{2x+2n} =
+      rho_n e^{i phi_q} with rho_n = q^{2l+2n} and phi_q = 2(+-k1+-k2) ln q,
+      (a) the smallness hypothesis 2(k1+k2)|ln q| <= pi/3 holds at the sampled q,
+          so cos(phi_q) >= 1/2;
+      (b) every per-factor ratio (1-2 rho_n cos phi_q + rho_n^2)/(1+2 rho_n cos phi_q
+          + rho_n^2) is <= 1, and <= 3/7 whenever rho_n >= 1/2;
+      (c) |r_x(q)|^2 = prod_n (per-factor ratio) <= (3/7)^(floor(N_l(q))+1) with
+          N_l(q) = ln2/(2|ln q|) - l  (the counting bound used in the proof).
 
 Run: python3 src/check_claim_kernels.py     (deterministic; output: results/check_claim_kernels.out)
 """
@@ -148,6 +157,48 @@ def main():
     print(f"  relative deviation of renormalised K^O(L,L) from Gamma-target: "
           f"{mp.nstr(final_dev_O, 4)} (must be < 2e-2): "
           f"{'PASS' if final_dev_O < mp.mpf('0.02') else 'FAIL'}")
+
+    # (K5) the per-factor product bound of the issue-#18 proof of (ii)/(iv)
+    print("\n  (K5) product bound |r_x(q)|^2 <= (3/7)^(floor(N_l)+1), all four sign choices")
+    l, k1, k2 = mp.mpf(1), mp.mpf('0.8'), mp.mpf('1.3')
+    for qv in ['0.9', '0.99', '0.999']:
+        q = mp.mpf(qv)
+        q2 = q * q
+        # (a) smallness hypothesis
+        hyp = 2 * (k1 + k2) * abs(mp.log(q))
+        passed_a = hyp <= mp.pi / 3
+        ok &= passed_a
+        print(f"  q={qv}: 2(k1+k2)|ln q| = {mp.nstr(hyp, 4)} <= pi/3 = "
+              f"{mp.nstr(mp.pi / 3, 4)}: {'PASS' if passed_a else 'FAIL'}")
+        Nl = mp.log(2) / (2 * abs(mp.log(q))) - l
+        bound = (mp.mpf(3) / 7) ** (int(mp.floor(Nl)) + 1)
+        nterms = max(400, int((mp.mp.dps + 10) * mp.log(10) / (-mp.log(q2))) + 10)
+        worst_ratio = mp.mpf(0)
+        for s1 in (1, -1):
+            for s2 in (1, -1):
+                phi = 2 * (s1 * k1 + s2 * k2) * mp.log(q)
+                c = mp.cos(phi)
+                passed_b = c >= mp.mpf('0.5')
+                r2 = mp.mpf(1)
+                factor_ok = True
+                for n in range(nterms):
+                    rho = q ** (2 * l + 2 * n)
+                    f = (1 - 2 * rho * c + rho * rho) / (1 + 2 * rho * c + rho * rho)
+                    factor_ok &= (f <= 1)
+                    if rho >= mp.mpf('0.5'):
+                        factor_ok &= (f <= mp.mpf(3) / 7)
+                    r2 *= f
+                    if rho < mp.mpf(10) ** (-mp.mp.dps - 5):
+                        break
+                passed_c = r2 <= bound
+                ok &= passed_b and factor_ok and passed_c
+                worst_ratio = max(worst_ratio, r2)
+                print(f"    signs ({s1:+d},{s2:+d}): cos(phi)={mp.nstr(c, 6)}>=1/2 "
+                      f"{'PASS' if passed_b else 'FAIL'}; per-factor bounds "
+                      f"{'PASS' if factor_ok else 'FAIL'}; |r_x|^2 = {mp.nstr(r2, 4)} <= "
+                      f"bound {mp.nstr(bound, 4)}: {'PASS' if passed_c else 'FAIL'}")
+        print(f"    worst |r_x(q)|^2 at q={qv}: {mp.nstr(worst_ratio, 4)} "
+              f"(bound {mp.nstr(bound, 4)})")
 
     print("\n" + ("ALL CHECKS PASSED" if ok else "SOME CHECKS FAILED -- see above"))
     return 0 if ok else 1

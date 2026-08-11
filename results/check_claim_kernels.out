@@ -48,5 +48,24 @@ check_claim_kernels.py -- issue #4 kernel checks (mpmath, 40 digits)
   relative deviation of renormalised K^S(L,U) from Gamma-target: 0.0004661 (must be < 2e-2): PASS
   relative deviation of renormalised K^O(L,L) from Gamma-target: 0.0004661 (must be < 2e-2): PASS
 
+  (K5) product bound |r_x(q)|^2 <= (3/7)^(floor(N_l)+1), all four sign choices
+  q=0.9: 2(k1+k2)|ln q| = 0.4425 <= pi/3 = 1.047: PASS
+    signs (+1,+1): cos(phi)=0.903678>=1/2 PASS; per-factor bounds PASS; |r_x|^2 = 2.201e-7 <= bound 0.07872: PASS
+    signs (+1,-1): cos(phi)=0.994455>=1/2 PASS; per-factor bounds PASS; |r_x|^2 = 5.893e-9 <= bound 0.07872: PASS
+    signs (-1,+1): cos(phi)=0.994455>=1/2 PASS; per-factor bounds PASS; |r_x|^2 = 5.893e-9 <= bound 0.07872: PASS
+    signs (-1,-1): cos(phi)=0.903678>=1/2 PASS; per-factor bounds PASS; |r_x|^2 = 2.201e-7 <= bound 0.07872: PASS
+    worst |r_x(q)|^2 at q=0.9: 2.201e-7 (bound 0.07872)
+  q=0.99: 2(k1+k2)|ln q| = 0.04221 <= pi/3 = 1.047: PASS
+    signs (+1,+1): cos(phi)=0.999109>=1/2 PASS; per-factor bounds PASS; |r_x|^2 = 8.309e-103 <= bound 3.082e-13: PASS
+    signs (+1,-1): cos(phi)=0.999949>=1/2 PASS; per-factor bounds PASS; |r_x|^2 = 2.191e-104 <= bound 3.082e-13: PASS
+    signs (-1,+1): cos(phi)=0.999949>=1/2 PASS; per-factor bounds PASS; |r_x|^2 = 2.191e-104 <= bound 3.082e-13: PASS
+    signs (-1,-1): cos(phi)=0.999109>=1/2 PASS; per-factor bounds PASS; |r_x|^2 = 8.309e-103 <= bound 3.082e-13: PASS
+    worst |r_x(q)|^2 at q=0.99: 8.309e-103 (bound 3.082e-13)
+  q=0.999: 2(k1+k2)|ln q| = 0.004202 <= pi/3 = 1.047: PASS
+    signs (+1,+1): cos(phi)=0.999991>=1/2 PASS; per-factor bounds PASS; |r_x|^2 = 3.162e-1066 <= bound 4.787e-128: PASS
+    signs (+1,-1): cos(phi)=0.999999>=1/2 PASS; per-factor bounds PASS; |r_x|^2 = 8.337e-1068 <= bound 4.787e-128: PASS
+    signs (-1,+1): cos(phi)=0.999999>=1/2 PASS; per-factor bounds PASS; |r_x|^2 = 8.337e-1068 <= bound 4.787e-128: PASS
+    signs (-1,-1): cos(phi)=0.999991>=1/2 PASS; per-factor bounds PASS; |r_x|^2 = 3.162e-1066 <= bound 4.787e-128: PASS
+    worst |r_x(q)|^2 at q=0.999: 3.162e-1066 (bound 4.787e-128)
+
 ALL CHECKS PASSED
-EXIT=0
