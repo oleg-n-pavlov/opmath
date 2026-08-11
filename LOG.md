@@ -146,3 +146,34 @@ recorded for #6-#8: the radial problem is the same q-difference operator for eve
 series membership enters only through the spectral value Ω̃ (strange ⇔ Ω̃ < -1, below the
 principal band). Any interpolation mechanism through strange *states* of the transfer matrix is
 excluded.
+
+## 2026-08-11 — issue #6: matrix coefficients of the strange series
+
+Section 4 of `tex/main.tex`. Sub-issues opened rather than solved inline: #13 (principal-series
+bilocal kernels / selectivity, flagged in Remark 1.12) and #14 (`gap`: no Plancherel/orthogonality
+theory for the strange family after the DSSYK rescaling — the project-level instantiation of the
+Plancherel caveat PROBLEM.md quotes).
+
+Results:
+- The strange series transcribed into our conventions (PROVED; transcription verified by #3's
+  checks C1-C2).
+- Radial coefficients on the chord lattice at the strange value Ω̃ = -mu(q^{2a}): the regular
+  solution is the continued q²-Hermite (-1)^k H_k(mu(q^{2a});q²), grows like q^{-2ak}
+  (no strange states — consistent with #5); NEW closed form for the minimal (decaying) solution
+  c^S_k(a) = (-1)^k q^{2ak} 2phi1(0,0; q^{4a+2}; q², q^{2k+2}), PROVED by an explicit
+  coefficient recursion with a convergence argument; Wronskian W_k = (q²;q²)_k W_0 (PROVED) with
+  W_0 = (s^{-1}-s)/((s²;q²)_inf(q²;q²)_inf) and the connection formula H_k(mu(s);q²) =
+  c^min_k(s^{-1})/(s²;q²)_inf + c^min_k(s)/(s^{-2};q²)_inf (both DERIVED: asymptotic matching,
+  verified to 1e-33..1e-40 at multiple (q,s) — `src/check_strange_coefficients.py`,
+  `results/check_strange_coefficients.out`, all checks pass).
+- Resonance observation: the connection formula degenerates exactly at s² ∈ q^{2Z} — which
+  includes every strange label in the Plancherel decomposition (a ∈ ½Z_{>0}); the minimal
+  solution itself stays regular there. Recorded in the theorem.
+- The rho-shift (operator weight q^{2lk} vs wavefunction decay q^{(2l-1)k}) recorded as a
+  remark with a numerical check (constant = 1.0), so it is not mistaken downstream for an error.
+- Failed first attempt recorded: the S2 growth-rate check used a fixed absolute tolerance at
+  k=60 and FAILED at (q,s)=(0.8,0.9) and (0.9,0.5); the deviations matched the predicted
+  correction scale max(s²,q²)^k exactly (3e-6 at 0.81^60), i.e. a premature-asymptotics
+  tolerance, not a formula error; fixed by comparing at k=200 with the predicted scale.
+- No analytic continuation from compact quotients is used anywhere (the 2412.19681 caveat does
+  not apply); stated in the tex.

@@ -1,0 +1,27 @@
+check_strange_coefficients.py -- issue #6 (mpmath, 40 digits)
+==============================================================================
+[PASS] q=0.6, s=0.35: (S1) minimal-solution recurrence, max rel dev = 4.75e-41
+[PASS]            (S1') strange-value recurrence (omega = -mu(s)), max rel dev = 4.75e-41
+[PASS]            (S2) rates at k=200 (tol 1.0e-30): c^reg ratio -> 1/s (dev 0.0), c^min ratio -> s (dev 0.0); H_k s^k (s^2;q^2)_inf -> 1.0 (predicted -> 1)
+[PASS]            (S3) Wronskian W_k = (q^2;q^2)_k W_0, max rel dev = 1.35e-40; W_0 = 5.9248375 (nonzero: no bound state)
+[PASS] q=0.8, s=0.9: (S1) minimal-solution recurrence, max rel dev = 8.36e-41
+[PASS]            (S1') strange-value recurrence (omega = -mu(s)), max rel dev = 8.36e-41
+[PASS]            (S2) rates at k=200 (tol 5.0e-17): c^reg ratio -> 1/s (dev 4.74e-19), c^min ratio -> s (dev 3.23e-39); H_k s^k (s^2;q^2)_inf -> 1.0 (predicted -> 1)
+[PASS]            (S3) Wronskian W_k = (q^2;q^2)_k W_0, max rel dev = 1.0e-39; W_0 = 67.835348 (nonzero: no bound state)
+[PASS] q=0.9, s=0.5: (S1) minimal-solution recurrence, max rel dev = 2.03e-40
+[PASS]            (S1') strange-value recurrence (omega = -mu(s)), max rel dev = 2.03e-40
+[PASS]            (S2) rates at k=200 (tol 5.0e-17): c^reg ratio -> 1/s (dev 4.44e-19), c^min ratio -> s (dev 3.12e-19); H_k s^k (s^2;q^2)_inf -> 1.0 (predicted -> 1)
+[PASS]            (S3) Wronskian W_k = (q^2;q^2)_k W_0, max rel dev = 2.9e-40; W_0 = 2766.1546 (nonzero: no bound state)
+[PASS] q=0.3, s=0.05: (S1) minimal-solution recurrence, max rel dev = 6.71e-41
+[PASS]            (S1') strange-value recurrence (omega = -mu(s)), max rel dev = 6.71e-41
+[PASS]            (S2) rates at k=200 (tol 1.0e-30): c^reg ratio -> 1/s (dev 0.0), c^min ratio -> s (dev 0.0); H_k s^k (s^2;q^2)_inf -> 1.0 (predicted -> 1)
+[PASS]            (S3) Wronskian W_k = (q^2;q^2)_k W_0, max rel dev = 2.75e-40; W_0 = 22.180745 (nonzero: no bound state)
+
+[PASS] q=0.6, s=0.35: (S3') W_0 == (1/s - s)/((s^2;q^2)_inf (q^2;q^2)_inf), rel dev = 7.75e-41
+[PASS]            (S5) connection formula H_k = c^min(1/s)/(s^2;q^2)_inf + c^min(s)/(s^-2;q^2)_inf, max rel dev = 2.21e-40
+[PASS] q=0.9, s=0.513: (S3') W_0 == (1/s - s)/((s^2;q^2)_inf (q^2;q^2)_inf), rel dev = 1.96e-40
+[PASS]            (S5) connection formula H_k = c^min(1/s)/(s^2;q^2)_inf + c^min(s)/(s^-2;q^2)_inf, max rel dev = 1.35e-33
+
+(S4) rho-shift record at q=0.7, l=1: c^min_k / q^(2lk) = 1570646.3 ~ q^(-k) x const (q^(-k) = 1.57e+6); const = 1.0
+
+ALL CHECKS PASSED

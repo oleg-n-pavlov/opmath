@@ -660,7 +660,155 @@ spectral value. This is the object issues \#6--\#7 compute.
 
 % Issue #6.
 
-\emph{To be written under issue \#6.}
+Numerical verification for this section: \texttt{src/check\_strange\_coefficients.py}
+(output \texttt{results/check\_strange\_coefficients.out}, all checks pass; checks are cited
+as (S1)--(S5) below).
+
+\subsection{The representations, explicitly}
+
+\begin{proposition}[strange series in our conventions]\label{prop:strangeexplicit}
+\PROVED\ (transcription of \cite{Groenevelt:2009gkk} eq.\ (strangeserrep) through the verified
+dictionary of Convention~\ref{conv:translation}; checks C1--C2.) For $a>0$,
+$\epsilon\in\{0,\tfrac12\}$, the strange series $\pi^{S}_{a,\epsilon}$ of $\Uq$ acts on
+$\ell^{2}(\Z)$ by
+\begin{equation}\label{eq:strangeexplicitSI}
+\begin{split}
+  K e_{n}&=q^{n+\epsilon}e_{n},\\
+  (q^{-1}-q)\,E\,e_{n}
+  &=q^{-n-\epsilon-\frac12}\sqrt{(1+q^{2n+2\epsilon+1+2a})(1+q^{2n+2\epsilon+1-2a})}\;e_{n+1},\\
+  F&=-E^{*},
+\end{split}
+\end{equation}
+with $\tCas=-\mu(q^{2a})$, equivalently
+$\Cas=-2\bigl(\mu(q^{2a})+1\bigr)/(q-q^{-1})^{2}=-\bigl(q^{a}+q^{-a}\bigr)^{2}/(q-q^{-1})^{2}$
+(Convention~\ref{conv:casimir}). It is unitary (all square-root arguments are manifestly positive for every $a>0$), irreducible,
+and admissible; the normaliser extension acts by the $\Z_2$-grading operators
+$U^{+-}_{0},U^{-+}_{0}$ of \cite{Groenevelt:2009gkk} which map $\tCas\mapsto-\tCas$, i.e.\
+exchange the strange family with the discrete family and the principal band with itself
+[SI \S3.3].
+\end{proposition}
+
+\subsection{Radial coefficients on the chord lattice}
+
+By Remark~\ref{rem:strangeonspace}, the meaningful ``matrix coefficients on the DSSYK space''
+are the solutions of the radial Casimir equation at the strange spectral value. On the chord
+lattice the radial equation is the three-term relation of Convention~\ref{conv:casimir}; in
+unnormalised form ($c_{k}=v_{k}\sqrt{(q^{2};q^{2})_{k}}$):
+\begin{equation}\label{eq:radialrecurrence}
+  2\omega\,c_{k}=c_{k+1}+(1-q^{2k})\,c_{k-1},\qquad k\ge1,
+  \tag{R}
+\end{equation}
+with the \emph{regular} solution fixed by $c_{1}=2\omega c_{0}$ (equivalently $c_{-1}=0$), i.e.\
+$c^{\mathrm{reg}}_{k}=H_{k}(\omega;q^{2})$.
+
+\begin{theorem}[strange radial coefficients, closed forms]\label{thm:strangeradial}
+Let $0<s<1$ and $\omega=-\mu(s)<-1$ (strange values: $s=q^{2a}$, $a>0$;
+Convention~\ref{conv:series}).
+\begin{enumerate}[label=(\alph*)]
+\item \PROVED\ \emph{(minimal solution.)} The sequence
+\begin{equation}\label{eq:minimalsolution}
+  c^{S}_{k}(a)\coloneqq(-1)^{k}\,q^{2ak}\;
+  {}_{2}\varphi_{1}\!\left(\begin{matrix}0,\,0\\ q^{4a+2}\end{matrix};\,q^{2},\,
+  q^{2k+2}\right),
+  \qquad
+  {}_{2}\varphi_{1}\!\left(\begin{matrix}0,0\\ c\end{matrix};q,z\right)
+  =\sum_{j\ge0}\frac{z^{j}}{(q;q)_{j}(c;q)_{j}},
+\end{equation}
+solves \eqref{eq:radialrecurrence} at $\omega=-\mu(q^{2a})$ for all $k\ge1$, and
+$c^{S}_{k}(a)=(-1)^{k}q^{2ak}\,(1+O(q^{2k}))$; the normalised sequence
+$v^{S}_{k}=c^{S}_{k}/\sqrt{(q^{2};q^{2})_{k}}$ is square-summable. (Check S1$'$;
+proof below.)
+\item \DERIVED\ \emph{(regular solution and growth.)} The regular solution is
+$c^{\mathrm{reg}}_{k}=H_{k}(-\mu(q^{2a});q^{2})=(-1)^{k}H_{k}(\mu(q^{2a});q^{2})$ with
+$H_{k}(\mu(s);q^{2})\,s^{k}\,(s^{2};q^{2})_{\infty}\to1$ as $k\to\infty$; it grows like
+$q^{-2ak}$ and is not square-summable --- consistently with
+Proposition~\ref{prop:chordprincipal} (no strange states). (Check S2.)
+\item \DERIVED\ \emph{(Wronskian and connection formula.)} With
+$W_{k}\coloneqq c^{\mathrm{reg}}_{k+1}c^{\mathrm{min}}_{k}-c^{\mathrm{min}}_{k+1}
+c^{\mathrm{reg}}_{k}$ one has $W_{k}=(q^{2};q^{2})_{k}\,W_{0}$ (\PROVED, one-line induction from
+\eqref{eq:radialrecurrence}), and
+\begin{equation}\label{eq:jost}
+  W_{0}=\frac{s^{-1}-s}{(s^{2};q^{2})_{\infty}(q^{2};q^{2})_{\infty}}\;\neq\;0
+  \quad\text{for all }0<s<1,
+\end{equation}
+equivalently the connection formula (generic $s$, $s^{2}\notin q^{2\Z}$)
+\begin{equation}\label{eq:connection}
+  H_{k}(\mu(s);q^{2})
+  =\frac{c^{\mathrm{min}}_{k}(s^{-1})}{(s^{2};q^{2})_{\infty}}
+  +\frac{c^{\mathrm{min}}_{k}(s)}{(s^{-2};q^{2})_{\infty}},
+  \qquad
+  c^{\mathrm{min}}_{k}(s)\coloneqq s^{k}\,
+  {}_{2}\varphi_{1}\!\left(\begin{matrix}0,0\\ s^{2}q^{2}\end{matrix};q^{2},q^{2k+2}\right),
+\end{equation}
+verified to relative $10^{-33}$ or better at multiple $(q,s)$ (checks S3, S3$'$, S5). At the
+\emph{resonant} points $s^{2}\in q^{2\Z}$ --- which include every strange label occurring in the
+Plancherel decomposition, $a\in\tfrac12\Z_{>0}$ --- the branch $c^{\mathrm{min}}(s^{-1})$
+degenerates and \eqref{eq:connection} requires a confluent limit; the minimal solution
+\eqref{eq:minimalsolution} itself remains well-defined there.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof of (a)]
+Substitute $c_{k}=s^{k}\varphi(q^{2k})$, $\varphi(z)=\sum_{j\ge0}d_{j}z^{j}$, into
+\eqref{eq:radialrecurrence} at $\omega=\mu(s)$ (the value $-\mu(s)$ follows by the parity map
+$c_{k}\to(-1)^{k}c_{k}$, which flips the sign of $\omega$ in \eqref{eq:radialrecurrence}).
+Matching coefficients of $z^{j}$ in $(s^{2}+1)\varphi(z)=s^{2}\varphi(q^{2}z)
++(1-z)\varphi(q^{-2}z)$ gives
+$d_{j}\bigl[(s^{2}+1)-s^{2}q^{2j}-q^{-2j}\bigr]=-d_{j-1}q^{2-2j}$, i.e.\
+$d_{j}=d_{j-1}\,q^{2}/\bigl[(1-q^{2j})(1-s^{2}q^{2j})\bigr]$, so
+$d_{j}=q^{2j}/\bigl[(q^{2};q^{2})_{j}(s^{2}q^{2};q^{2})_{j}\bigr]$ with $d_{0}=1$ ---
+the series \eqref{eq:minimalsolution}. For $0<s<1$ the factors $(1-s^{2}q^{2i})$ are bounded
+below by $1-s^{2}q^{2}>0$, so $|d_{j}|\le C q^{2j}$ and $\varphi$ is analytic in
+$|z|<q^{-2}$, which contains every lattice point $z=q^{2k}$, $k\ge0$; the term-by-term
+manipulation is therefore justified, and $\varphi(q^{2k})=1+O(q^{2k})$ gives the stated
+asymptotics and square-summability. (Numerical confirmation to $10^{-40}$: checks S1, S1$'$.)
+\end{proof}
+
+\begin{remark}[the $\rho$-shift]\label{rem:rhoshift}
+At the discrete-series value $\omega=\mu(q^{2\ell-1})$ the minimal solution decays like
+$q^{(2\ell-1)k}$ while the discrete bilocal (Convention~\ref{conv:chord}) weights chord states
+by $q^{2\ell k}$; the mismatch $q^{-k}$, constant $=1$ numerically (check S4), is the usual
+Weyl-vector shift between an operator weight and a wavefunction decay rate, recorded here so
+that it is not mistaken for an inconsistency downstream. The same shift appears in the strange
+family: bilocal weight $(-1)^{k}q^{2\ell k}$ versus minimal-solution decay
+$(-1)^{k}q^{2ak}=(-1)^{k}q^{(2\ell-1)k}$ under $a=\ell-\tfrac12$.
+\end{remark}
+
+\subsection{Bilocal coefficients between principal states}
+
+The equal-time overlap kernels of the strange bilocals are Lemma~\ref{lem:mehler}: for
+$\ell\in\tfrac12\Z_{>0}$ the chord sum converges absolutely ($|t|=q^{2\ell}<1$) and
+\begin{equation}
+  \bra{\P^{\theta_1}}\mathcal{S}^{\ell}(0)\ket{\P^{\theta_2}}
+  =\frac{(q^{4\ell};q^{2})_{\infty}}{(-q^{2\ell}e^{i(\pm\theta_1\pm\theta_2)};q^{2})_{\infty}},
+\end{equation}
+holomorphic in $q^{2\ell}$ on the unit disk; no analytic continuation from any compact-quotient
+computation is used anywhere in this section (everything is defined directly on the non-compact
+lattice), so the caveat of arXiv:2412.19681 about continuation-based derivations does not apply
+here.
+
+\subsection{Orthogonality and Plancherel: what is available and what is not}
+
+\begin{proposition}[available]\label{prop:planchereldata}
+\PROVED\ (in the sources.) (i) On the chord sector, the principal eigenfunctions are complete
+and delta-orthonormal with the DSSYK Plancherel density
+$\frac{d\theta}{2\pi}(q^{2},e^{\pm2i\theta};q^{2})_{\infty}$ [SI (4.11);
+Proposition~\ref{prop:chordprincipal}]. (ii) At the unrescaled level, the GKK sector
+decompositions (Convention~\ref{conv:plancherel}) provide a rigorous Plancherel theory in which
+the strange series occurs with counting measure at $q^{2a}=pq^{1+2l}$.
+\end{proposition}
+
+\begin{remark}[not available: rescaled Plancherel for the strange family]\label{rem:noplancherel}
+\GAP{14}\ No orthogonality or completeness statement for strange-series coefficients
+\emph{on the DSSYK space} is available: the strange radial coefficients
+\eqref{eq:minimalsolution} are solutions at spectral values off the spectrum of the self-adjoint
+transfer matrix, and whether the GKK Plancherel decomposition survives SI's rescaling
+$r\to\infty$ is not established --- by us or by \cite{Schouten:2025dssyk}. Every statement in
+this project that would sum or integrate over strange labels on the DSSYK space is conditional
+on issue \#14 and says so. The unconditional statements are: the GKK theory at finite scaling,
+the chord-sector principal completeness, the kernel computations of Section~\ref{sec:intro},
+and Theorem~\ref{thm:strangeradial}.
+\end{remark}
 
 \section{The radial part of the Casimir}
 \label{sec:radial}
