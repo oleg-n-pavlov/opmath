@@ -46,6 +46,7 @@
 \newcommand{\bra}[1]{\langle #1|}
 \renewcommand{\P}{P}                            % principal-series eigenvector symbol, SI (4.10)
 \renewcommand{\O}{\mathcal{O}}                  % discrete-series bilocal, SI (4.14)
+\newcommand{\K}{\mathcal{K}}                    % overlap kernels, Sec. 1
 
 \title{Strange series representations of $\Uq$ and the\\
        AdS$_2\leftrightarrow$dS$_2$ structure of the DSSYK bulk dual}
@@ -68,7 +69,292 @@ was only derived or argued, and what was left open, in that order.
 % Issue #4. State the claim under test as a precise mathematical statement, and quote
 % arXiv:2512.10101 verbatim at the point where the claim is made there.
 
-\emph{To be written under issue \#4.}
+\subsection{The claim, verbatim}
+\label{sec:claimverbatim}
+
+The object of this project is the following assertion of Schouten--Isachenkov
+\cite{Schouten:2025dssyk} (arXiv:2512.10101v2; all quotations and equation numbers refer to v2;
+the full quotation ledger with locations is \texttt{lit/notes/2512.10101.md}):
+
+\begin{quote}
+``Lastly, we make remarks on the correlation function related to the strange series
+representation, which is argued to interpolate between the AdS and dS regions of our
+$q$-homogeneous space.'' \hfill (abstract)
+\end{quote}
+\begin{quote}
+``such that the strange series has a non-zero amplitude between the lower part and upper part of
+the spectrum~. It was proposed in [arXiv:2411.16922] and [arXiv:2505.08116] that zooming into the
+upper part of the spectrum, i.e.\ $\theta=|\ln(q^2)|k$, corresponds to de Sitter JT-gravity.
+If this proposal were proven to be correct, the strange series would therefore have a non-zero
+amplitude between the anti-de Sitter and de Sitter regions.'' \hfill (\S4.3, end)
+\end{quote}
+\begin{quote}
+``Moreover, supposing that dS space corresponds to the upper part of the spectrum, it was shown
+in Section~4.3 that the strange series gives non-zero amplitudes between AdS and dS regions, and
+thus in some sense interpolates between them. It is currently unknown what the correct physics
+interpretation of such an amplitude would be.'' \hfill (\S5, Discussion, item 1)
+\end{quote}
+
+The authors' own epistemic labelling is therefore: \emph{argued}, twice conditional --- on the
+dS identification of the upper spectral edge, and on an interpretation of the amplitude that they
+declare unknown. The phrase ``in some sense interpolates'' is theirs; making the sense precise is
+the purpose of this section.
+
+\subsection{Setting and the paper's computation}
+\label{sec:setting}
+
+Throughout, conventions are those of Section~\ref{sec:conventions}. The DSSYK spectral parameter
+is $\theta\in[0,\pi]$, $E(\theta)=2\cos\theta/\sqrt{1-q^{2}}$ (Convention~\ref{conv:q}); the
+principal-series eigenvectors $\ket{\P^{\theta}}$ and the chord states $\ket{k}$ are as in
+Conventions \ref{conv:casimir} and \ref{conv:chord}.
+
+\begin{definition}[edge regimes]\label{def:edges}
+For $k\ge0$ fixed and $q\to1^{-}$, the \emph{lower-edge regime} is the family
+$\theta^{L}_{q}(k)\coloneqq\pi-|\ln q^{2}|\,k$ and the \emph{upper-edge regime} is
+$\theta^{U}_{q}(k)\coloneqq|\ln q^{2}|\,k$.
+\end{definition}
+
+\begin{definition}[AdS region]\label{def:ads}
+The \emph{AdS region} is the lower-edge regime. Justification (not a convention): in this regime
+the $q\to1$ limit of DSSYK is the Schwarzian theory on AdS$_2$ [SI \S4.2, eq.\ (4.17); standard
+DSSYK literature \cite{Berkooz:2018largeN}], and every bulk-dual proposal on the market agrees on
+this identification.
+\end{definition}
+
+\begin{definition}[dS region --- two inequivalent candidates]\label{def:ds}
+\emph{(a) Edge-dS (dS-JT):} the upper-edge regime $\theta^{U}_{q}(k)$
+[arXiv:2411.16922 \cite{Blommaert:2024entropic}; arXiv:2505.08116 \cite{Okuyama:2025dsjt}].
+\emph{(b) Centre-dS:} the middle of the band, $\theta=\pi/2$, $E=0$
+[arXiv:2310.16994 \cite{Narovlansky:2023lfz} and successors].
+The claim of \cite{Schouten:2025dssyk} is formulated with (a); its footnote records (b) as a
+rival. Any statement below that depends on the choice says so explicitly.
+\end{definition}
+
+The paper's strange-series computation concerns the bilocal operators of
+Convention~\ref{conv:chord},
+$\O^{\ell}$ (discrete series) and $\mathcal{S}^{\ell}$ (strange series), $\ell\in\tfrac12\Z_{>0}$,
+through their equal-time overlap kernels
+\begin{equation}\label{eq:kernels}
+  \K^{\O}_{q}(\theta_{1},\theta_{2})
+  \coloneqq\bra{\P^{\theta_1}}\O^{\ell}(0)\ket{\P^{\theta_2}}
+  =\frac{(q^{4\ell};q^{2})_{\infty}}{(q^{2\ell}e^{i(\pm\theta_1\pm\theta_2)};q^{2})_{\infty}},
+  \qquad
+  \K^{\mathcal{S}}_{q}(\theta_{1},\theta_{2})
+  \coloneqq\bra{\P^{\theta_1}}\mathcal{S}^{\ell}(0)\ket{\P^{\theta_2}},
+\end{equation}
+where the denominator is the product over the four sign choices [SI (4.15)--(4.16), (4.19)].
+
+\begin{lemma}[$q$-Mehler form; chord-side characterisation]\label{lem:mehler}
+\DERIVED\ For $t\in\C$, $|t|<1$,
+\begin{equation}\label{eq:qmehler}
+  \sum_{k\ge0}\frac{t^{k}}{(q^{2};q^{2})_{k}}\,H_{k}(\cos\theta_1;q^{2})H_{k}(\cos\theta_2;q^{2})
+  =\frac{(t^{2};q^{2})_{\infty}}{(t\,e^{i(\pm\theta_1\pm\theta_2)};q^{2})_{\infty}},
+\end{equation}
+the $q$-Mehler formula for continuous $q$-Hermite polynomials
+(Gasper--Rahman; \cite{Berkooz:2018largeN} eq.\ (2.28)). Consequently
+$\K^{\O}_{q}$ is \eqref{eq:qmehler} at $t=q^{2\ell}$, and
+$\K^{\mathcal{S}}_{q}$ is \eqref{eq:qmehler} at $t=-q^{2\ell}$:
+the strange bilocal inserts matter with \emph{alternating chord weights}
+$(-1)^{k}q^{2k\ell}$, versus $q^{2k\ell}$ for the discrete bilocal. In particular
+$\K^{\mathcal{S}}_{q}(\theta_1,\theta_2)
+=(q^{4\ell};q^{2})_{\infty}/(-q^{2\ell}e^{i(\pm\theta_1\pm\theta_2)};q^{2})_{\infty}$,
+which is SI (4.19) before its limit.
+\end{lemma}
+
+\begin{proof}
+$\hat\rho_{st}\ket{k}=\tfrac12 q^{-1}q^{-2k}\ket{k}$ [SI (4.13)] gives
+$(2q\hat\rho_{st})^{-\ell-\frac{i\pi}{2\ln q}}\ket{k}
+=q^{2k(\ell+\frac{i\pi}{2\ln q})}\ket{k}=(-1)^{k}q^{2k\ell}\ket{k}$, since
+$q^{2k\cdot i\pi/(2\ln q)}=e^{i\pi k}$. Expanding both $\ket{\P^{\theta_i}}$ in chord states
+(Convention~\ref{conv:casimir}) yields the left side of \eqref{eq:qmehler} with $t=\mp q^{2\ell}$;
+\eqref{eq:qmehler} itself is classical.
+\end{proof}
+
+\begin{lemma}[exact reflection identity]\label{lem:reflection}
+\DERIVED\ For all $q\in(0,1)$, $\ell\in\tfrac12\Z_{>0}$ and $\theta_{1},\theta_{2}$,
+\begin{equation}\label{eq:reflection}
+  \K^{\mathcal{S}}_{q}(\theta_{1},\theta_{2})
+  =\K^{\O}_{q}(\theta_{1},\,\pi-\theta_{2})
+  =\K^{\O}_{q}(\pi-\theta_{1},\,\theta_{2}).
+\end{equation}
+That is: at finite $q$, the strange-series equal-time kernel is the discrete-series kernel with
+one spectral argument reflected through the middle of the band ($E\to-E$).
+\end{lemma}
+
+\begin{proof}
+$e^{\pm i(\pi-\theta_2)}=-e^{\mp i\theta_2}$, so the four denominator arguments
+$-q^{2\ell}e^{i(\pm\theta_1\pm\theta_2)}$ of $\K^{\mathcal{S}}_{q}(\theta_1,\theta_2)$
+(Lemma~\ref{lem:mehler}) coincide, as a set, with the four arguments
+$q^{2\ell}e^{i(\pm\theta_1\pm(\pi-\theta_2))}$ of
+$\K^{\O}_{q}(\theta_1,\pi-\theta_2)$; the numerators are equal. The second equality holds because
+the kernel depends on $(\theta_1,\theta_2)$ only through the four sums $\pm\theta_1\pm\theta_2$,
+and reflecting both arguments returns the original kernel:
+$\K^{\mathcal{S}}$ and $\K^{\O}$ are each invariant under simultaneous reflection.
+\end{proof}
+
+\begin{proposition}[the paper's limit statements, re-derived]\label{prop:limits}
+\DERIVED\ Fix $\ell\in\tfrac12\Z_{>0}$ and $k_{1},k_{2}\ge0$. As $q\to1^{-}$:
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Same edge, discrete (Schwarzian benchmark):}
+$\K^{\O}_{q}(\theta^{L}_{q}(k_1),\theta^{L}_{q}(k_2))
+\sim N(q)\,\dfrac{\Gamma(\ell\pm ik_1\pm ik_2)}{\Gamma(2\ell)}$,
+where $\Gamma(\ell\pm ik_1\pm ik_2)$ denotes the product over the four sign choices and
+$N(q)\coloneqq(1-q^{2})^{2\ell-3}(q^{2};q^{2})_{\infty}^{-3}$
+[SI (4.17); the $q$-gamma limit $\Gamma_{q^2}\to\Gamma$].
+\item \emph{Same edge, strange:} the normalisation-free ratio vanishes,
+$\K^{\mathcal{S}}_{q}(\theta^{L}_{q}(k_1),\theta^{L}_{q}(k_2))\,/\,
+ \K^{\O}_{q}(\theta^{L}_{q}(k_1),\theta^{L}_{q}(k_2))\longrightarrow 0$
+[this is the content of SI (4.19)].
+\item \emph{Opposite edges, strange:} exactly, at every $q$,
+$\K^{\mathcal{S}}_{q}(\theta^{L}_{q}(k_1),\theta^{U}_{q}(k_2))
+=\K^{\O}_{q}(\theta^{L}_{q}(k_1),\theta^{L}_{q}(k_2))$,
+hence with the same normalisation $N(q)$ as in (i) the limit is the Schwarzian $3j$-symbol
+$\Gamma(\ell\pm ik_1\pm ik_2)/\Gamma(2\ell)$ [this is SI (4.20), sharpened to an identity].
+\item \emph{Opposite edges, discrete:} the ratio
+$\K^{\O}_{q}(\theta^{L}_{q}(k_1),\theta^{U}_{q}(k_2))\,/\,
+ \K^{\O}_{q}(\theta^{L}_{q}(k_1),\theta^{L}_{q}(k_2))\longrightarrow 0$:
+ordinary (discrete-series) matter does \emph{not} connect the two edges.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+$\theta^{L}_{q}(k)$ gives $e^{i\theta^{L}_{q}(k)}=-q^{2ik}$ and $\theta^{U}_{q}(k)$ gives
+$e^{i\theta^{U}_{q}(k)}=q^{-2ik}$. (iii) is then Lemma~\ref{lem:reflection} evaluated at
+$\pi-\theta^{U}_{q}(k_2)=\theta^{L}_{q}(k_2)$ --- the reflection is exact, no limit needed ---
+combined with (i). For (i): each denominator factor is
+$(q^{2(\ell\pm ik_1\pm ik_2)};q^{2})_{\infty}$, and
+$(q^{2x};q^{2})_{\infty}=(1-q^{2})^{1-x}(q^{2};q^{2})_{\infty}/\Gamma_{q^{2}}(x)$
+[SI (A.3)] with $\Gamma_{q^{2}}(x)\to\Gamma(x)$ gives the stated asymptotics; the imaginary
+parts cancel in the accumulated exponent of $(1-q^{2})$. For (ii) and (iv): by
+Lemma~\ref{lem:reflection} the two ratios are equal, so it suffices to prove (iv). By (i)'s
+factorisation, the ratio in (iv) is
+$\prod_{\pm\pm}(q^{2(\ell\pm ik_1\pm ik_2)};q^{2})_{\infty}
+/\prod_{\pm\pm}(-q^{2(\ell\pm ik_1\pm ik_2)};q^{2})_{\infty}$.
+For fixed $x$ with $\mathrm{Re}\,x=\ell>0$,
+$\bigl|(-q^{2x};q^{2})_{\infty}\bigr|=\prod_{n\ge0}\bigl|1+q^{2x+2n}\bigr|
+\ge\prod_{0\le n\le N(q)}\bigl(1+\tfrac12 q^{2\ell}\bigr)\to\infty$
+as $q\to1$, where $N(q)\coloneqq\lfloor |2\ln q|^{-1}\ln 2\rfloor\to\infty$ counts the factors
+with $q^{2n}\ge\tfrac12$ (and $|1+q^{2x+2n}|\ge 1+\cos(2k\ln q\cdots)q^{2\ell+2n}\ge
+1-q^{2\ell+2n}>0$ keeps all other factors bounded below away from $0$ uniformly in $q$ near
+$1$; the phases $q^{\pm2ik_i}\to1$), while the numerator tends to the finite nonzero limit
+$(1-q^2)$-renormalised in (i). A cleaner route to the same conclusion: the ratio equals
+$\prod_{\pm\pm}\Gamma_{q^{2}}(\tfrac{i\pi}{2\ln q}+\ell\pm ik_1\pm ik_2)
+/\Gamma_{q^{2}}(\ell\pm ik_1\pm ik_2)^{\vphantom{1}}$ up to a phase, and the half-period-shifted
+$q$-gamma tends to $0$; the elementary product bound above is verified numerically in
+\texttt{src/check\_claim\_kernels.py} (output \texttt{results/check\_claim\_kernels.out}: the
+ratio falls to $10^{-21419}$ by $q=0.9999$, the renormalised mixed-edge strange kernel agrees
+with $\Gamma(\ell\pm ik_1\pm ik_2)/\Gamma(2\ell)$ to $4.7\times10^{-4}$ relative at $q=0.9999$,
+and the reflection identity holds to better than $9\times10^{-37}$ relative at all sampled $q$),
+with further scans in issue~\#10. \emph{Note}: SI's printed (4.19) writes the shift as $i\pi/\ln q$ (the full period of
+$\Gamma_{q^{2}}$, which would \emph{not} vanish); consistency with their own (4.18) and \S4.3
+text requires $i\pi/(2\ln q)$; see \texttt{lit/notes/2512.10101.md} \S7.
+\end{proof}
+
+\subsection{Formalisations of the claim}
+\label{sec:formalisations}
+
+The informal claim admits inequivalent formalisations. We state all that we will use, from
+weakest to strongest, and identify which one this project attacks.
+
+\begin{claim}[C-amp: non-vanishing AdS$\leftrightarrow$dS amplitude; SI's literal claim]
+\label{claim:camp}
+Assume Definition~\ref{def:ds}(a) (edge-dS). Then the strange-series bilocals
+$\mathcal{S}^{\ell}$, $\ell\in\tfrac12\Z_{>0}$, have equal-time overlap kernels between the AdS
+region and the dS region with finite non-zero $q\to1$ limit (after the normalisation $N(q)$ that
+renders the discrete-series AdS kernel finite), given by the Schwarzian $3j$-symbol; their
+AdS$\leftrightarrow$AdS kernels vanish in the same normalisation; and for the discrete-series
+bilocals the situation is reversed. \emph{Status:} \DERIVED\ --- this is
+Proposition~\ref{prop:limits}\,(ii)--(iv), conditional \emph{only} on the meaning of ``dS''.
+\end{claim}
+
+\begin{claim}[C-geo: geometric interpolation; the open claim this project attacks]
+\label{claim:cgeo}
+There exists a radial Casimir problem on the quantum homogeneous space carrying the DSSYK
+dynamics (issues \#5--\#7) --- a second-order $q$-difference operator in an invariant coordinate,
+with an effective potential depending on the representation label --- together with a criterion,
+fixed in advance (issue \#8), for when such a radial problem is of AdS$_2$ type and when of
+dS$_2$ type; and under this criterion the strange series realises the dS$_2$ type, or crosses
+from one type to the other as its label varies, while the representations with classical
+analogues realise the AdS$_2$ type. \emph{Status:} \CONJ\ --- this is the precise reading of
+``genuinely interpolate''; nothing in \cite{Schouten:2025dssyk} proves or refutes it, and the
+authors call the interpretation of the amplitude ``currently unknown''.
+\end{claim}
+
+\begin{remark}[what would settle the question]\label{rem:settle}
+Claim~\ref{claim:camp} is settled (Proposition~\ref{prop:limits}), \emph{given} its
+conditionality; what remains open in it is exactly its hypothesis, Definition~\ref{def:ds}(a).
+Claim~\ref{claim:cgeo} is open and falsifiable: computing the radial Casimir operator on the
+space fixed in issue \#5, restricted to the strange series (issues \#6--\#7), and evaluating the
+issue-\#8 criterion on it, either exhibits the AdS$\to$dS crossing (proving
+Claim~\ref{claim:cgeo}), or exhibits an obstruction (refuting it). A specialist can check either
+outcome against Sections \ref{sec:space}--\ref{sec:criterion}.
+\end{remark}
+
+\begin{remark}[dS-identification dependence]\label{rem:dsdependence}
+\ARGUED\ Claim~\ref{claim:camp} is \emph{not} robust against replacing
+Definition~\ref{def:ds}(a) by (b). At $\theta_2=\pi/2$ the four denominator arguments of
+$\K^{\mathcal{S}}_{q}(\theta^{L}_{q}(k_1),\pi/2)$ tend to $\pm i$, and the standard asymptotics
+$\ln(u;q^{2})_{\infty}\sim-\mathrm{Li}_2(u)/|\ln q^{2}|$ gives
+\[
+\K^{\mathcal{S}}_{q}(\theta^{L}_{q}(k_1),\pi/2)\,/\,
+\K^{\O}_{q}(\theta^{L}_{q}(k_1),\theta^{L}_{q}(k_2))
+\;\sim\;\exp\!\Bigl(-\frac{3\pi^{2}}{4\,|\ln q^{2}|}\Bigr)\longrightarrow 0
+\]
+(using $\mathrm{Li}_2(i)+\mathrm{Li}_2(-i)=-\pi^{2}/24$, $\mathrm{Li}_2(1)=\pi^{2}/6$):
+the strange amplitude between the AdS edge and the band centre is exponentially small in the
+same normalisation in which the edge-to-edge amplitude is finite. Numerical check (issue \#10
+scans pending): the ratio is $5.6\times10^{-11}$ at $q=0.9$, $1.8\times10^{-153}$ at $q=0.99$,
+$1.3\times10^{-313}$ at $q=0.995$; the measured rate $|\ln q^{2}|\cdot\ln(\mathrm{ratio})$ is
+$-4.97,\,-7.07,\,-7.22$ against the predicted $-3\pi^{2}/4=-7.40$ (subleading corrections are
+$O(|\ln q^{2}|\ln|\ln q^{2}|)$ in the exponent). So if the centre-dS identification
+(b) is the correct one, the strange series does \emph{not} connect AdS to dS in the amplitude
+sense --- the claim's truth value depends on which dS proposal one adopts. This
+criterion-sensitivity is exactly the situation flagged in issue \#8 (``if the criterion is
+ambiguous, that is itself the finding''); the quantitative treatment belongs to \#8/\#11.
+\end{remark}
+
+\begin{remark}[discreteness of the strange family]\label{rem:discreteness}
+``Interpolate'' suggests a continuous deformation. Three parameters could supply it:
+(1) the abstract strange label $a>0$, continuous in the classification
+(Convention~\ref{conv:series}) but \emph{discrete} ($a\in\tfrac12\Z_{>0}$) in the Plancherel
+decomposition of the regular representation (Convention~\ref{conv:plancherel}) --- and the
+bilocal construction of SI uses $\ell\in\tfrac12\Z_{>0}$ because integer powers of the spherical
+element are what exists in the coordinate algebra (their footnote on the universal cover for
+continuous weights applies here too);
+(2) the spectral parameter $\theta$ (continuous; this is the parameter in
+Claim~\ref{claim:camp});
+(3) the radial coordinate of the homogeneous space (continuous $q$-lattice; this is the
+parameter in Claim~\ref{claim:cgeo}).
+Any proof or refutation of Claim~\ref{claim:cgeo} must say against which parameter the
+``crossing'' happens; a formalisation in which no continuous parameter crosses anything is not
+an interpolation statement but a two-point statement, and must be reported as such.
+\end{remark}
+
+\begin{remark}[degenerate readings, excluded]\label{rem:degenerate}
+Two readings are excluded as contentless. (a) ``The strange series are the negative-$\tCas$
+counterparts of the discrete series'' is true by construction (Convention~\ref{conv:series});
+without an independent geometric criterion it says nothing about AdS or dS. (b) Given
+Definition~\ref{def:ds}(a) and Proposition~\ref{prop:limits}, calling the non-zero mixed-edge
+kernel ``interpolation'' is definitionally true; the content resides in the hypothesis (a) and in
+the \emph{selectivity} of the property --- among the bilocal families computed so far (discrete,
+strange) exactly the strange one connects the edges. Whether the selectivity survives the
+inclusion of principal-series bilocals is, to our knowledge, not computed anywhere; we record it
+as an open sub-question for issue \#6.
+\end{remark}
+
+\subsection{What the paper proves and what it argues}
+\label{sec:provedvsargued}
+
+From the quotation ledger (\texttt{lit/notes/2512.10101.md} \S3, \S6): the operator-algebraic
+framework and the DSSYK reduction are derivations resting on published rigorous mathematics
+(Koelink--Kustermans, GKK); the strange-series kernels (4.19)--(4.20) are short derivations
+(re-derived above with two typos noted); the dS identification is an external
+\emph{proposal}; the interpolation language is the authors' gloss, explicitly conditional and
+explicitly left uninterpreted (``It is currently unknown what the correct physics interpretation
+of such an amplitude would be''); the classical-normaliser matrix elements are uncomputed
+(their \S2.3 footnote), and the semigroup-Plancherel status is open (their \S2.3 footnote).
+The project's target is Claim~\ref{claim:cgeo}; Claim~\ref{claim:camp} is its settled base
+point.
 
 \section{Conventions}
 \label{sec:conventions}

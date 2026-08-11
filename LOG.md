@@ -73,3 +73,51 @@ Carried forward (flagged for issues #4 and #8, per coordinator note):
 2. The strange series enters the Plancherel formula only at discrete labels a ∈ ½Z_{>0}, while
    "interpolates" is prima facie a continuous notion; #4 must confront whether a discretely
    indexed family can interpolate at all.
+
+## 2026-08-11 — issue #4: formalising the claim
+
+Wrote `lit/notes/2512.10101.md` (verbatim quotation ledger with locations, proved-vs-argued
+split, conventions map, and a list of suspected typos in v2) and Section 1 of `tex/main.tex`.
+
+Structure of the formalisation:
+- Definitions 1.1–1.3 fix the edge regimes, the AdS region (lower edge; uncontroversial), and
+  the two rival dS identifications (edge-dS of arXiv:2411.16922/2505.08116, used by the paper;
+  centre-dS of arXiv:2310.16994).
+- Lemma (q-Mehler form): both bilocal kernels are q-Mehler kernels; the strange one at
+  t = -q^{2l}, i.e. strange matter = alternating chord weights (-1)^k q^{2kl}. DERIVED.
+- Lemma (reflection identity): K^S(th1,th2) = K^O(th1, pi-th2) EXACTLY at finite q — the strange
+  kernel is the discrete kernel with one spectral argument reflected through E -> -E. This
+  sharpens the paper's two q->1 statements (4.19)/(4.20) into one finite-q identity. DERIVED.
+- Proposition (limits): the paper's (4.19)/(4.20) re-derived as normalisation-free ratio
+  statements; (4.20) upgraded to an exact identity K^S(L(k1),U(k2)) = K^O(L(k1),L(k2)).
+  Also the converse (iv): discrete-series matter does NOT connect opposite edges. DERIVED;
+  numerics in `src/check_claim_kernels.py`.
+- Claim C-amp (the paper's literal claim): settled by the Proposition, conditional ONLY on the
+  edge-dS identification. Claim C-geo (geometric interpolation via the radial Casimir problem,
+  what "genuinely interpolate" ought to mean): CONJECTURED, open — the project's target.
+- Remarks: dS-identification sensitivity (under centre-dS the amplitude argument does not go
+  through as stated — quantitative version deferred to #8/#11); the discreteness tension (which
+  continuous parameter is supposed to cross: abstract label a — discrete in the Plancherel
+  decomposition; spectral parameter theta; radial coordinate); two degenerate readings excluded
+  as contentless; open sub-question flagged for #6 (principal-series bilocals' mixed-edge
+  kernels — not computed anywhere we know of, needed for the selectivity statement).
+
+Suspected typos found in v2 while re-deriving (recorded in the lit note §7): the Gamma_{q^2}
+shift in (4.19) should be i pi/(2 ln q), not i pi/ln q (the full period, which would not vanish);
+mechanism unaffected.
+
+Numerics record for #4 (failures included, per CONTRIBUTING.md §5):
+- First run of `check_claim_kernels.py`: 6 of 36 K1 checks FAILED at q=0.9 (deviations up to
+  2.5e-18). Diagnosis: the (a;q)_inf implementation capped its product at a dps-independent
+  number of terms; the truncated tail contributed relative error ~1e-25, amplified by kernel
+  values ~1e7. Fixed by scaling the term count with working precision; all K1 checks then pass
+  (deviations < 6e-33).
+- The reflection-identity check near q=1 was first written with an absolute tolerance while the
+  unrenormalised kernels grow beyond 1e+10000; rewritten as a relative deviation (now < 4e-38 at
+  all sampled q).
+- The first version of the dS-centre remark (Remark on dS-identification dependence) argued the
+  wrong direction: a sign error in the ln(u;q^2)_inf ~ -Li_2(u)/|ln q^2| asymptotics suggested
+  the AdS<->centre strange amplitude diverges; direct computation shows it VANISHES like
+  exp(-3pi^2/(4|ln q^2|)) (measured rates -4.97/-7.07/-7.22 at q=0.9/0.99/0.995 vs predicted
+  -7.40). The remark in tex/main.tex states the corrected version with the measured numbers.
+  Conclusion unchanged: under the centre-dS identification the amplitude argument fails.

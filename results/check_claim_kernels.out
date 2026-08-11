@@ -1,0 +1,52 @@
+check_claim_kernels.py -- issue #4 kernel checks (mpmath, 40 digits)
+==============================================================================
+[PASS] q=0.60 l=0.5 th=(0.70,2.10) K1 discrete (chord sum = closed form): dev=2.58e-41
+[PASS] q=0.60 l=0.5 th=(0.70,2.10) K1 strange  (chord sum = closed form): dev=7.35e-40
+[PASS] q=0.60 l=0.5 th=(0.70,2.10) K2 reflection K^S(th1,th2)=K^O(th1,pi-th2): dev=1.38e-40
+[PASS] q=0.60 l=0.5 th=(2.90,0.30) K1 discrete (chord sum = closed form): dev=1.5e-40
+[PASS] q=0.60 l=0.5 th=(2.90,0.30) K1 strange  (chord sum = closed form): dev=1.48e-39
+[PASS] q=0.60 l=0.5 th=(2.90,0.30) K2 reflection K^S(th1,th2)=K^O(th1,pi-th2): dev=1.47e-40
+[PASS] q=0.60 l=1.0 th=(0.70,2.10) K1 discrete (chord sum = closed form): dev=2.87e-41
+[PASS] q=0.60 l=1.0 th=(0.70,2.10) K1 strange  (chord sum = closed form): dev=6.89e-41
+[PASS] q=0.60 l=1.0 th=(0.70,2.10) K2 reflection K^S(th1,th2)=K^O(th1,pi-th2): dev=6.89e-41
+[PASS] q=0.60 l=1.0 th=(2.90,0.30) K1 discrete (chord sum = closed form): dev=7.89e-41
+[PASS] q=0.60 l=1.0 th=(2.90,0.30) K1 strange  (chord sum = closed form): dev=1.1e-39
+[PASS] q=0.60 l=1.0 th=(2.90,0.30) K2 reflection K^S(th1,th2)=K^O(th1,pi-th2): dev=3.67e-40
+[PASS] q=0.60 l=2.0 th=(0.70,2.10) K1 discrete (chord sum = closed form): dev=1.15e-40
+[PASS] q=0.60 l=2.0 th=(0.70,2.10) K1 strange  (chord sum = closed form): dev=2.53e-40
+[PASS] q=0.60 l=2.0 th=(0.70,2.10) K2 reflection K^S(th1,th2)=K^O(th1,pi-th2): dev=2.25e-42
+[PASS] q=0.60 l=2.0 th=(2.90,0.30) K1 discrete (chord sum = closed form): dev=1.43e-40
+[PASS] q=0.60 l=2.0 th=(2.90,0.30) K1 strange  (chord sum = closed form): dev=4.13e-40
+[PASS] q=0.60 l=2.0 th=(2.90,0.30) K2 reflection K^S(th1,th2)=K^O(th1,pi-th2): dev=1.5e-42
+[PASS] q=0.90 l=0.5 th=(0.70,2.10) K1 discrete (chord sum = closed form): dev=5.02e-40
+[PASS] q=0.90 l=0.5 th=(0.70,2.10) K1 strange  (chord sum = closed form): dev=5.79e-39
+[PASS] q=0.90 l=0.5 th=(0.70,2.10) K2 reflection K^S(th1,th2)=K^O(th1,pi-th2): dev=2.11e-39
+[PASS] q=0.90 l=0.5 th=(2.90,0.30) K1 discrete (chord sum = closed form): dev=3.42e-35
+[PASS] q=0.90 l=0.5 th=(2.90,0.30) K1 strange  (chord sum = closed form): dev=1.54e-33
+[PASS] q=0.90 l=0.5 th=(2.90,0.30) K2 reflection K^S(th1,th2)=K^O(th1,pi-th2): dev=4.24e-33
+[PASS] q=0.90 l=1.0 th=(0.70,2.10) K1 discrete (chord sum = closed form): dev=2.57e-40
+[PASS] q=0.90 l=1.0 th=(0.70,2.10) K1 strange  (chord sum = closed form): dev=3.12e-39
+[PASS] q=0.90 l=1.0 th=(0.70,2.10) K2 reflection K^S(th1,th2)=K^O(th1,pi-th2): dev=2.76e-39
+[PASS] q=0.90 l=1.0 th=(2.90,0.30) K1 discrete (chord sum = closed form): dev=9.67e-38
+[PASS] q=0.90 l=1.0 th=(2.90,0.30) K1 strange  (chord sum = closed form): dev=2.74e-33
+[PASS] q=0.90 l=1.0 th=(2.90,0.30) K2 reflection K^S(th1,th2)=K^O(th1,pi-th2): dev=5.78e-34
+[PASS] q=0.90 l=2.0 th=(0.70,2.10) K1 discrete (chord sum = closed form): dev=2.53e-40
+[PASS] q=0.90 l=2.0 th=(0.70,2.10) K1 strange  (chord sum = closed form): dev=3.67e-39
+[PASS] q=0.90 l=2.0 th=(0.70,2.10) K2 reflection K^S(th1,th2)=K^O(th1,pi-th2): dev=3.31e-39
+[PASS] q=0.90 l=2.0 th=(2.90,0.30) K1 discrete (chord sum = closed form): dev=6.92e-37
+[PASS] q=0.90 l=2.0 th=(2.90,0.30) K1 strange  (chord sum = closed form): dev=6.02e-35
+[PASS] q=0.90 l=2.0 th=(2.90,0.30) K2 reflection K^S(th1,th2)=K^O(th1,pi-th2): dev=3.02e-35
+
+  target Gamma(l+-ik1+-ik2)/Gamma(2l) = (0.0122844714332 - 3.56431547614e-44j)  (l=1, k1=0.8, k2=1.3)
+         q |    ratio (ii)=(iv) ->0 |    renorm K^S(L,U) -> target |    renorm K^O(L,L) -> target
+       0.9 |            1.29687e-15 | (0.01989922792 + 9.304963939e-44j) | (0.01989922792 + 6.228006627e-44j)   [rel |K^S(L,U)-K^O(L,L)| = 3.11e-40]
+      0.99 |           1.82059e-206 | (0.01287248507 + 5.59417556e-44j) | (0.01287248507 - 6.048092199e-45j)   [rel |K^S(L,U)-K^O(L,L)| = 8.18e-39]
+     0.999 |          2.63609e-2133 | (0.01234186984 + 1.780267447e-44j) | (0.01234186984 + 1.461530286e-44j)   [rel |K^S(L,U)-K^O(L,L)| = 3.17e-38]
+    0.9999 |         1.01136e-21419 | (0.01229019752 - 3.715963212e-44j) | (0.01229019752 + 6.105937465e-44j)   [rel |K^S(L,U)-K^O(L,L)| = 8.96e-37]
+
+  at q=0.9999: |ratio (ii)| = 1.011e-21419 (must be < 1e-3): PASS
+  relative deviation of renormalised K^S(L,U) from Gamma-target: 0.0004661 (must be < 2e-2): PASS
+  relative deviation of renormalised K^O(L,L) from Gamma-target: 0.0004661 (must be < 2e-2): PASS
+
+ALL CHECKS PASSED
+EXIT=0
