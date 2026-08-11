@@ -1,0 +1,74 @@
+check_radial_casimir.py -- issue #7 (mpmath)
+==============================================================================
+(R0) identity 2phi1(0,0;C;q,Z)*(C;q)_inf*(Z;q)_inf == 1phi1(Z;0;q,C)
+  [PASS] q=0.36, C=0.2, Z=0.85: rel dev = 1.63e-60
+  [PASS] q=0.36, C=0.2, Z=-0.95: rel dev = 1.53e-60
+  [PASS] q=0.81, C=0.5, Z=-0.6: rel dev = 8.15e-58
+  [PASS] q=0.49, C=0.07, Z=(0.0 + 0.8j): rel dev = 2.82e-61
+
+(R1) slice reduction of SI (4.25); symmetry w.r.t. SI (4.24); orthonormalised Jacobi form; chord wall at c>0
+  [PASS] q=0.6: (4.25) -> slice form Omtilde f_m = (q/2) f_(m+1) + (1-c q^2m)/(2q) f_(m-1), max dev = 2.91e-61
+  [PASS]            symmetry <Omtilde f,g>_w == <f,Omtilde g>_w (c=-q^2), rel dev = 2.26e-61
+  [PASS]            orthonormal a_m == (1/2)sqrt(1-c q^(2m+2)), max dev = 6.22e-61
+  [PASS]            c=q^4>0: w_m=0 below wall m0=-2; J == chord transfer matrix, max dev = 0.0
+  [PASS] q=0.85: (4.25) -> slice form Omtilde f_m = (q/2) f_(m+1) + (1-c q^2m)/(2q) f_(m-1), max dev = 1.58e-60
+  [PASS]            symmetry <Omtilde f,g>_w == <f,Omtilde g>_w (c=-q^2), rel dev = 8.36e-62
+  [PASS]            orthonormal a_m == (1/2)sqrt(1-c q^(2m+2)), max dev = 6.22e-61
+  [PASS]            c=q^4>0: w_m=0 below wall m0=-2; J == chord transfer matrix, max dev = 3.89e-62
+
+(R2) classical limit (orthonormal gauge): h^J_q := 2(J_c-1)/lambda^2 -> (1/4) d_phi^2 - p p_R e^(-2 phi); rate O(lambda^2)
+  [PASS] p_R=1.0: dev(lam)= 0.0143/0.00302/0.0007 at lam=0.2/0.1/0.05; ratios 4.754, 4.306 (predicted -> 4)
+  [PASS] p_R=-1.0: dev(lam)= 0.0306/0.00713/0.00171 at lam=0.2/0.1/0.05; ratios 4.289, 4.166 (predicted -> 4)
+  eigenfunction check, wall side: h^J_q P / P -> -s^2, s = 0.7
+    lam=0.2: h^J_q P / P = -0.49388597 (target -0.49), |dev| = 0.00389
+    lam=0.1: h^J_q P / P = -0.49079618 (target -0.49), |dev| = 0.000796
+    lam=0.05: h^J_q P / P = -0.49018001 (target -0.49), |dev| = 0.00018
+  [PASS] eigenvalue deviation ratios 4.881, 4.423 (predicted -> 4)
+  [PASS] twisted-sector identity -(Omtilde+1) o Pi == Pi o (Omtilde-1) exactly, max dev = 0.0
+
+(R3) closed form c_m(sigma) on the c<0 wedge: recurrence at m<=0 and match with downward recursion
+  [PASS] q=0.6, gamma=1.0, sigma=0.55: recurrence m=-8..3, max rel dev = 9.57e-159
+  [PASS]            downward recursion == closed form at m=-8, rel dev = 3.55e-160
+  [PASS] q=0.6, gamma=1.0, sigma=-0.4: recurrence m=-8..3, max rel dev = 2.77e-159
+  [PASS]            downward recursion == closed form at m=-8, rel dev = 8.96e-161
+  [PASS] q=0.75, gamma=0.5625, sigma=0.3: recurrence m=-8..3, max rel dev = 7.94e-160
+  [PASS]            downward recursion == closed form at m=-8, rel dev = 1.52e-161
+
+(R4) c<0 wedge, growth end m -> -inf: BOTH solutions have |g_m| ~ q^{|m|/2} (limit circle; deficiency indices (1,1))
+  [PASS] q=0.6, gamma=1, omega=-mu(0.45) (strange-type): slopes of ln_q|g_m| vs |m| = 0.500008, 0.500008 (predicted 0.5, tol 0.0018); independent (|W|=3.81e-6)
+  [PASS] q=0.6, gamma=1, omega=i (deficiency): slopes of ln_q|g_m| vs |m| = 0.499989, 0.499989 (predicted 0.5, tol 0.0018); independent (|W|=1.1e-6)
+  free end: |sigma(i)| = 0.414214 < 1; the second solution grows like |sigma|^-m: exactly one l^2 solution at +inf. Together with the limit-circle growth end: deficiency indices (1,1).
+
+(R5) extension dependence (limit-circle signature): out-of-band eigenvalues of Dirichlet vs Neumann truncation at m=-M
+  [PASS] M=8: 4 Dirichlet eigenvalues in 1.02<|E|<3; nearest-Neumann gaps in [0.113, 0.843] (do not shrink with M)
+  [PASS] M=12: 4 Dirichlet eigenvalues in 1.02<|E|<3; nearest-Neumann gaps in [0.111, 0.78] (do not shrink with M)
+  [PASS] M=16: 4 Dirichlet eigenvalues in 1.02<|E|<3; nearest-Neumann gaps in [0.11, 0.772] (do not shrink with M)
+  [PASS] control, c>0 chord wedge (n=40): out-of-band eigenvalue count D/N = 0/0 (predicted 0/0)
+
+(R6) point spectrum of the extension through omega_0 = -mu(q^(2a0)), gamma=1 slice: two bilateral q^2-grids with root product in -q^(2Z)
+  [PASS] a0=1/2: |h(-mu(q^3)   [strange grid])| = 7.75e-42  (== 0 predicted)
+  [PASS] a0=1/2: |h(-mu(q^5)   [strange grid])| = 1.32e-41  (== 0 predicted)
+  [PASS] a0=1/2: |h(+mu(q^1)   [partner grid])| = 1.36e-41  (== 0 predicted)
+  [PASS] a0=1/2: |h(+mu(q^3)   [partner grid])| = 7.75e-42  (== 0 predicted)
+  [PASS] a0=1/2: |h(-mu(q^2.6) [off-grid control])| = 0.209  (nonzero predicted)
+  [PASS] a0=1/2: |h(+mu(q^2)   [off-grid control])| = 0.0966  (nonzero predicted)
+  [PASS] a0=0.37: |h(-mu(q^(2a0+2))  [strange grid])| = 5.75e-42  (== 0 predicted)
+  [PASS] a0=0.37: |h(+mu(q^(2-2a0))  [partner grid])| = 1.25e-41  (== 0 predicted)
+  [PASS] a0=0.37: |h(+mu(q^(4-2a0))  [partner grid])| = 6.65e-42  (== 0 predicted)
+  [PASS] a0=0.37: |h(+mu(q^(2a0))    [mirror: control])| = 0.0428  (nonzero predicted)
+  [PASS] a0=0.37: |h(+mu(q^(2a0+2))  [mirror: control])| = 0.0631  (nonzero predicted)
+  => the extension through -mu(q^(2a0)) is Pi-invariant iff 2a0 in Z: at a0=1/2 the spectrum is {±mu(q^(1+2Z))} (fusion pairing a = l - 1/2); at a0=0.37 the mirror points are absent.
+  [PASS] cutoff independence: |h| at Mlo=-145 vs -185: 2.85e-33 vs 1.36e-41
+
+(R7) q->1: the grids persist near q=1 and the lower-edge tower 2(1-mu(q^(2a_j)))/lambda^2 -> -(a0+j)^2 (classical discrete series of the p p_R<0 well); the mirror grid is expelled like -4/lambda^2
+  [PASS] q=0.9: |h(-mu(q^3) [strange grid])| = 1.26e-34
+  [PASS] q=0.9: |h(+mu(q^1) [partner grid])| = 3.07e-24
+  [PASS] q=0.9: |h(-mu(q^2.3) [control])| = 0.401
+  lower-edge energies 2(1-mu(q^(2a)))/lambda^2 at a = a0+j:
+    q=0.9: deviations from -(a0+j)^2, j=0,1,2: -0.000231, -0.0188, -0.146
+    q=0.99: deviations from -(a0+j)^2, j=0,1,2: -2.1e-6, -0.00017, -0.00132
+  [PASS] deviation rate (q=0.9)/(q=0.99) = 109.9 (predicted ~ (lam_1/lam_2)^2 = 109.9)
+    mirror point +mu(q) at q=0.9: lower-edge energy 2(1+mu)/lambda^2 = 90.3335 ~ 4/lambda^2 = 90.0833 -> infinity
+    mirror point +mu(q) at q=0.99: lower-edge energy 2(1+mu)/lambda^2 = 9900.33 ~ 4/lambda^2 = 9900.08 -> infinity
+
+ALL CHECKS PASSED
