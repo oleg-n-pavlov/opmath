@@ -121,3 +121,28 @@ Numerics record for #4 (failures included, per CONTRIBUTING.md §5):
   exp(-3pi^2/(4|ln q^2|)) (measured rates -4.97/-7.07/-7.22 at q=0.9/0.99/0.995 vs predicted
   -7.40). The remark in tex/main.tex states the corrected version with the measured numbers.
   Conclusion unchanged: under the centre-dS identification the amplitude argument fails.
+
+## 2026-08-11 — issue #5: the quantum homogeneous space
+
+Section 3 of `tex/main.tex`; CONVENTIONS.md §7 updated to the fixed choice.
+
+The DSSYK space is the twisted-primitive ("(s,t)-Gauss") double quotient of SU_q(1,1)⋊Z_2 with
+invariant algebra ⟨ρ_st, e⟩ (SI (3.47)-(3.48)), in the rescaled regime: two-sided version = the
+chord sector at ε=-1 (SI (4.1)-(4.5)); one-sided version = SI's reduced quantum AdS_{2,q}, the
+restricted q-lattice R²_{q²}(ξ) (4.22) with the q-exponential-weighted inner product (4.24),
+Casimir action (4.25) (the radial-type q-difference operator), classical coordinates (4.30).
+Excluded with sources: the quantum disk (Cartan quotient; SI §5 verbatim: "distinct from the
+DSSYK coset considered in this paper") and the quantum hyperboloid (occurs in no source's DSSYK
+reduction). Recorded SI's own caveat that the position-space picture rests on an *assumed*
+q-Fourier transform (their §4.4 "is currently not available to us") — we stay on the momentum
+lattice; a gap issue is required if any later step needs position space.
+
+Sharpest content: where the strange series lives. PROVED (elementary, via the determinate
+q²-Hermite moment problem / bounded Jacobi operator): the chord-sector state decomposition is
+purely principal (a.c. spectrum [-1,1], multiplicity one) — the strange series does NOT occur as
+states of the DSSYK sector. It occurs (GKK, quoted) as discrete summands of L²_q(SU(1,1)⋊Z_2)
+in the sectors (+,-),(-,+),(+,+), and acts on the chord sector through the bilocals. Consequence
+recorded for #6-#8: the radial problem is the same q-difference operator for every series;
+series membership enters only through the spectral value Ω̃ (strange ⇔ Ω̃ < -1, below the
+principal band). Any interpolation mechanism through strange *states* of the transfer matrix is
+excluded.

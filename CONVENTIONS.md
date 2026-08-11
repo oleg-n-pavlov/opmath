@@ -167,9 +167,22 @@ quantum *semigroup* split-offs, "the mathematical status of the corresponding Pl
 theory is not clear to us" [SI §5]; any use of Plancherel theory beyond GKK's theorems must be
 declared as an assumption (CONTRIBUTING.md §2, PROBLEM.md §2).
 
-## 7. Quantum homogeneous space objects (final choice deferred to issue #5)
+## 7. Quantum homogeneous space objects (choice fixed by issue #5)
 
-Objects defined by SI that any choice must reproduce:
+**The DSSYK space is the twisted-primitive double quotient** `(Y_s)\G_q/(Y_t)` of
+`G_q = SU_q(1,1)⋊Z_2` (invariant algebra `⟨ρ_st, e⟩`, SI (3.47)-(3.48)), in the rescaled
+regime SI (4.2): two-sided version = the chord sector (SI (4.1), (4.5)); one-sided version =
+SI's reduced quantum AdS_{2,q}, the restricted q-lattice `R²_{q²}(ξ)` (SI (4.22)) with inner
+product (4.24), Casimir action (4.25), classical coordinates (4.30). NOT the quantum disk
+(Cartan quotient — SI §5 call it "distinct from the DSSYK coset considered in this paper"),
+NOT the quantum hyperboloid. The radial coordinate is `y` (equivalently `φ`, `e^φ = ½y^{-½}`).
+Everything is defined on the momentum-space lattice; the position picture would need SI's
+assumed q-Fourier transform (their §4.4) and is not used here. On the chord sector the state
+decomposition is principal-only (tex/main.tex, Prop. on chord-sector states); the strange
+series enters as bilocal operators and as summands of L²_q(G_q) (GKK sectors). See
+tex/main.tex §3.
+
+Objects defined by SI (any construction must reproduce these):
 
 - Representation space of the normaliser coordinate algebra: `L²_{q^2}(I_{q^2})`,
   `I_q = (-∞,-1)_q ∪ [0,∞)_q`, position operator `e γ*γ` [SI §3.1, eq. (3.18), label `eq:repsNormalizer`].
