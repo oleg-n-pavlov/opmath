@@ -14,10 +14,7 @@ tex/*.snm
 tex/*.vrb
 !results/*.out
 
-# Deliberate choice (issue #3, coordinator note): the compiled PDF is NOT tracked during
-# development to avoid a large binary diff on every commit; issue #12 will remove this line and
-# commit the final PDF, as its acceptance criteria require.
-tex/main.pdf
+# The final compiled PDF is tracked (issue #12); rebuild artefacts above stay ignored.
 
 # Python
 __pycache__/

@@ -589,3 +589,24 @@ arXiv metadata: Jeremy van der Heijden).
   non-DSSYK Cartan quotient. CONSISTENT; no shared strange quantity.
 - Summary: no contradictions; two convergences (strange-range towers in the q-Askey
   deformations; three independent structures at the band centre).
+
+## 2026-08-11 — issue #12: final write-up; the document now compiles
+
+- The mathtools blocker resolved: the package is genuinely absent from the local TeX Live;
+  replaced by an \IfFileExists fallback defining \coloneqq/\eqqcolon — the document now
+  builds locally: 33 pages, zero unresolved citations/references (the only warnings are
+  harmless small-caps-italic font fallbacks). tex/main.pdf committed; .gitignore updated
+  as issue #12 required. bibtex surfaced a missing author field in
+  Blommaert:2024sinedilaton — filled and verified against arXiv metadata
+  (Blommaert–Mertens–Papalini).
+- Section 8 (conclusion): the verdict restated; the independently-usable results listed
+  for a reader of arXiv:2512.10101; the open gaps ordered by estimated proximity with the
+  technique each plausibly needs (#26 and #16: finite computations transporting GKK's
+  domain condition / odd generators through the rescaling; #14: a real limit theorem for
+  the sector transforms; #13: hard, needs SI's App. C actions; the spectral-triple
+  residue: conj:residue). Audit: every GAP tag carries one of the live gap issues #14,
+  #16, #26; #13 is open work, not a gap in any argument made.
+- Abstract written last, in the required order (proved / derived / verdict / open).
+- README updated with the final status and verdict summary.
+- Decision recorded: no separate short note is written — the full document now renders
+  and is the single record; a second document would duplicate content and risk divergence.

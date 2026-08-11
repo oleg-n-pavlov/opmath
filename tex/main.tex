@@ -2,7 +2,12 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{amsmath,amssymb,amsthm}
+\IfFileExists{mathtools.sty}{\usepackage{mathtools}}{%
+  \providecommand{\coloneqq}{\mathrel{\vcenter{\baselineskip0.5ex \lineskiplimit0pt
+      \hbox{\scriptsize.}\hbox{\scriptsize.}}}=}
+  \providecommand{\eqqcolon}{=\mathrel{\vcenter{\baselineskip0.5ex \lineskiplimit0pt
+      \hbox{\scriptsize.}\hbox{\scriptsize.}}}}}
 \usepackage{bm}
 \usepackage[margin=1in]{geometry}
 \usepackage[dvipsnames]{xcolor}
@@ -57,8 +62,32 @@
 \maketitle
 
 \begin{abstract}
-Placeholder. To be written last, after the verdict is known. It must state what was proved, what
-was only derived or argued, and what was left open, in that order.
+\noindent We examine the claim of arXiv:2512.10101 that the strange series representations
+of $\Uq$ interpolate between the AdS$_2$ and dS$_2$ regions of the DSSYK bulk dual.
+\emph{Proved}: the strange bilocal is the discrete bilocal times the chord-parity unitary
+$\Pi$ implementing the normaliser $\Z_2$-grading, and its equal-time kernel is the discrete
+kernel with one spectral argument reflected through the band centre --- an exact finite-$q$
+identity; the normaliser fuses each strange representation with a discrete-series pair into
+one irreducible corepresentation ($a=\ell-\tfrac12$); the momentum-space Casimir of the
+reduced quantum AdS$_{2,q}$ splits into two radial operators --- the chord transfer matrix
+(wall) and a $q$-Liouville well with deficiency indices $(1,1)$ whose self-adjoint
+extensions each carry one discrete-type \emph{and} one strange-type eigenvalue tower,
+locked by an exact root-product rule, realising the fusion pairing at the Plancherel
+labels; and any normaliser-covariant AdS/dS criterion assigns the strange family and its
+discrete partners the same type. \emph{Derived}: the classical limits (Liouville radial
+operator, Schwarzian density of states, Bessel-$K$ wavefunctions); the strange towers
+merge into the AdS-edge discrete series as $q\to1$ while their mirrors are expelled; an
+exact edge-connectivity transition in the complex bilocal weight, crossing precisely at
+the band-centre weight; and the identification of the $\alpha<-1$ $q$-Askey bound states
+of arXiv:2605.13956 with strange-series Casimir values. \emph{Verdict}: the amplitude
+form of the claim holds conditional on the edge-dS identification (and fails under
+centre-dS); the geometric form is \emph{refuted} --- the AdS$\leftrightarrow$dS bridge the
+framework supports is the grading $\Pi$, not a migration of the strange family, whose
+towers sit on the AdS side of the spectrum. \emph{Open}: the extension selected by the
+rescaled quantum group, the grading unitary as a rescaled limit of the dual algebra, a
+rescaled Plancherel theory, the non-spherical bilocals, and a falsifiable conjecture for
+the announced spectral-triple metric. All numerical statements carry committed,
+bit-for-bit reproducible checks.
 \end{abstract}
 
 \tableofcontents
@@ -2264,7 +2293,87 @@ trap encountered ($\theta_{\mathrm{BMP}}=\pi-\theta$) is stated where used.
 
 % Issue #12. Written so that it can be forwarded to a specialist as-is.
 
-\emph{To be written under issue \#12.}
+\subsection{Verdict}
+
+The question of \cite{Schouten:2025dssyk} --- do the strange series representations
+genuinely interpolate between the AdS$_2$ and dS$_2$ regions of the DSSYK bulk dual? ---
+splits, on formalisation (Section~\ref{sec:formalisations}), into the amplitude claim
+C-amp and the geometric claim C-geo, and the verdict (Theorem~\ref{thm:verdict}) is:
+
+\begin{itemize}
+\item \emph{C-amp holds}, sharpened: at finite $q$ the strange kernel is the discrete
+kernel with one spectral argument reflected through the band centre
+(Lemma~\ref{lem:reflection}, an exact identity, not a limit), so the mixed-edge strange
+amplitude \emph{equals} the same-edge discrete amplitude; the claim is conditional only on
+the edge-dS identification, fails under centre-dS, and its selectivity refines, on the
+full complex-weight bilocal family, to an exact transition at the band-centre weight
+(Theorem~\ref{thm:transition}).
+\item \emph{C-geo is refuted}: every intrinsic criterion is normaliser-covariant and
+cannot separate the strange family from its fused discrete partners
+(Theorems \ref{thm:covobstruction}, \ref{thm:verdict}); the orientation separates them
+but places the \emph{strange} towers at the AdS edge; no quantity crosses as the label
+varies. The AdS$\leftrightarrow$dS bridge the framework supports is the normaliser
+grading $\Pi$ itself, of which the strange series is one half of an orbit.
+\end{itemize}
+
+This is outcome 3 plus outcome 2 of \texttt{PROBLEM.md} \S6: a negative result with an
+explicit obstruction, together with sharp structures --- the radial-part theory of
+Section~\ref{sec:radial} and the falsifiable residue Conjecture~\ref{conj:residue} ---
+that make the remaining question precise.
+
+\subsection{What stands independently of the verdict}
+
+For a reader of \cite{Schouten:2025dssyk}, the following are usable regardless of any
+AdS/dS position: the factorisation $\mathcal{S}^{\ell}=\O^{\ell}\Pi$ through the chord
+parity and its essential uniqueness (Proposition~\ref{prop:factorisation},
+Lemma~\ref{lem:uniqueness}); the fusion transcription with the label map $a=\ell-\tfrac12$
+(Theorem~\ref{thm:fusion}); the slice reduction of SI (4.25) to two radial operators and
+the identification of the wedge operator with Koelink's case-(1) family --- deficiency
+indices $(1,1)$, per-extension spectra on two bilateral $q^{2}$-grids with the root
+product rule \eqref{eq:productrule} and the fusion-realising $\Pi$-invariant extensions
+(Section~\ref{sec:wedge}); the closed-form radial solutions and their $q\to1$ confluences
+to Bessel $I$/$K$ through the connection formula (Theorem~\ref{thm:strangeradial},
+Proposition~\ref{prop:besselK}); the exact marginal-line identity and midpoint crossing
+(Theorem~\ref{thm:transition}); and the identification of the $\alpha<-1$ $q$-Askey
+bound-state towers of \cite{Aguilar:2026qaskey} with strange-series Casimir values
+(Remark~\ref{rem:qaskeycheck}). Two suspected misprints in
+\cite{Schouten:2025dssyk} v2 are recorded in \texttt{lit/notes/2512.10101.md} \S7 (the
+$\Gamma_{q^{2}}$ shift in (4.19), twice).
+
+\subsection{Open gaps, with the technique each plausibly needs}
+
+Ordered by estimated proximity.
+
+\begin{enumerate}
+\item \emph{Extension selection (issue \#26, \GAP{26}).} Transport GKK's
+affiliation-fixed domain condition ($u_{-k}=q^{k/2}f(q^{k})$, $f$ differentiable at $0$;
+their Thm.\ \texttt{thm:Jacobioperatorforcasec=q}) through SI's rescaling and match it to
+Koelink's $\theta$-parametrisation \cite{Koelink:2003oneparam}. Conjecturally selects the
+$\Pi$-invariant fusion extension \eqref{eq:fusionspectrum}. A finite computation with a
+clear target; does not affect the verdict either way.
+\item \emph{$\Pi$ as a rescaled limit of $\hat M_{-}$ (issue \#16, \GAP{16}).} Rescale
+the matrix elements of GKK's odd generator $U^{-+}_{0}$ in the appropriate sector and
+compare with $\Pi$ times a spectral phase (Lemma~\ref{lem:uniqueness} fixes the target up
+to that phase). Same flavour as \#26.
+\item \emph{Rescaled Plancherel theory (issue \#14, \GAP{14}).} Either prove
+strong-resolvent-type convergence of the GKK sector transforms under $r\to\infty$ with
+control of the discrete summands, or exhibit their escape --- the latter would itself
+locate ``where the strange series goes'' in the DSSYK limit. A real theorem either way;
+the wedge extension theory of Section~\ref{sec:wedge} is the natural limit object.
+\item \emph{Non-spherical bilocals (issue \#13).} The operators SI found
+``impractical'': their action must be computed from the Gauss-decomposition formulas (SI
+App.\ C) rather than from the functional calculus of $\hat\rho_{st}$. Hard by the
+authors' own account; the transition of Theorem~\ref{thm:transition} says what to expect
+of any family that is diagonal enough.
+\item \emph{The spectral-triple metric} (SI's announced programme). Conjecture
+\ref{conj:residue} states what this project predicts for it: $\Pi$-covariance on
+intrinsic data (else Claim~\ref{claim:cgeo} reopens), and edge-locality of the towers
+matching Proposition~\ref{prop:orientation}.
+\end{enumerate}
+
+Every gap-tagged statement in this document carries one of the three open \texttt{gap}
+issues \#14, \#16, \#26 above; issue \#13 is open work, not a gap in any argument made
+here; no other unproved step is load-bearing.
 
 \bibliographystyle{JHEP}
 \bibliography{refs}

@@ -35,4 +35,30 @@ Anything tagged `GAP` has a corresponding issue labelled `gap`.
 
 ## Status
 
-Not started. Work is tracked in the issue tree under the epic issue #1.
+**Verdict reached** (2026-08-11; sessions 1–4, issues #2–#27). In brief — the full
+statement, with hypotheses and epistemic tags, is `tex/main.tex` (compiles to a 30+-page
+PDF; see Sections 6 and 8 for the verdict and outlook):
+
+- **The amplitude form of the claim holds**, sharpened to an exact finite-q identity (the
+  strange kernel is the discrete kernel with one argument reflected through the band
+  centre), conditional only on the edge-dS identification of arXiv:2411.16922 /
+  arXiv:2505.08116 — and it **fails under the centre-dS identification** of
+  arXiv:2310.16994.
+- **The geometric form of the claim is refuted**: every normaliser-covariant AdS/dS
+  criterion assigns the strange family and its fused discrete partners the same type
+  (covariance obstruction, realised concretely in the radial problem); the orientation
+  datum separates them but places the *strange* towers at the AdS edge; no quantity
+  crosses as the label varies. The AdS↔dS bridge the framework supports is the
+  normaliser grading Π itself.
+- New structures along the way: the radial part of the Casimir on the reduced quantum
+  AdS_{2,q} (two operators: chord wall + q-Liouville well with deficiency indices (1,1),
+  per-extension spectra on two locked q²-grids realising the GKK fusion pairing); an
+  exact edge-connectivity transition in the bilocal weight at the band-centre image; the
+  q→1 dictionary (Schwarzian density of states, Bessel-K wavefunctions from the
+  project's own connection formula, and the precise disappearance mechanism of the
+  strange series); cross-literature identifications (q-Askey α<-1 bound states =
+  strange-range values; sine-dilaton curvature flip = band centre = transition locus).
+
+Open items, each with a live issue: #13 (non-spherical bilocals), and the `gap`-labelled
+#14 (rescaled Plancherel), #16 (Π as a rescaled limit), #26 (extension selection); #23
+(licence) awaits the repository owner. Work is tracked under the epic issue #1.
