@@ -225,6 +225,18 @@ portion is bit-identical to the previously committed file except that a trailing
 line, which the script never printed (a hand edit), is gone. The systematic
 committed-outputs policy is handled under the repository-integrity issue.
 
+## 2026-08-11 — issue #19: PROBLEM.md attribution fix
+
+PROBLEM.md §5 attributed arXiv:2511.03779 (JHEP 05(2026)080) to Jiuci Xu, contradicting
+lit/README.md (issue #2), which had already established the author as Sergio E.
+Aguilar-Gutierrez. Re-verified against the arXiv API today: sole author Aguilar-Gutierrez,
+title "Cosmological Entanglement Entropy from the von Neumann Algebra of Double-Scaled SYK
+& Its Connection with Krylov Complexity". Corrected, with the actual title spelled out.
+Also verified the van der Heijden et al. reference at PROBLEM.md §5 against arXiv:2511.08743:
+title "Quantum Symmetry and Geometry in Double-Scaled SYK" (van der Heijden, E. Verlinde,
+J. Xu) — was already correct; arXiv id added so the reference is checkable. No other
+PROBLEM.md changes.
+
 ## 2026-08-11 — issue #6: matrix coefficients of the strange series
 
 Section 4 of `tex/main.tex`. Sub-issues opened rather than solved inline: #13 (principal-series

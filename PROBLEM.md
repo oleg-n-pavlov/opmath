@@ -118,9 +118,12 @@ A result is accepted only if all of the following hold.
 - **Cross-checks against independent literature**: Askey–Wilson technology (arXiv:2605.13956,
   *q-Askey deformations of Double-Scaled SYK*), the sine-dilaton picture (arXiv:2404.03535,
   JHEP 06(2025)050), the de Sitter holography claims, the von Neumann algebra results
-  (Jiuci Xu, arXiv:2403.09021 — type II$_1$ factor; arXiv:2511.03779, JHEP 05(2026)080 —
-  entanglement entropy), and van der Heijden et al., *Quantum symmetry and geometry in
-  double-scaled SYK*, JHEP 05(2026)148.
+  (Jiuci Xu, arXiv:2403.09021 — type II$_1$ factor; Sergio E. Aguilar-Gutierrez,
+  arXiv:2511.03779, JHEP 05(2026)080 — *Cosmological Entanglement Entropy from the von
+  Neumann Algebra of Double-Scaled SYK & Its Connection with Krylov Complexity*), and van
+  der Heijden–Verlinde–Xu, *Quantum Symmetry and Geometry in Double-Scaled SYK*,
+  arXiv:2511.08743, JHEP 05(2026)148. (Attribution of 2511.03779 corrected and both titles
+  verified against the arXiv records on 2026-08-11, issue #19; see also lit/README.md.)
 
 ## 6. Admissible outcomes
 
