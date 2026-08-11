@@ -316,7 +316,9 @@ dS$_2$ type; and under this criterion the strange series realises the dS$_2$ typ
 from one type to the other as its label varies, while the representations with classical
 analogues realise the AdS$_2$ type. \emph{Status:} \CONJ\ --- this is the precise reading of
 ``genuinely interpolate''; nothing in \cite{Schouten:2025dssyk} proves or refutes it, and the
-authors call the interpretation of the amplitude ``currently unknown''.
+authors call the interpretation of the amplitude ``currently unknown''. \emph{Resolution
+(issues \#7--\#8):} refuted --- see Theorem~\ref{thm:verdict}, whose classes (I)--(III)
+exhaust the readings of this claim.
 \end{claim}
 
 \begin{remark}[what would settle the question]\label{rem:settle}
@@ -1708,7 +1710,179 @@ its explicit eigenfunctions, and its classical limits all respect.
 % Issue #8. The explicit quantity whose sign change constitutes AdS_2 -> dS_2, and whether the
 % strange series is the family that crosses it.
 
-\emph{To be written under issue \#8.}
+This section executes issue \#8 as reformulated under issue \#15
+(Remark~\ref{rem:obstructionreading}): assess the candidate criteria, construct the
+obstruction or refute it, and decide the verdict for Claim~\ref{claim:cgeo}.
+\emph{Provenance, for the acceptance requirement that the criterion not be chosen to fit the
+answer:} the candidate list below is the one fixed in issue \#8's body at project start, and
+the covariance obstruction (Theorem~\ref{thm:covobstruction}) was proved under issue \#15 ---
+both \emph{before} the radial computation of Section~\ref{sec:radial} existed.
+
+\subsection{Criterion classes and the candidate list}
+
+\begin{definition}[criterion classes]\label{def:criterionclasses}
+An AdS/dS criterion is an assignment $C$ from the irreducible admissible unitary
+$*$-representations of $\Uq$ (equivalently, from their occurrences in the radial problem of
+Section~\ref{sec:radial}) to values in $\{\mathrm{AdS},\mathrm{dS},\ldots\}$, built from:
+\begin{enumerate}[label=(\Roman*)]
+\item \emph{intrinsic data}: the quantum group, the DSSYK space, the radial operators, their
+extension theory, eigenfunctions and classical limits --- i.e.\ normaliser-covariant data in
+the sense of Definition~\ref{def:covariant};
+\item intrinsic data \emph{plus the orientation}: the identification of the lower spectral
+edge $\theta=\pi$ as the ground-state (Schwarzian/AdS) side --- intrinsic to DSSYK as a
+thermal theory ($e^{-\beta T}$ weights low energy; Definition~\ref{def:ads}), and the one
+datum in the model that is odd under the grading $\Pi$;
+\item class (II) data \emph{plus an external bulk proposal} --- the edge-dS or centre-dS
+identifications of Definition~\ref{def:ds}.
+\end{enumerate}
+The candidates fixed in issue \#8: (a) the sign of the effective curvature extracted from the
+radial operator; (b) the sign of the exponential term in the ($q$-)P\"oschl--Teller
+potential; (c) the character of the spectrum (continuous vs.\ discrete, normalisable vs.\
+delta-normalisable); (d) reality/unitarity conditions on the representation label; (e) the
+signature of the invariant metric on the quantum homogeneous space.
+\end{definition}
+
+\subsection{Assessment of the candidates}
+
+\begin{proposition}[candidates (a)--(d) cannot validate Claim~\ref{claim:cgeo}]
+\label{prop:criterioncases}
+\PROVED\ (from Section~\ref{sec:radial} and Theorem~\ref{thm:covobstruction}.) Each of the
+criteria (a)--(d), evaluated on the DSSYK radial problem, is a normaliser-covariant
+assignment; by Theorem~\ref{thm:covobstruction} it gives
+$C(\pi^{S}_{\ell-1/2})=C(D^{\pm}_{\ell})$ and therefore cannot classify the strange family as
+dS against an AdS discrete family. Case by case:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Effective curvature.} The radial potential \eqref{eq:qpotential} carries no
+representation label (Remark~\ref{rem:effectivepotential}); its classical limits on the two
+wedges are the AdS$_2$ Liouville wall and well of SI (2.26)
+(Theorem~\ref{thm:radialclassical}) --- both wedges are regions of the \emph{same} classical
+AdS$_{2}$ reduction. No curvature-like coefficient anywhere in the radial family depends on
+which representation is inserted: criterion (a) is constant on representations.
+\item \emph{Potential sign.} The sign of the exponential term is
+$\operatorname{sgn}(\chi\xi)$ --- a wedge datum (which slice), not a representation datum.
+Constant on representations.
+\item \emph{Spectral character.} Strange and discrete values enter identically: simple
+isolated eigenvalues of the same wedge extensions, in towers exchanged by $\Pi$ with all
+normalisability data preserved (Theorem~\ref{thm:wedgespectra},
+Corollary~\ref{cor:radialparity}); principal values are the common continuum. The one
+apparent intrinsic asymmetry --- strange radial solutions alternate at lattice scale,
+$c_{m}\sim(-1)^{m}q^{2am}$, so they have no continuum limit as functions --- is precisely
+the parity twist, i.e.\ it is \emph{equivalent to} $\operatorname{sgn}\tCas$, whose reading
+is the orientation question of class (II), not an intrinsic discriminator.
+\item \emph{Label reality/unitarity.} Both families are unitary at every label
+(Convention~\ref{conv:series}; the strange series for \emph{all} $a>0$), and the fusion
+theorem pairs them label-by-label inside single irreducible corepresentations
+(Theorem~\ref{thm:fusion}). Covariant, hence obstructed.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[candidate (e): not constructible in the present framework]
+\label{rem:metriccriterion}
+A metric-signature criterion cannot be evaluated: the DSSYK space is constructed in momentum
+coordinates, the position picture rests on an assumed $q$-Fourier transform
+(Remark~\ref{rem:positionspace}), and a metric requires the spectral-triple layer that
+\cite{Schouten:2025dssyk} explicitly defer: ``the natural metric structure provided by a
+spectral triple should shed light on the intriguing overlap of correlation functions between
+AdS and dS regions of the $q$-deformed homogeneous space, which we observed in Section 4.3.
+[\ldots] Implementing and exploring this vision in the present context is a work in
+progress'' [SI \S5]. Nothing in this project assumes such a metric (so this is not a
+\texttt{gap} in our argument); but it is the one listed candidate that could in principle
+carry grading-breaking structure, and Conjecture~\ref{conj:residue} records what it would
+have to do.
+\end{remark}
+
+\subsection{The oriented data}
+
+\begin{proposition}[what the orientation separates]\label{prop:orientation}
+\DERIVED\ (arithmetic from Section~\ref{sec:radial}; checks (R7).) Relative to the DSSYK
+orientation (class (II)): on every wedge extension $J^{(\theta)}_{-}$, the strange tower
+lies \emph{below the lower band edge} --- at energies $E=2\tCas/\sqrt{1-q^{2}}$ a distance
+\begin{equation}\label{eq:bindingenergy}
+  \Delta E_{a}=\frac{2\bigl(\mu(q^{2a})-1\bigr)}{\sqrt{1-q^{2}}}
+  =\frac{4\sinh^{2}(a\lambda/2)}{\sqrt{1-e^{-\lambda}}}
+\end{equation}
+below the chord-sector ground-state energy $-E_{\max}$ --- and the discrete tower
+symmetrically above $+E_{\max}$. As $q\to1$ the strange tower survives at the AdS
+(ground-state) edge as the classical discrete-series bound states of the inverted-Liouville
+well, and is expelled from the opposite edge; the discrete tower has the mirror fate
+(Proposition~\ref{prop:radialq1}). The orientation therefore \emph{does} break the grading
+and \emph{does} separate the two families --- but it attaches the \emph{strange} family to
+the AdS side and the \emph{discrete} family to the opposite edge. (These towers live on the
+$\epsilon=+1$ wedge of the reduced space, not in the chord sector, whose spectrum remains
+exactly the band $[-E_{\max},E_{\max}]$: Proposition~\ref{prop:chordprincipal}; there is no
+contradiction with DSSYK spectral data.)
+\end{proposition}
+
+\subsection{Verdict}
+
+\begin{theorem}[verdict on Claim~\ref{claim:cgeo}]\label{thm:verdict}
+Under the criterion classes of Definition~\ref{def:criterionclasses}:
+\begin{enumerate}[label=(\roman*)]
+\item \PROVED\ \emph{(class (I): refuted.)} No intrinsic criterion validates
+Claim~\ref{claim:cgeo}: the listed candidates (a)--(d) fail by
+Proposition~\ref{prop:criterioncases}, and \emph{any} intrinsic criterion is
+normaliser-covariant, hence obstructed by Theorem~\ref{thm:covobstruction}; candidate (e)
+is not constructible (Remark~\ref{rem:metriccriterion}).
+\item \DERIVED\ \emph{(class (II): refuted with an inversion.)} The orientation separates
+the families, but assigns the strange family to the \emph{AdS} side
+(Proposition~\ref{prop:orientation}): under the edge-dS reading of the opposite edge, the
+dS-edge-local family is the \emph{discrete} series. An oriented criterion therefore not
+only fails to validate ``the strange series realises the dS$_{2}$ type'' --- it supports
+the opposite assignment.
+\item \DERIVED\ \emph{(class (III): reduces to Claim~\ref{claim:camp}.)} Under edge-dS,
+what is true is exactly Proposition~\ref{prop:limits}: the strange bilocals are the
+edge-crossing family (finite AdS$\leftrightarrow$dS amplitudes, vanishing
+AdS$\leftrightarrow$AdS ones, the reverse for discrete bilocals) --- with the selectivity
+against principal-series bilocals still open (issue \#13, Remark~\ref{rem:degenerate}).
+Under centre-dS, the strange AdS$\leftrightarrow$dS amplitude vanishes
+(Remark~\ref{rem:dsdependence}) and no spectral statement singles out the band centre: the
+claim fails in every class.
+\item \DERIVED\ \emph{(No crossing.)} In no class does any quantity \emph{cross} as the strange label
+$a$ varies: the eigenvalue moves monotonically along $(-\infty,-1)$, the bilocal amplitudes
+vary smoothly, and the only distinguished labels are the resonances $2a\in\Z$ (Plancherel
+labels, $\Pi$-invariant extensions, connection-formula degeneration
+(Theorem~\ref{thm:strangeradial}(c))) --- structure conditions, not sign changes. The
+``interpolation'' of Claim~\ref{claim:cgeo}, read as a crossing against any continuous
+parameter (Remark~\ref{rem:discreteness}), does not occur.
+\end{enumerate}
+\emph{Conclusion for the epic.} Claim~\ref{claim:cgeo} is \textbf{refuted} as an
+intrinsic-geometry statement, by the explicit obstruction now realised in the radial
+problem; the defensible content of ``the strange series interpolates between AdS and dS''
+is Claim~\ref{claim:camp} (conditional on edge-dS), \emph{together with} the structural
+statement that the strange and discrete families form a single $\Pi$-orbit --- one fused
+irreducible corepresentation of the normaliser (Theorem~\ref{thm:fusion}), one locked pair
+of spectral towers per radial extension (Theorem~\ref{thm:wedgespectra}), the two towers
+edge-local at the two ends of the spectrum with the strange component on the AdS side and
+the cross-edge amplitudes carried by the strange bilocals. The AdS$\leftrightarrow$dS
+bridge, to the extent the framework supports one, is the \emph{grading} $\Pi$; the strange
+series is one half of its orbit, not a family that migrates from one geometry to the other.
+\end{theorem}
+
+\begin{claim}[the falsifiable residue]\label{conj:residue}
+\CONJ\ If the spectral-triple metric structure announced in \cite{Schouten:2025dssyk} \S5
+is constructed for the reduced space, then: (1) it will be $\Pi$-covariant on the intrinsic
+data, and its AdS/dS decomposition will enter through the spectral orientation, i.e.\
+through the same external input as Definition~\ref{def:ds}; and (2) evaluated on the wedge
+towers it will attach the strange tower to the AdS-edge region and the discrete tower to
+the opposite edge region, as in Proposition~\ref{prop:orientation}. \emph{Reasons}: (1) any
+structure built functorially from the quantum group data inherits the covariance of
+Theorem~\ref{thm:covobstruction}; (2) is the $q\to1$ spectral localisation of
+Proposition~\ref{prop:radialq1}, which a compatible metric must reproduce. Either part is
+falsifiable by the future construction; failure of (1) would exhibit exactly the
+grading-breaking structure whose absence drives Theorem~\ref{thm:verdict}, and would
+reopen Claim~\ref{claim:cgeo}.
+\end{claim}
+
+\begin{remark}[what remains open after this section]\label{rem:criterionopen}
+The verdict is unconditional on the radial side but leaves three loads on other issues:
+the selectivity of C-amp against principal-series bilocals (issue \#13); the rescaled
+Plancherel theory (issue \#14) for any statement summing over strange labels; and the
+extension selection (issue \#26), which affects only \emph{which} locked tower pair is
+realised, not the verdict (every extension is obstructed the same way, and the conjectured
+canonical extension is itself $\Pi$-invariant). The centre-dS quantitative comparison
+deferred from Remark~\ref{rem:dsdependence} is subsumed by
+Theorem~\ref{thm:verdict}(iii).
+\end{remark}
 
 \section{Limits and verification}
 \label{sec:verification}

@@ -443,3 +443,56 @@ Failed attempts, recorded per CONTRIBUTING.md §5:
   cofactors); both fixed, checks then pass at 1e-60.
 - `check_claim_kernels.py` needed >300 s on this machine (recorded: the 96 s timing in the
   #22 entry was a different machine); rerun completed and reproduces bit-for-bit.
+
+## 2026-08-11 — issues #24, #25, #17: housekeeping
+
+#24: `src/requirements.txt` reduced to `mpmath==1.3.0` (verified clean-venv install);
+exploratory stack moved to `src/requirements-dev.txt` with resolvable loose bounds; CI now
+also runs `check_radial_casimir.py` with its reproducibility diff. #25: LOG reordered
+chronologically (pure move of the #6 entry) with session boundary markers. #17: closed —
+sessions 3-4 run under the owner account and pushes succeed; the read-only-collaborator
+request is moot unless that account returns.
+
+## 2026-08-11 — issue #8: the AdS/dS criterion — verdict
+
+Section 6 of `tex/main.tex`. Executed as reformulated under #15 ("construct the obstruction
+or refute it"), with the radial problem of #7 as input. No new numerics (all claims reduce
+to verified §1/§5 structures plus arithmetic); provenance stated in the tex: the candidate
+list is issue #8's original body and the covariance obstruction predates the radial
+computation.
+
+- Criterion classes fixed (def:criterionclasses): (I) intrinsic/covariant; (II) + the
+  thermodynamic orientation (the one Π-odd datum intrinsic to DSSYK); (III) + an external
+  dS proposal.
+- PROVED (prop:criterioncases): the issue-#8 candidates (a) curvature sign, (b) potential
+  sign, (c) spectral character, (d) label unitarity are all normaliser-covariant on the
+  radial data — (a),(b) are label-independent wedge data (both wedges contract to classical
+  AdS₂ Liouville wall/well); (c) the towers are exchanged by Π with all normalisability data
+  preserved; the one apparent asymmetry (lattice-scale alternation of strange radial
+  solutions) is literally the parity twist, i.e. equivalent to sgn Ω̃; (d) both families
+  unitary at every label and fused pairwise. All obstructed by thm:covobstruction.
+- Candidate (e), metric signature: not constructible in SI's framework (position space
+  assumed, metric deferred to their spectral-triple programme; verbatim quote). Not a gap in
+  our argument; flagged as the one place grading-breaking structure could enter.
+- DERIVED (prop:orientation): the orientation DOES break the grading and separates the
+  towers — but attaches the STRANGE family to the AdS (ground-state) edge (binding energy
+  ΔE_a = 2(μ(q^{2a})-1)/√(1-q²) below -E_max) and the discrete family to the opposite edge.
+- Verdict (thm:verdict): class (I) refuted (PROVED); class (II) refuted with an inversion —
+  under edge-dS the dS-edge-local family is the DISCRETE series, not the strange one
+  (DERIVED); class (III) reduces to C-amp exactly (strange bilocals edge-crossing;
+  principal-selectivity still open, #13; under centre-dS everything fails); and no quantity
+  crosses as the label varies — the only distinguished labels are the resonances 2a ∈ Z
+  (structure conditions, not sign changes). Claim C-geo is REFUTED as an intrinsic-geometry
+  statement; the defensible content of "interpolates" is C-amp + the Π-orbit structure (one
+  fused corepresentation, one locked tower pair per extension, strange component AdS-side,
+  cross-edge amplitudes strange-borne). The AdS↔dS bridge, to the extent the framework
+  supports one, is the grading Π itself.
+- CONJECTURED (conj:residue, the falsifiable residue): the future spectral-triple metric of
+  SI's outlook will (1) be Π-covariant with the AdS/dS split entering through the same
+  external orientation, and (2) localise the towers as in prop:orientation; failure of (1)
+  would exhibit the missing grading-breaking structure and reopen C-geo.
+- claim:cgeo in Section 1 given a status-resolution pointer to thm:verdict.
+
+This is admissible outcome 3 (well-argued negative with explicit obstruction) plus 2
+(sharpened falsifiable statement) of PROBLEM.md §6 for the epic's core question; #9-#12
+(limits consolidation, verification section, cross-checks, final write-up) remain.
