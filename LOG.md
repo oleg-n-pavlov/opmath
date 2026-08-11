@@ -561,3 +561,31 @@ realised by the (R6) grid scans and (P2)-(P5) transition scans, since by thm:ver
 no boundary is crossed by the representation label. Honesty note kept explicit: no
 committed mathematical claim was falsified by a check; all failures were in check design,
 implementation, or pre-commitment drafts.
+
+## 2026-08-11 — issue #11: cross-checks against independent literature
+
+Subsection 7.3 of tex. Sources read from arXiv LaTeX/full text: 2605.13956 (q-Askey
+DSSYK: Aguilar-Gutierrez–Kukolj–Seitz), 2404.03535v2 (sine-dilaton), 2310.16994 (already
+in §1), 2403.09021 (Xu), 2511.03779, 2511.08743 (vdHVX; author first name verified from
+arXiv metadata: Jeremy van der Heijden).
+
+- q-Askey (DERIVED): their |α|>1 deformed bound states, transcribed, sit at Ω̃ =
+  ±μ(|α|e^{-2λl}) with finite towers — for α<-1 EXACTLY in the strange range, log-periodic,
+  window-truncated: the finite-tower analogue of our wedge grids and GKK's sector spectra.
+  They read them as ETW-brane/Morse bound states and do not connect them to the strange
+  series; the identification appears to be new here. AGREE.
+- sine-dilaton (DERIVED): convention map θ_BMP = π - θ; horizon curvature R = +2cosθ =
+  √(1-q²)E: AdS-sign at the ground-state edge (matches def:ads), dS-sign at the opposite
+  edge (supports edge-dS), sign flip exactly at the band centre — their curvature criterion
+  is literally sgn E (our orientation datum, consistent with prop:criterioncases(a)), and
+  the flip locus coincides with our exact transition locus. AGREE (threefold).
+- centre-dS (ARGUED): claim under test fails there (rem:dsdependence numbers), but the
+  transition locus sits exactly at their dS point. DISAGREE-on-claim + coincidence.
+- Xu II₁ (ARGUED): chord sector purely a.c. (prop:chordprincipal) consistent with the
+  II₁ trace representation; our towers live outside the chord sector. CONSISTENT.
+- vdHVX (ARGUED): their one-particle chord space = D⁺ only — forced by the classification
+  (one-sided K-spectrum has no strange constituents) and corroborating that strange
+  constituents require the normaliser/two-sided structures; their disk realisation is the
+  non-DSSYK Cartan quotient. CONSISTENT; no shared strange quantity.
+- Summary: no contradictions; two convergences (strange-range towers in the q-Askey
+  deformations; three independent structures at the band centre).

@@ -2150,6 +2150,115 @@ boundary'': by Theorem~\ref{thm:verdict}(iv) no boundary is crossed by the label
 scans that exist are the extension-grid scans (R6) and the transition scans (P2)--(P5),
 which locate the one genuine crossing --- in the bilocal weight, at the exact midpoint.
 
+\subsection{Cross-checks against independent literature}
+\label{sec:crosschecks}
+
+% Issue #11. One comparison per source; each ends agree/disagree/orthogonal; convention
+% mismatches resolved through Convention 2.8 before any disagreement is declared.
+
+\begin{remark}[$q$-Askey deformations: the strange range appears as deformed bound states]
+\label{rem:qaskeycheck}
+\DERIVED\ (transcription of \cite{Aguilar:2026qaskey} \S2, labels
+\texttt{eq:dissrete cond 1}--\texttt{eq:bounds discrete levels} of the arXiv source, plus
+one line of arithmetic.) The $q$-Askey--deformed chord Hamiltonians of
+\cite{Aguilar:2026qaskey} (Al-Salam--Chihara through Askey--Wilson; precisely the
+deformation direction SI's ``AW-DSSYK'' outlook anticipates, and the polynomial-side
+counterparts of GKK's half-line sector operators) acquire, for a deformation parameter
+$|\alpha|>1$, a \emph{finite} tower of bound states
+$E(\theta_{l})=\tfrac{2}{\sqrt{1-q^{2}}}\cosh\theta_{l}$, $\theta_{l}=\log\alpha-2\lambda
+l$, $0\le l\le\lfloor\log|\alpha|/2\lambda\rfloor$, with
+$\tfrac{\sqrt{1-q^{2}}}{2}E\in(1,\mu(\alpha)]$ for $\alpha>1$ and
+$\in[-\mu(|\alpha|),-1)$ for $\alpha<-1$. In our variables these are $\tCas$-values
+$+\mu(|\alpha|e^{-2\lambda l})$, resp.\ $-\mu(|\alpha|e^{-2\lambda l})$ (for $\alpha<0$,
+$\log\alpha=\log|\alpha|+i\pi$ makes $\cosh\theta_{l}$ negative --- the same half-period
+shift as everywhere in this project): \emph{the $\alpha<-1$ towers sit exactly in the
+strange range} $\tCas<-1$, log-periodically spaced, truncated at the $|y|>1$-type window
+--- the finite-tower analogue of our wedge grids \eqref{eq:twogrids} and of GKK's
+half-line sector spectra. \cite{Aguilar:2026qaskey} interpret them as
+ETW-brane/Morse-potential bound states, non-perturbative in $G_{N}$, and do not connect
+them to the strange series (consistent with the issue-\#2 finding that no citing paper
+engages it); the identification of their $\alpha<-1$ family with strange-series Casimir
+values appears to be new to this project. \emph{Verdict: agree} --- independent appearance
+of beyond-the-band bound states at strange values, with the negative-parameter/alternating
+structure matching Lemma~\ref{lem:mehler}'s $t<0$ weights; their Morse potential is the
+two-exponential completion of our one-exponential well
+(Remark~\ref{rem:effectivepotential}).
+\end{remark}
+
+\begin{remark}[sine-dilaton gravity: the curvature flip sits at the band centre]
+\label{rem:sinedilatoncheck}
+\DERIVED\ (transcription of \cite{Blommaert:2024sinedilaton} \S2, \S5.2, with the
+convention map.) Sine-dilaton conventions have $E=-\cos\theta_{\mathrm{BMP}}/(2|\log q|)$
+with ground state at $\theta_{\mathrm{BMP}}=0$, so
+$\theta_{\mathrm{BMP}}=\pi-\theta$ in our Convention~\ref{conv:q}. Their classical
+solutions have $F(r)=-2\cos r+2\cos\theta_{\mathrm{BMP}}$, horizon at
+$r=\theta_{\mathrm{BMP}}$, and Ricci scalar $R=-2\cos(2|\log q|\Phi)$; at the horizon,
+$R=-2\cos\theta_{\mathrm{BMP}}=+2\cos\theta=\sqrt{1-q^{2}}\,E$. Hence: the horizon
+curvature is \emph{negative (AdS-sign) at the ground-state edge} $\theta=\pi$ ---
+agreeing with Definition~\ref{def:ads} --- \emph{positive (dS-sign) at the opposite edge},
+supporting the edge-dS reading their follow-up \cite{Blommaert:2024entropic} makes
+precise, and \emph{flips sign exactly at the band centre} $\theta=\pi/2$, where their
+static-patch ``pode'' discussion also sits. \emph{Verdict: agree}, threefold: (i) the
+AdS edge assignment matches; (ii) their effective-curvature criterion is literally
+$\operatorname{sgn}E$ --- the orientation datum of
+Definition~\ref{def:criterionclasses}(II), consistent with
+Proposition~\ref{prop:criterioncases}(a) (in the bulk dual the curvature is an
+energy-orientation datum, not a representation datum); (iii) their curvature-flip locus
+coincides with the exact transition locus of Theorem~\ref{thm:transition}(iv) and with
+the centre-dS point --- three independently derived structures at $\theta=\pi/2$.
+\end{remark}
+
+\begin{remark}[centre-dS]\label{rem:centredscheck}
+\ARGUED\ Under the centre-dS identification \cite{Narovlansky:2023lfz}, the strange
+bilocal AdS$\leftrightarrow$dS amplitude vanishes like $\exp(-3\pi^{2}/4|\ln q^{2}|)$
+(Remark~\ref{rem:dsdependence}, measured rates $-4.97/-7.07/-7.22$ vs.\ $-7.40$), so
+Claim~\ref{claim:camp} fails there --- but the transition locus of
+Theorem~\ref{thm:transition} sits exactly at the centre-dS point: in the weight
+parameter, edge-connectivity switches on precisely at the weight whose spectral image is
+their dS locus. \emph{Verdict: disagree on the claim under test (as SI's own footnote
+anticipates), with the new structural coincidence recorded.}
+\end{remark}
+
+\begin{remark}[chord von Neumann algebra, type II$_{1}$]\label{rem:xucheck}
+\ARGUED\ \cite{Xu:2024vnalgebras} establishes the (zero-particle) chord algebra as a type
+II$_{1}$ factor. Consistency on shared quantities: our chord-sector spectral result
+(Proposition~\ref{prop:chordprincipal}: purely absolutely continuous band, no point
+spectrum) is what the trace representation of a II$_{1}$ factor generated by $T$ requires
+--- no normalisable transfer-matrix bound states in the chord sector; and our tower
+spectra live on the $\epsilon=+1$ wedge, \emph{outside} the chord sector, so their
+absence from the II$_{1}$ analysis is consistency, not tension. The follow-up
+\cite{Aguilar:2025cosmological} computes cosmological entanglement entropy from the same
+algebra; it shares no computed quantity with this project beyond that consistency.
+\emph{Verdict: consistent (orthogonal quantities).}
+\end{remark}
+
+\begin{remark}[quantum symmetry in the chord algebra]\label{rem:vdhvxcheck}
+\ARGUED\ \cite{vanderHeijden:2025quantum} construct $\Uq$ generators inside the chord
+algebra and show the \emph{one-particle} chord space decomposes into \emph{positive
+discrete series} $D^{+}_{\ell}$ only. This is exactly what the classification of
+Convention~\ref{conv:series} forces --- a one-sided $K$-spectrum admits no strange
+constituents (two-sided is automatic for the strange family) --- and it corroborates,
+from an independent construction, this project's structural finding that strange
+constituents require the two-sided/normaliser structures (the fusion of
+Theorem~\ref{thm:fusion}), not the one-sided matter modules. Their quantum-disk
+realisation concerns the Cartan-type quotient that Definition~\ref{def:qdisk} records as
+\emph{distinct} from the DSSYK coset (SI \S5 verbatim), and their
+$U_{q}(\mathfrak{sl}(2,\R))$-vs-$\Uq$ discussion parallels SI's Cayley-transform caveat
+(quoted in Section~\ref{sec:radial} sources). They do not engage the strange series
+(issue \#2 grep). \emph{Verdict: consistent; no shared strange-series quantity exists to
+compare.}
+\end{remark}
+
+\begin{remark}[summary of the cross-checks]\label{rem:crosschecksummary}
+No contradiction with any independent source was found; two genuine convergences emerged:
+the strange-range bound-state towers (independently present in \cite{Aguilar:2026qaskey}
+as $\alpha<-1$ deformations, unidentified there), and the band-centre locus, at which
+three independent structures meet --- the sine-dilaton curvature flip, the centre-dS
+proposal, and this project's exact edge-connectivity transition. All comparisons passed
+through the translation table (Convention~\ref{conv:translation}); the one convention
+trap encountered ($\theta_{\mathrm{BMP}}=\pi-\theta$) is stated where used.
+\end{remark}
+
 \section{Conclusion and open gaps}
 \label{sec:conclusion}
 
