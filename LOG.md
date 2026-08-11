@@ -310,3 +310,45 @@ Results:
   tolerance, not a formula error; fixed by comparing at k=200 with the predicted scale.
 - No analytic continuation from compact quotients is used anywhere (the 2412.19681 caveat does
   not apply); stated in the tex.
+
+## 2026-08-11 — session 3: recovery of the unpushed session-2 commits, and independent verification
+
+Context: session 2 ran under an account with read-only access to the repository (issue #17), so
+its six commits `43239a7..1ea8419` existed only in that session's working copy and were delivered
+as a tar archive. Session 1 (issues #2–#6, `902a212..bbacc7e`) had terminated earlier on an
+account-level monthly spend limit, mid-way into the write-up of Section 4.
+
+Recovery:
+- Verified that the archive's base commit `bbacc7e` is bit-identical to `origin`'s tip
+  (`bbacc7e88b54fe258d121795a3d90d86608d2c16` on both sides) and that the archive's history is
+  linear with a clean working tree, so the integration is a fast-forward and rewrites nothing.
+- Fetched and fast-forwarded `bbacc7e..1ea8419`, then **pushed**. The six commits are now on
+  origin; the blocker recorded in the session-2 handoff §4 is discharged. Issue #17 remains open
+  as an account-permissions matter, but no longer endangers committed work.
+
+Independent verification, on a different machine and a fresh environment than the one that
+produced the outputs:
+- All five check scripts pass: `check_claim_kernels`, `check_conventions`,
+  `check_normaliser_grading`, `check_strange_coefficients`, `check_tex_integrity`.
+- Every committed `results/*.out` reproduces **bit-for-bit** — `git status --short results/`
+  is empty after the full run. Since the environment differs from the authoring one, this is a
+  genuine reproduction rather than a re-run in place, and it corroborates the determinism claim
+  of issue #20.
+- Caveat, stated so it is not overread: this verifies reproducibility of the numerics, **not**
+  the correctness of the proofs. The `PROVED` tags in `tex/main.tex` have not been independently
+  re-derived in this session.
+
+Defects found during verification, both filed:
+- **#24** — `src/requirements.txt` pins `numpy==2.5.2`, which does not resolve (newest available
+  here is `2.4.6`), so `pip install -r src/requirements.txt` fails outright and the CI added under
+  #22 would fail at its install step. The check scripts import only `mpmath`, which pins and
+  installs cleanly at `1.3.0`; all checks above were run against `mpmath` alone. Tooling defect,
+  no effect on results.
+- **#25** — `LOG.md` is no longer chronological (the #15–#22 entries precede the #6 entry). This
+  was carried in the session-2 handoff as a known-but-unfiled defect; now filed. This entry is
+  appended at the end, i.e. in true chronological position; the reordering of the earlier entries
+  is left to #25 so that it shows up as a move rather than being tangled with this entry.
+
+Next: issue #7, the radial part of the Casimir — Section 5 of `tex/main.tex` is still a
+placeholder that fixes only the method and the momentum-lattice constraint of
+Remark~\ref{rem:positionspace}.
