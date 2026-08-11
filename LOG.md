@@ -261,6 +261,25 @@ placeholder states the fixed cross-check targets with citations to
 Blommaert:2024sinedilaton and Xu:2024vnalgebras. Neither sentence pre-empts issues #7 or
 #9–#11. Zero uncited keys and zero unresolved cites, verified.
 
+## 2026-08-11 — issue #22: CI, pinned dependencies, committed tex-integrity checker
+
+- `src/check_tex_integrity.py` (new, committed): structural verification of tex/main.tex +
+  tex/refs.bib — duplicate labels, unresolved \ref/\eqref, cite/bib consistency in both
+  directions, environment balance, the forbidden phrases of CONTRIBUTING.md §2, existence
+  of every referenced src/ and results/ path. All 7 checks pass on the current tree. This
+  is the structural stand-in for compilation while the local TeX Live cannot build the
+  document (see the #15 entry).
+- `src/requirements.txt` pinned to the working environment (mpmath==1.3.0, numpy==2.5.2,
+  scipy==1.18.0, sympy==1.14.0, matplotlib==3.11.1); the check scripts need only mpmath.
+- `.github/workflows/checks.yml` (new): on push/PR, install pinned requirements, run the
+  integrity checker and all four numerical check scripts, and diff each regenerated output
+  against the committed results/*.out (meaningful since #20 made outputs deterministic).
+  LaTeX build attempted in a separate job with continue-on-error: true (non-blocking by
+  design; the local toolchain cannot build, CI's current TeX Live may). Local timings:
+  conventions 0.2 s, strange_coefficients 0.5 s, normaliser_grading 8 s, claim_kernels
+  96 s. Caveat: CI cannot be observed running until pushes succeed (#17); the workflow is
+  committed now and will run on the first successful push.
+
 ## 2026-08-11 — issue #6: matrix coefficients of the strange series
 
 Section 4 of `tex/main.tex`. Sub-issues opened rather than solved inline: #13 (principal-series

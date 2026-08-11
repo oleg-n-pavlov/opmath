@@ -1,0 +1,58 @@
+# Issue #22: on every push/PR, verify that the committed check scripts run, pass, and
+# reproduce the committed outputs bit-for-bit (guaranteed by pure-mpmath arithmetic,
+# issue #20), and that the tex sources are structurally consistent. The LaTeX build is a
+# separate, non-blocking job: the research record must never be gated on a TeX toolchain,
+# but a successful build is archived when possible.
+name: checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  numerics-and-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install pinned dependencies
+        run: python -m pip install -r src/requirements.txt
+      - name: tex integrity (labels/refs/cites/environments/phrases/paths)
+        run: python src/check_tex_integrity.py
+      - name: check_conventions (exit 0 and output reproduces)
+        run: |
+          python src/check_conventions.py > /tmp/check_conventions.out
+          diff /tmp/check_conventions.out results/check_conventions.out
+      - name: check_strange_coefficients (exit 0 and output reproduces)
+        run: |
+          python src/check_strange_coefficients.py > /tmp/check_strange_coefficients.out
+          diff /tmp/check_strange_coefficients.out results/check_strange_coefficients.out
+      - name: check_normaliser_grading (exit 0 and output reproduces)
+        run: |
+          python src/check_normaliser_grading.py > /tmp/check_normaliser_grading.out
+          diff /tmp/check_normaliser_grading.out results/check_normaliser_grading.out
+      - name: check_claim_kernels (exit 0 and output reproduces; ~2 min)
+        run: |
+          python src/check_claim_kernels.py > /tmp/check_claim_kernels.out
+          diff /tmp/check_claim_kernels.out results/check_claim_kernels.out
+
+  latex-build:
+    # Non-blocking by design (see header comment). The local toolchain cannot build the
+    # document (LOG.md, issue #15); this job documents whether a current TeX Live can.
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build tex/main.pdf
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: tex
+      - name: Archive the PDF
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-pdf
+          path: tex/main.pdf
