@@ -352,3 +352,78 @@ Defects found during verification, both filed:
 Next: issue #7, the radial part of the Casimir — Section 5 of `tex/main.tex` is still a
 placeholder that fixes only the method and the momentum-lattice constraint of
 Remark~\ref{rem:positionspace}.
+
+## 2026-08-11 — issue #7: the radial part of the Casimir
+
+Section 5 of `tex/main.tex`; numerics `src/check_radial_casimir.py`
+(`results/check_radial_casimir.out`, 45/45 pass, deterministic). Sources read from the arXiv
+LaTeX: SI §2.4/§3.5/§4.4–4.5, GKK §8 + App. B, BINN §4.4, Koelink arXiv:math/0305385
+(= BINN's [Koelink2003]), 2412.19681 (Matsuki framework).
+
+Results (tags as in the tex):
+- PROVED (prop:slicereduction): SI (4.25) with inner product (4.24) decomposes over the
+  slices χ = ±q^{2n}; per slice the symmetrised Casimir is the zero-diagonal Jacobi operator
+  J_c, a_m = ½√(1-cq^{2m+2}), c = χ/ξ; J_c ≅ J_{cq²}, so exactly TWO radial operators: the
+  chord wedge χξ>0 gives back the DSSYK transfer matrix on every slice (wall = the measure's
+  exact zero, i.e. length positivity); the ε=+1 wedge χξ<0 gives J_- with a_m = ½√(1+q^{2m+2})
+  on ℓ²(Z). The effective potential is the one-exponential q-Liouville coefficient
+  1-4pp_R(q^{-1}-q)²y/q — it carries NO representation label; the label enters as the spectral
+  value and as the boundary decay exponent of the radial solution (the honest answer to
+  issue task 2).
+- DERIVED (thm:radialclassical): in the orthonormal gauge 2(J_c-1)/λ² → ¼∂φ² - pp_R e^{-2φ}
+  (measured O(λ²) rates ≈ 4.3–4.9 per λ-halving), = SI's classical (2.26) up to the exact
+  conjugation -Ω_cl ≅ ¼ - h_cl; both edges captured (lower edge via Π, exact identity).
+  Bessel-K eigenfunction check: deviations 3.9e-3/8.0e-4/1.8e-4 at λ=0.2/0.1/0.05.
+- PROVED (thm:wedgedeficiency, in Koelink math/0305385 + our dictionary): J_- IS Koelink's
+  case-(1) operator at ψ=0 (a_k² = 1+r^{-2}q^{-2k}, r = γ^{-1/2}, index reflection):
+  deficiency indices (1,1). The horizon end y→∞ is limit circle with BOTH solutions
+  |g_m| ~ q^{|m|/2} (measured slopes 0.500008/0.499989 vs predicted 0.5).
+- PROVED/DERIVED (thm:wedgespectra): every self-adjoint extension has a.c. [-1,1] plus point
+  spectrum on two bilateral q²-grids μ(y₁q^{2Z}) ∪ μ(y₂q^{2Z}) (Koelink Thm 5.8 + Rmk 5.11);
+  NEW: root product rule y₁y₂ ∈ -γq^{2Z} (Abel argument on the order-2 elliptic level-set),
+  hence the roots are real of OPPOSITE signs: every extension carries one infinite
+  discrete-type tower AND one infinite strange-type tower, locked log-periodically.
+  Verified by the bilinear eigenvector test: on-grid |h| ≤ 1.4e-41 (numerical floor) vs
+  off-grid controls 0.04–0.2; the naive mirror points are NOT in the spectrum for generic
+  a₀ = 0.37.
+- DERIVED (cor:wedgeparityfusion): the extension through -μ(q^{2a₀}) is Π-invariant iff
+  2a₀ ∈ Z — exactly the Plancherel labels — and then its spectrum is {±μ(q^{2a₀+2Z})}: the
+  GKK fusion pairing a = ℓ-½ realised as the point spectrum of a single self-adjoint radial
+  operator.
+- GAP (#26, new sub-issue): which extension the quantum group selects after SI's rescaling.
+  GKK's unrescaled Casimir is canonically self-adjoint (affiliation to M̂ fixes the one
+  non-e.s.a. sector); the rescaling acts on states, not domains. Conjecture: the Π-invariant
+  fusion extension. Until resolved, all wedge point-spectrum statements are per-extension.
+- DERIVED (prop:radialq1): q→1: at fixed a the strange eigenvalue merges into the band edge
+  (gap a²λ²/2); in lower-edge Schwarzian units the strange tower survives as the classical
+  discrete-series bound states -(a₀+j)² of the inverted-Liouville well (measured deviation
+  rate 109.9 vs predicted (ln0.9/ln0.99)² = 109.9), with -Ω_cl = ¼-(a+j)² = ℓ(1-ℓ) under
+  a = ℓ-½ AGAIN; the discrete tower is expelled like 4/λ² (90.33 vs 90.08 at q=0.9); roles
+  exchanged at the upper edge. So the strange series disappears at q=1 by MERGING INTO the
+  ordinary discrete series of the corresponding edge theory while its mirror is expelled —
+  the acceptance criterion addressed head-on, and consistent with cor:radialparity: nothing
+  in the radial problem breaks the ±pairing.
+- BINN corroboration (rem:binnhorizon, verbatim quotes): our wedge bound states = BINN's
+  "operators sitting at the Poincaré horizon"; their truncation postulate is, in the vN
+  picture, just the choice of the chord wedge; the non-truncating wedge is genuinely present.
+- Matsuki comparison (rem:matsuki, ARGUED): the two slice families are the q-analogue of the
+  two open classical regions p_Lp_R ≷ 0 with the Liouville wall/well radial parts; no
+  q-Matsuki theory is constructed (deviation from PROBLEM.md §4's sketch, justified: SI's
+  Gauss decomposition already supplies the reduction).
+
+Failed attempts, recorded per CONTRIBUTING.md §5:
+- My first asymptotic analysis of the horizon end concluded LIMIT POINT via a mis-estimated
+  reduction-of-order sum; Koelink's theorem (and then the measured slopes) show limit circle.
+  The error and its correction are recorded in rem:deficiencyfirsttry.
+- First run of (R2) compared the classical limit in the unnormalised function gauge and
+  FAILED with rate ratios ≈ 2 (an O(λ) midpoint artifact, not a mathematics error); the
+  gauge-invariant orthonormal-gauge comparison passes with ratios ≈ 4. Kept as a caveat in
+  the theorem.
+- First run of (R6) FAILED at one far-grid point (|h| = 9.9e-16 vs floor): upward recursion
+  of a minimal solution is exponentially unstable (contamination ~ σ^{-Δm}); fixed by
+  evaluating the closed form directly on the upper half-lattice and recursing only downward.
+- First run of (R1) had two test-code bugs (the identity term of Ω̃ written as +2 instead of
+  +2f(m); the c>0 wall test written with an absolute tolerance on a product with large
+  cofactors); both fixed, checks then pass at 1e-60.
+- `check_claim_kernels.py` needed >300 s on this machine (recorded: the 96 s timing in the
+  #22 entry was a different machine); rerun completed and reproduces bit-for-bit.

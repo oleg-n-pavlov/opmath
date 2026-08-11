@@ -1227,9 +1227,480 @@ Calogero--Sutherland/P\"oschl--Teller) is developed in
 \cite{Isachenkov:2016superint,Isachenkov:2017integrability}; this section transports it to
 the quantum side, starting from the momentum-space Casimir action
 \eqref{eq:ourradialoperator} (Remark~\ref{rem:positionspace}: everything stays on the
-momentum lattice).
+momentum lattice). Numerical verification for this section:
+\texttt{src/check\_radial\_casimir.py} (output
+\texttt{results/check\_radial\_casimir.out}, 45/45 checks pass; cited as (R0)--(R7) below).
 
-\emph{To be written under issue \#7.}
+\subsection{Slice reduction: the radial operator}
+
+\begin{proposition}[slice reduction of the momentum-space Casimir]\label{prop:slicereduction}
+\PROVED\ (computation; checks (R1).) Let $q\in(0,1)$, $\xi\in q^{2\Z}$, and let $\Cas$ act on
+functions on the restricted lattice $\R^{2}_{q^{2}}(\xi)$ of \eqref{eq:ourlattice} by
+\eqref{eq:ourradialoperator}, with the inner product \eqref{eq:ourinnerproduct}. Then:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(slices)} $\Cas$ commutes with multiplication by $\chi$, hence preserves each slice
+$\{(\chi, q^{2m+1})\}_{m}$; with $f_{m}\coloneqq f(\chi,q^{2m+1})$ the symmetrised Casimir
+$\tCas=\tfrac12\bigl((q-q^{-1})^{2}\Cas+2\bigr)$ acts on the slice by the three-term
+$q$-difference operator
+\begin{equation}\label{eq:sliceoperator}
+  (\tCas f)_{m}=\tfrac{q}{2}\,f_{m+1}+\tfrac{1}{2q}\bigl(1-c\,q^{2m}\bigr)\,f_{m-1},
+  \qquad c\coloneqq\chi/\xi\in\pm q^{2\Z},
+\end{equation}
+which depends on the slice only through $c$.
+\item \emph{(symmetry)} \eqref{eq:sliceoperator} is symmetric with respect to the slice weight
+induced by \eqref{eq:ourinnerproduct},
+$w_{m}=q^{2m+1}(cq^{2m+2};q^{2})_{\infty}$: one has $w_{m}\cdot\tfrac{q}{2}
+=w_{m+1}\cdot\tfrac{1}{2q}(1-cq^{2m+2})$ for all $m$. For $c=q^{2\nu}>0$ the weight vanishes
+identically for $m<m_{0}\coloneqq-\nu$ (an exactly vanishing factor of the $q$-Pochhammer):
+the length-positivity truncation of Proposition~\ref{prop:where} is carried by the measure.
+\item \emph{(orthonormal form)} In the orthonormalised basis $g_{m}=\sqrt{w_{m}}f_{m}$, $\tCas$
+acts as the Jacobi operator
+\begin{equation}\label{eq:Jc}
+  (J_{c}\,g)_{m}=a_{m}\,g_{m+1}+a_{m-1}\,g_{m-1},\qquad
+  a_{m}=\tfrac12\sqrt{1-c\,q^{2m+2}},
+\end{equation}
+with zero diagonal, on $\ell^{2}(\Z)$ for $c<0$ and on $\ell^{2}(\{m\ge m_{0}\})$ for $c>0$.
+\item \emph{(two radial operators)} The unit shift $m\mapsto m+1$ intertwines $J_{c}$ with
+$J_{cq^{2}}$. Hence, up to unitary equivalence, exactly \emph{two} radial operators occur on
+the whole space: for every slice with $\chi\xi>0$ (the $\epsilon=-1$, chord/normaliser wedge),
+$J_{+}\coloneqq J_{c>0}$ \emph{is the DSSYK transfer matrix} $\tCas$ of
+Convention~\ref{conv:casimir} under $k=m-m_{0}$; and for every slice with $\chi\xi<0$ (the
+$\epsilon=+1$ wedge), $J_{-}\coloneqq J_{c=-1}$, with $a_{m}=\tfrac12\sqrt{1+q^{2m+2}}$,
+$m\in\Z$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) \eqref{eq:ourradialoperator} contains only $y$-shifts $\mathcal{T}_{q}^{\pm2}$ and
+multiplication operators; $\tfrac12(q-q^{-1})^{2}$ times the potential term gives, at
+$y=q^{2m+1}$, the coefficient $\tfrac12(q-q^{-1})^{2}\,\xi^{-1}\chi y/(1-q^{2})^{2}
+=\tfrac12 q^{-2}\chi\xi^{-1}q^{2m+1}=\tfrac{1}{2q}\,cq^{2m}$, since
+$(q-q^{-1})^{2}/(1-q^{2})^{2}=q^{-2}$; the kinetic part contributes
+$\tfrac{q}{2}f_{m+1}+\tfrac{1}{2q}f_{m-1}$ after the $+1$ from the symmetrisation cancels the
+$-f_m$. (b) $w_{m}\tfrac q2=\tfrac12 q^{2m+2}(cq^{2m+2};q^{2})_{\infty}$ and
+$w_{m+1}\tfrac{1}{2q}(1-cq^{2m+2})=\tfrac12 q^{2m+2}(1-cq^{2m+2})(cq^{2m+4};q^{2})_{\infty}$,
+equal by $(u;q^{2})_{\infty}=(1-u)(uq^{2};q^{2})_{\infty}$; for $c=q^{2\nu}$ and $m\le-\nu-1$
+the argument $cq^{2m+2}\in q^{-2\Z_{\ge0}}$ makes a factor of $(cq^{2m+2};q^{2})_{\infty}$
+vanish exactly. (c) $a_{m}=\tfrac q2\sqrt{w_{m}/w_{m+1}}=\tfrac12\sqrt{1-cq^{2m+2}}$.
+(d) Substituting $m=k+m_0$, $c=q^{2\nu}$, $m_0=-\nu$ into \eqref{eq:Jc} gives
+$a=\tfrac12\sqrt{1-q^{2k+2}}$, the chord coefficients; all statements are verified
+numerically to $10^{-60}$ or exactly in checks (R1).
+\end{proof}
+
+\begin{remark}[the effective potential; where the representation label sits]
+\label{rem:effectivepotential}
+The radial ``potential'' is the single $q$-exponential coefficient
+\begin{equation}\label{eq:qpotential}
+  1-c\,q^{2m}=1-4\,p\,p_{R}\,(q^{-1}-q)^{2}\,y/q,\qquad y=q^{2m+1},\quad
+  e^{\varphi}=\tfrac12 y^{-1/2},
+\end{equation}
+using SI's dictionary $p=\tfrac12\chi/(q^{-1}-q)$, $p_{R}=\tfrac12\xi^{-1}/(q^{-1}-q)$
+[SI (4.30), (4.4)]: a $q$-Liouville (one-exponential) potential, the complete
+$a,b,c,d\to0$ degeneration of the Askey--Wilson ($q$-P\"oschl--Teller) operator
+SI (3.85) whose parameters are $(qs\eta,qt^{-1}\xi,qt\xi,qs^{-1}\eta)$
+(Convention~\ref{conv:translation}). Issue \#7's task ``write the effective potential as a
+function of the strange-series label'' is therefore answered in the negative direction the
+data force: \emph{the potential carries no representation label}. The label enters the radial
+problem only (i) as the spectral value $\omega=\tCas$-eigenvalue ($-\mu(q^{2a})$ strange,
+$+\mu(q^{2\ell-1})$ discrete, $\cos\theta$ principal) --- as already recorded in
+Remark~\ref{rem:strangeonspace}(iii) --- and (ii) as the boundary decay exponent of the
+radial solution, $g^{(\omega)}_{m}\sim q^{1/2}\sigma^{m}/(\sigma^{2}q^{2};q^{2})_{\infty}$
+as $m\to+\infty$ with $\sigma=-q^{2a}$, resp.\ $q^{2\ell-1}$
+(Lemma~\ref{lem:wedgesolutions}).
+\end{remark}
+
+\subsection{The chord wedge}
+
+\begin{proposition}[the $\chi\xi>0$ wedge]\label{prop:chordwedge}
+\PROVED\ On every slice with $\chi\xi>0$ the radial operator is the chord transfer matrix
+$\tCas$: bounded, self-adjoint, with purely absolutely continuous spectrum $[-1,1]$ of
+multiplicity one and \emph{no} eigenvalues (Proposition~\ref{prop:chordprincipal}). In
+particular no strange or discrete Casimir values occur on the chord wedge, for any slice and
+any boundary datum $\xi$.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:slicereduction}(d) and Proposition~\ref{prop:chordprincipal}. (Check
+(R5), control part: Dirichlet and Neumann truncations of the chord wedge both have zero
+out-of-band eigenvalues.)
+\end{proof}
+
+\subsection{The classical limit}
+\label{sec:radialclassical}
+
+\begin{theorem}[$q\to1$ contraction of the radial operator]\label{thm:radialclassical}
+\DERIVED\ (checks (R2).) Fix $p,p_{R}\in\R\setminus\{0\}$ and set
+$\chi=2p(q^{-1}-q)$, $\xi^{-1}=2p_{R}(q^{-1}-q)$, $\lambda=-2\ln q$, and
+$e^{\varphi}=\tfrac12y^{-1/2}$ [SI (4.4), (4.30)]. Then, pointwise on smooth functions of
+$\varphi$ and with deviation $O(\lambda^{2})$,
+\begin{equation}\label{eq:classcontraction}
+  \frac{2(J_{c}-1)}{\lambda^{2}}
+  \;\longrightarrow\;
+  h_{\mathrm{cl}}\coloneqq\tfrac14\,\partial_{\varphi}^{2}-p\,p_{R}\,e^{-2\varphi},
+\end{equation}
+the Liouville radial operator: a wall for $p\,p_{R}>0$ (the chord wedge) and an inverted
+(bottomless) exponential well for $p\,p_{R}<0$ (the $\epsilon=+1$ wedge). Equivalently, in
+terms of SI's classical radial Casimir action (2.26) [label
+\texttt{eq:classicalCasimirAction}],
+$(-\Cas_{\mathrm{cl}}f)(\varphi)=(-\tfrac14\partial^{2}_{\varphi}-\tfrac12\partial_{\varphi}
++p_{L}p_{R}e^{-2\varphi})f$ on $L^{2}(e^{2\varphi}d\varphi)$: conjugation by $e^{\varphi}$
+gives the unitary equivalence $-\Cas_{\mathrm{cl}}\cong\tfrac14-h_{\mathrm{cl}}$, so
+\eqref{eq:classcontraction} reproduces SI's classical radial part with the band-edge constant
+$\tfrac14$ accounted for (principal eigenvalues: $-\Cas_{\mathrm{cl}}=\tfrac14+s^{2}$
+$\leftrightarrow$ $h_{\mathrm{cl}}$-value $-s^{2}$). Moreover:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(both edges)} The contraction \eqref{eq:classcontraction} captures the upper
+spectral edge ($\tCas\approx+1$); the lower (Schwarzian/AdS) edge is the \emph{same} classical
+operator reached through the grading unitary: exactly, at every $q$,
+$-(\tCas+1)\circ\Pi=\Pi\circ(\tCas-1)$ on each slice
+(Lemma~\ref{lem:gradingchord}; check (R2), deviation $0$), so
+$-2(\tCas+1)/\lambda^{2}$ on the $(-1)^{m}$-twisted sector contracts to the same
+$h_{\mathrm{cl}}$.
+\item \emph{(eigenfunction check)} On the wall side, $h_{\mathrm{cl}}$ has the generalised
+eigenfunctions $K_{2is}\bigl(2\sqrt{pp_{R}}\,e^{-\varphi}\bigr)$ with
+$h_{\mathrm{cl}}$-eigenvalue $-s^{2}$ (the Liouville/Schwarzian wavefunctions of SI (2.27));
+numerically, $2(J_{c}-1)/\lambda^{2}$ applied to the sampled Bessel function returns the
+eigenvalue with deviation $3.9\times10^{-3}$, $8.0\times10^{-4}$, $1.8\times10^{-4}$ at
+$\lambda=0.2,0.1,0.05$ (ratios $4.9$, $4.4$; predicted rate $4$), and the operator-level
+deviations on test functions have measured ratios $4.8,4.3$ ($pp_{R}>0$) and $4.3,4.2$
+($pp_{R}<0$) per halving of $\lambda$ (checks (R2)).
+\item \emph{(gauge caveat, recorded)} In the unnormalised function picture
+\eqref{eq:sliceoperator} the same contraction produces the similarity-equivalent form
+$\tfrac14(1-\partial_{\varphi})^{2}-pp_{R}e^{-2\varphi}$ but with an $O(\lambda)$ midpoint
+artifact in pointwise comparisons; the gauge-invariant $O(\lambda^{2})$ statement is
+\eqref{eq:classcontraction} in the orthonormal gauge. (First run of check (R2) was written in
+the function gauge and FAILED with rate ratios $\approx2$; recorded per
+\texttt{CONTRIBUTING.md} \S5.)
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Derivation]
+With $\ln y$-derivative $D=y\partial_{y}=-\tfrac12\partial_{\varphi}$ one has
+$g(q^{\pm2}y)=e^{\mp\lambda D}g$, so the kinetic part of \eqref{eq:Jc} is
+$\tfrac12(e^{\lambda D}+e^{-\lambda D})g-g=\tfrac{\lambda^{2}}{2}D^{2}g+O(\lambda^{4})$,
+giving $2(\cdot)/\lambda^{2}\to D^{2}=\tfrac14\partial_{\varphi}^{2}$. The potential part:
+$a_{m}-\tfrac12=-\tfrac14 cq^{2m+2}+O(c^{2}q^{4m})$ with
+$cq^{2m+2}=4pp_{R}(q^{-1}-q)^{2}qy=4pp_{R}\lambda^{2}y(1+O(\lambda^{2}))$, and the two
+neighbours contribute $qy$ and $q^{-1}y$ whose average is $y\cosh(\lambda/2)\cdot(1+O(\lambda^2))$, so
+$2(a_{m}(g_{m+1})+a_{m-1}(g_{m-1})-\text{kinetic})/\lambda^{2}\to-4pp_{R}y=-pp_{R}e^{-2\varphi}$
+with $O(\lambda^{2})$ error. The unitary equivalence with SI (2.26): for $u=e^{\varphi}f$,
+$e^{\varphi}(-\tfrac14\partial^{2}-\tfrac12\partial+V)e^{-\varphi}u
+=(-\tfrac14\partial^{2}+\tfrac14+V)u$. (a) is Lemma~\ref{lem:gradingchord}(ii) restricted to
+a slice ($J_{c}$ has zero diagonal, so $(-1)^{m}$-conjugation flips its sign); (b) is the
+standard Bessel computation, $\tfrac14\partial_{\varphi}^{2}K_{2is}(ue^{-\varphi}\!\cdot)
+=(u^{2}e^{-2\varphi}/4-s^{2})K_{2is}$, verified numerically as stated.
+\end{proof}
+
+\begin{remark}[comparison with the Matsuki-decomposition machinery]\label{rem:matsuki}
+\ARGUED\ Issue \#7 asks whether the classical Matsuki picture of
+\cite{Schlosser:2024matsuki} has a $q$-analogue here. What the computation delivers is the
+$q$-analogue \emph{of its output}, not of the decomposition theory itself: classically, the
+double reduction by the two parabolic (twisted-primitive limit) subgroups splits the group
+into the two open regions $p_{L}p_{R}\gtrless0$, on each of which the Casimir has the radial
+part SI (2.26) --- the Liouville wall/well pair; on the quantum side,
+Proposition~\ref{prop:slicereduction} splits the momentum lattice into the two slice families
+$\chi\xi\gtrless0$ ($\epsilon=\mp1$), carrying $J_{+}$ (wall, truncating) and $J_{-}$ (well,
+non-truncating), and Theorem~\ref{thm:radialclassical} shows each contracts onto its
+classical counterpart. The classical radial coordinate ranges over a continuum touching the
+orbit boundaries; the $q$-lattice $\pm q^{2\Z}\times q^{2\Z+1}$ never meets the walls
+$\chi=0$, $y=0$. We do \emph{not} construct a $q$-Matsuki decomposition theory (no claim
+about general double cosets is made or needed: SI's quantum Gauss decomposition already
+supplies the reduction); this is the stated deviation-with-justification from
+\texttt{PROBLEM.md} \S4's method sketch. SI themselves note the agreement of
+\eqref{eq:ourradialoperator} with the hands-on lattice Casimir of BINN
+\cite{Berkooz:2022qgroup} (4.10) [SI \S4.4].
+\end{remark}
+
+\subsection{The non-chord wedge: solutions, deficiency indices, extensions}
+\label{sec:wedge}
+
+Throughout this subsection $c=-\gamma<0$ with $\gamma\in q^{2\Z}$; by
+Proposition~\ref{prop:slicereduction}(d) we may and do take $\gamma=1$, i.e.\
+$J_{-}$ with $a_{m}=\tfrac12\sqrt{1+q^{2m+2}}$ on $\ell^{2}(\Z)$; general $\gamma$ statements
+follow by the shift. The unnormalised picture is
+\begin{equation}\label{eq:wedgerecurrence}
+  2\omega\,c_{m}=c_{m+1}+(1+\gamma q^{2m})\,c_{m-1},\qquad m\in\Z,
+  \tag{R$'$}
+\end{equation}
+the analytic continuation of the chord recurrence \eqref{eq:radialrecurrence} under
+$q^{2k}\mapsto-\gamma q^{2m}$, i.e.\ under the \emph{same} half-period shift
+$k\mapsto m+\tfrac{\ln\gamma}{2\ln q}+\tfrac{i\pi}{2\ln q}$ that generates the strange series
+(Convention~\ref{conv:series}).
+
+\begin{lemma}[closed-form solutions on the wedge]\label{lem:wedgesolutions}
+\DERIVED\ (checks (R0), (R3).) For $\sigma\in\C^{\times}$, $|\sigma|<1$, and
+$\omega=\mu(\sigma)$:
+\begin{enumerate}[label=(\alph*)]
+\item the sequence
+$c_{m}(\sigma)\coloneqq\sigma^{m}\,{}_{2}\varphi_{1}\!\left(\begin{matrix}0,0\\
+\sigma^{2}q^{2}\end{matrix};q^{2},-\gamma q^{2m+2}\right)$ solves \eqref{eq:wedgerecurrence}
+wherever the series converges ($\gamma q^{2m+2}<1$); the derivation of
+Theorem~\ref{thm:strangeradial}(a) carries over verbatim with $q^{2k}\to-\gamma q^{2m}$;
+\item by the $a\to0$, $b\to0$ confluence of Heine's transformation
+[\cite{GasperRahman} (1.4.1)],
+\begin{equation}\label{eq:phi11identity}
+  {}_{2}\varphi_{1}\!\left(\begin{matrix}0,0\\ C\end{matrix};q,Z\right)
+  =\frac{{}_{1}\varphi_{1}\!\left(\begin{matrix}Z\\ 0\end{matrix};q,C\right)}
+        {(C;q)_{\infty}\,(Z;q)_{\infty}},\qquad
+  {}_{1}\varphi_{1}\!\left(\begin{matrix}Z\\ 0\end{matrix};q,C\right)
+  =\sum_{n\ge0}\frac{(Z;q)_{n}}{(q;q)_{n}}(-1)^{n}q^{\binom n2}C^{n},
+\end{equation}
+whose right side is entire in $Z$; hence
+\begin{equation}\label{eq:wedgeclosed}
+  c_{m}(\sigma)=\frac{\sigma^{m}\;{}_{1}\varphi_{1}\!\left(\begin{matrix}-\gamma
+  q^{2m+2}\\ 0\end{matrix};q^{2},\sigma^{2}q^{2}\right)}
+  {(\sigma^{2}q^{2};q^{2})_{\infty}\,(-\gamma q^{2m+2};q^{2})_{\infty}}
+\end{equation}
+extends $c_{m}(\sigma)$ to \emph{every} $m\in\Z$ (the denominator never vanishes for
+$\gamma>0$), and $c_{m}(\sigma)=\sigma^{m}(1+O(q^{2m}))$ as $m\to+\infty$;
+\item the weighted solution is
+$g^{(\omega)}_{m}=q^{1/2}\sqrt{(-\gamma q^{2m+2};q^{2})_{\infty}}\;c_{m}(\sigma)$.
+\end{enumerate}
+The identity \eqref{eq:phi11identity} and the solution property of \eqref{eq:wedgeclosed} at
+$m\le0$ are verified to $10^{-57}$ and $10^{-158}$ relative (checks (R0), (R3)).
+\end{lemma}
+
+\begin{theorem}[deficiency indices of the wedge radial operator]\label{thm:wedgedeficiency}
+\PROVED\ (in \cite{Koelink:2003oneparam}; parameter identification ours; numerically
+verified, checks (R4), (R5).) The operator $J_{-}$, defined on finitely supported sequences
+in $\ell^{2}(\Z)$, is unbounded, symmetric, and \emph{not} essentially self-adjoint: its
+deficiency indices are $(1,1)$. Specifically, $2J_{-}$ is the operator $L$ of
+\cite{Koelink:2003oneparam}, case (1) of his Lemma 3.1 with $\psi=0$: his
+$a_{k}=|r|^{-1}q^{-k}\sqrt{1-2rq^{k}\sin\psi+r^{2}q^{2k}}$ satisfies
+$a_{k}^{2}=1+r^{-2}q^{-2k}$ at $\psi=0$, which equals our $(2a_{m})^{2}=1+\gamma q^{2m+2}$
+under $e_{m}\mapsto e_{-m}$ and $r=\gamma^{-1/2}$ (the bond $(m,m+1)$ maps to his bond
+$(-m-1,-m)$). The structure of the two ends:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(horizon end, limit circle)} As $m\to-\infty$ (i.e.\ $y\to\infty$,
+$\varphi\to-\infty$) \emph{every} solution of \eqref{eq:wedgerecurrence} is
+square-summable in the weighted norm, with $|g_{m}|\sim\mathrm{const}\cdot q^{|m|/2}$;
+measured slopes of $\ln_{q}|g_{m}|$ over $m\in[-32,-20]$: $0.500008$ and $0.500008$ for the
+two basis solutions at a strange-type $\omega$, $0.499989$, $0.499989$ at $\omega=i$
+(predicted $\tfrac12$, tolerance $1.8\times10^{-3}$ from the $O(q^{|m|})$ correction scale;
+checks (R4)).
+\item \emph{(boundary end, limit point)} As $m\to+\infty$ the coefficients are bounded
+($a_{m}\to\tfrac12$), so the half-line restriction is bounded and self-adjoint there; for
+$\omega\notin[-1,1]$ exactly one solution ($c_{m}(\sigma)\sim\sigma^{m}$, $|\sigma|<1$)
+decays, the other grows like $\sigma^{-m}$.
+\end{enumerate}
+Consequently the eigenvalue equation at $\omega=i$ has exactly one $\ell^{2}(\Z)$ solution:
+deficiency indices $(1,1)$, and the self-adjoint extensions $J_{-}^{(\theta)}$ form a
+$\mathrm{U}(1)$ family.
+\end{theorem}
+
+\begin{remark}[first analysis, and why it was wrong]\label{rem:deficiencyfirsttry}
+Our first asymptotic analysis of the horizon end concluded limit point (a Gaussian/
+anti-Gaussian solution pair), through a mis-estimated reduction-of-order sum; the correct
+statement is Koelink's: in the unnormalised picture all solutions decay at the same
+\emph{Gaussian} leading order $q^{m^{2}+O(m)}$ (the recurrence degenerates to a one-term
+recursion downward), the weight grows like $q^{-(m+O(1))^{2}}$, and the products sit at the
+common \emph{exponential} order $q^{|m|/2}$ --- both square-summable. Recorded per
+\texttt{CONTRIBUTING.md} \S5; the numerical slopes above are the check that settled it.
+The extension dependence is also directly visible numerically: out-of-band eigenvalues of
+Dirichlet vs.\ Neumann truncations at $m=-M$ remain separated by gaps in $[0.11,0.84]$ as
+$M=8,12,16$ grows (check (R5)) --- for an essentially self-adjoint operator they would
+converge to each other.
+\end{remark}
+
+\begin{theorem}[spectra of the self-adjoint extensions]\label{thm:wedgespectra}
+Let $J^{(\theta)}_{-}$, $\theta\in\mathrm{U}(1)$, be the self-adjoint extensions of $J_{-}$.
+\begin{enumerate}[label=(\alph*)]
+\item \PROVED\ (in \cite{Koelink:2003oneparam}, Thm.\ 5.8 and Rmk.\ 5.11
+(arXiv labels: \texttt{thm:case1spectraldecomp}, \texttt{rmk:discspectralE}), transcribed
+through the dictionary of Theorem~\ref{thm:wedgedeficiency}.) Every $J^{(\theta)}_{-}$ has
+absolutely continuous spectrum $[-1,1]$ of multiplicity one, plus simple point spectrum
+\begin{equation}\label{eq:twogrids}
+  \sigma_{\mathrm{pp}}\bigl(J^{(\theta)}_{-}\bigr)
+  =\mu\Bigl(\bigl(y_{1}(\theta)\,q^{2\Z}\cup y_{2}(\theta)\,q^{2\Z}\bigr)
+  \cap\{|y|>1\}\Bigr),
+\end{equation}
+\emph{two bilateral $q^{2}$-grids}, unbounded in both directions, determined by the two
+roots $y_{1},y_{2}$ (per fundamental cell) of the equation $g(y)=\mathrm{const}(\theta)$
+for an explicit elliptic function $g$ of order two (a quotient of two theta functions;
+proof of (b) below); the eigenfunction at
+$\omega=\mu(y_{i}q^{2j})$ is the explicit $g^{(\omega)}$ of
+Lemma~\ref{lem:wedgesolutions}(c).
+\item \DERIVED\ \emph{(root product rule.)} The two roots obey
+\begin{equation}\label{eq:productrule}
+  y_{1}\,y_{2}\in-\gamma\,q^{2\Z} .
+\end{equation}
+Consequently $y_{1}$ and $y_{2}$ are real of \emph{opposite signs}: every self-adjoint
+extension carries one infinite \emph{discrete-type} tower ($\tCas=\mu(y)>1$) and one
+infinite \emph{strange-type} tower ($\tCas=\mu(y)<-1$), log-periodically locked by
+\eqref{eq:productrule}. In particular, on the $\gamma=1$ slice the extension whose spectrum
+contains the strange value $-\mu(q^{2a_{0}})$ ($a_{0}>0$) has
+\begin{equation}\label{eq:extensionspectrum}
+  \sigma_{\mathrm{pp}}=\bigl\{-\mu(q^{2a_{0}+2j})\bigr\}_{j\in\Z,\;q^{2a_{0}+2j}<1}
+  \;\cup\;\bigl\{+\mu(q^{2j-2a_{0}})\bigr\}_{j\in\Z,\;q^{2j-2a_{0}}<1}
+\end{equation}
+(the two parametrisations $\mu(y)=\mu(1/y)$ are used with arguments inside $(0,1)$, so the
+$|y|>1$ window of \eqref{eq:twogrids} is automatic).
+\item \DERIVED\ \emph{(numerical verification.)} With the bilinear eigenvector test
+$h(\omega)=\sum_{m}\hat g^{(\omega_{0})}_{m}\hat g^{(\omega)}_{m}$ (two real normalisable
+solutions belong to one extension iff $h=0$; Green's identity), at $q=0.6$, $\gamma=1$:
+for $a_{0}=\tfrac12$, $|h|$ at the four predicted grid points
+$-\mu(q^{3}),-\mu(q^{5}),+\mu(q),+\mu(q^{3})$ is
+$7.8\times10^{-42}$, $1.3\times10^{-41}$, $1.4\times10^{-41}$, $7.8\times10^{-42}$
+(the numerical floor of the $m$-cutoffs), against off-grid controls $0.209$ and $0.097$;
+for generic $a_{0}=0.37$, the strange grid point and the two product-rule partners give
+$|h|\le1.3\times10^{-41}$ while the \emph{naive mirror points} $+\mu(q^{2a_{0}})$,
+$+\mu(q^{2a_{0}+2})$ give $0.043$, $0.063$: the partner grid is
+\eqref{eq:extensionspectrum}, not the mirror. (Checks (R6); grid persistence at $q=0.9$,
+check (R7).)
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof of (b)]
+In Koelink's variables (case (1), $\psi=0$, $a=q^{1/2}$, $t=ir$, $r=\gamma^{-1/2}$, base
+$q$ with our $q^{2}$-grids arising as his ``$q^{2}$-quadratic grids'') the point-spectrum
+condition is $A\,\theta(yq^{1/2}ir)+\bar A\,\theta(-yq^{1/2}ir)=0$ with
+$\theta(x)=(x,q/x;q)_{\infty}$ and $A=A(\theta)$ [\cite{Koelink:2003oneparam}, Rmk.\ 5.11,
+display \texttt{eq:weightE1}]. Writing $y=e^{2\pi iw}$, $q=e^{\pi i\tau}$,
+the function $g(w,\tau)=\theta(e^{2\pi iw}q^{1/2}ir)/\theta(-e^{2\pi iw}q^{1/2}ir)$ is
+elliptic of order $2$ with periods $1,\tau$ (i.e.\ $y\mapsto yq^{2}$), and the condition is
+the level set $g(w,\tau)=-\bar A/A$. By Abel's theorem the two roots $w_{1},w_{2}$ of a
+level set of an elliptic function satisfy $w_{1}+w_{2}\equiv$ (sum of the poles) mod the
+period lattice; the poles of $g$ are at $-yq^{1/2}ir\in q^{\Z}$, two per cell, with product
+$y_{p1}y_{p2}=(-q^{-1/2}/ir)(-q^{1/2}/ir)=-1/r^{2}=-\gamma$; hence
+$y_{1}y_{2}\equiv-\gamma\bmod q^{2\Z}$. A complex-conjugate root pair would have
+$y_{1}y_{2}=|y_{1}|^{2}>0$, contradicting \eqref{eq:productrule}; so both roots are real, of
+opposite signs. \eqref{eq:extensionspectrum} is \eqref{eq:productrule} solved for $y_{2}$
+at $y_{1}=-q^{2a_{0}}$.
+\end{proof}
+
+\begin{corollary}[parity on the wedge; the fusion extension]\label{cor:wedgeparityfusion}
+\DERIVED\ (checks (R6d).) $\Pi J_{-}\Pi=-J_{-}$ exactly ($J_{-}$ has zero diagonal), so
+$\Pi$ maps the extension family to itself with
+$\sigma\bigl(J^{(\theta')}_{-}\bigr)=-\sigma\bigl(J^{(\theta)}_{-}\bigr)$, pairing the
+towers as in Corollary~\ref{cor:radialparity}. The extension through $-\mu(q^{2a_{0}})$ is
+$\Pi$-invariant iff its two grids are mirrors of each other, i.e.\ iff
+$2a_{0}\in\Z$ --- \emph{exactly the Plancherel labels} $a_{0}\in\tfrac12\Z_{>0}$ of
+Convention~\ref{conv:plancherel}. At those labels its spectrum is
+\begin{equation}\label{eq:fusionspectrum}
+  \sigma_{\mathrm{pp}}=\bigl\{\pm\mu(q^{2a_{0}+2j})\bigr\}_{j\in\Z,\;q^{2a_{0}+2j}<1},\qquad
+  \text{i.e.\ strange labels } a\in(a_{0}+\Z)_{>0}\text{ and discrete labels }
+  \ell=a+\tfrac12 :
+\end{equation}
+the radial problem realises the fusion pairing $a=\ell-\tfrac12$ of
+Theorem~\ref{thm:fusion} spectrally, discrete and strange towers inside one self-adjoint
+operator. For $2a_{0}\notin\Z$ the mirror points are \emph{not} in the spectrum (measured
+$|h|=0.043$, $0.063$ vs.\ $10^{-41}$ on-grid; check (R6)).
+\end{corollary}
+
+\begin{remark}[which extension is physical: open]\label{rem:whichextension}
+\GAP{26}\ Nothing computed here selects one $\theta$. At the unrescaled level GKK's Casimir
+is \emph{canonically} self-adjoint --- the closure is unique by strong commutation of the
+closed generators, and where a sector Jacobi operator fails to be essentially self-adjoint
+(their $(+,+)$ sector at $m=0$) the extension is fixed by affiliation to the dual von
+Neumann algebra $\hat M$ [GKK, proof of Lemma \texttt{lem:commutationEE*pmepet} and Thm.\
+\texttt{thm:Jacobioperatorforcasec=q}: the domain condition
+$u_{-k}=q^{k/2}f(q^{k})$, $f$ differentiable at $0$]. SI's rescaling (4.2) acts on states
+and on $\hat\rho_{st}$, not on $\hat M$ or on operator domains; whether it carries GKK's
+canonical domain to a distinguished $\theta$ --- conjecturally the $\Pi$-invariant fusion
+extension \eqref{eq:fusionspectrum} --- is issue \#26 (the domain-level counterpart of
+issue \#16). Until it is resolved, every statement about ``the'' point spectrum of the
+wedge radial Casimir is per-extension.
+\end{remark}
+
+\begin{remark}[horizon reading; agreement with BINN]\label{rem:binnhorizon}
+BINN \cite{Berkooz:2022qgroup} met the same operator family from the hands-on lattice side
+and drew the physical boundary condition we cannot yet derive: for their non-truncating
+transfer matrices (same recurrence \eqref{eq:wedgerecurrence}-type, studied via
+\cite{Koelink:2003oneparam}), ``the resulting operator has a continuous one-parameter
+family of self-adjoint extensions'', ``the spectrum always contains some bound states'',
+and --- verbatim --- ``We interpret the bound states that appear on top of that as
+corresponding to operators sitting at the Poincar\'e horizon'', with the truncating choice
+justified by demanding ``that no additional states are localized just on the Poincar\'e
+horizon'' [BINN \S4.4]. In the von Neumann algebraic construction the truncating wedge is
+not a \emph{choice} but one of the two slice families ($\chi\xi>0$), and the non-truncating
+wedge ($\chi\xi<0$, the $\epsilon=+1$ component) is genuinely present, with the horizon
+bound states \eqref{eq:twogrids} at discrete- \emph{and} strange-type Casimir values. Two
+differences from BINN's misaligned case are recorded: their non-truncating operator has
+$\chi>0$ off the lattice alignment (coefficient $1-\chi q^{2m}$ changing sign), ours has
+$\chi<0$ (coefficient $1+\gamma q^{2m}>0$ throughout); and in GKK's unrescaled sector
+operators the corresponding point spectra are \emph{asymmetric} (infinitely many
+strange-type, finitely many discrete-type eigenvalues in the $(+,+)$ sector, GKK \S8.3) ---
+the diagonal term that causes the asymmetry dies under SI's rescaling, which restores the
+exact $\Pi$-symmetry of Corollary~\ref{cor:wedgeparityfusion}.
+\end{remark}
+
+\subsection{The strange series in the radial problem, and the $q\to1$ limit}
+
+\begin{theorem}[where the strange values sit radially]\label{thm:radialstrange}
+\DERIVED\ (from Theorems \ref{thm:wedgedeficiency}--\ref{thm:wedgespectra}; checks (R6).)
+On the DSSYK space, the strange Casimir values $\omega=-\mu(q^{2a})<-1$ occur in the radial
+problem exactly as follows.
+\begin{enumerate}[label=(\roman*)]
+\item On the chord wedge ($\chi\xi>0$): never (Proposition~\ref{prop:chordwedge}).
+\item On the $\epsilon=+1$ wedge ($\chi\xi<0$): for \emph{every} $a>0$ the explicit
+radial solution $g^{(-\mu(q^{2a}))}$ of Lemma~\ref{lem:wedgesolutions} is normalisable
+(geometric decay $|\sigma|^{m}=q^{2am}$ at the boundary end, $q^{|m|/2}$ at the horizon
+end), and $-\mu(q^{2a})$ is a simple eigenvalue of exactly one self-adjoint extension
+$J^{(\theta(a))}_{-}$; within that extension it comes locked to the discrete-type tower
+\eqref{eq:extensionspectrum}. The discrete values $+\mu(q^{2\ell-1})$ enter in the
+mirror-symmetric way. The strange and discrete families are therefore \emph{exactly on a
+par} in the radial problem; no radial datum distinguishes them except the sign of
+$\tCas$ --- the concrete realisation of Corollary~\ref{cor:radialparity} and
+Theorem~\ref{thm:covobstruction} announced there.
+\end{enumerate}
+\end{theorem}
+
+\begin{proposition}[$q\to1$: how the strange towers disappear]\label{prop:radialq1}
+\DERIVED\ (checks (R7).) Fix $a>0$ and let $q\to1^{-}$.
+\begin{enumerate}[label=(\roman*)]
+\item The strange eigenvalue $-\mu(q^{2a})\to-1^{-}$: its distance to the continuum
+$[-1,1]$ is $\mu(q^{2a})-1=2\sinh^{2}(a\lambda/2)=\tfrac{a^{2}\lambda^{2}}{2}+O(\lambda^{4})$
+--- the strange towers merge into the band edge and no isolated spectrum survives at $q=1$
+at fixed label. The strange \emph{representation} disappears (its Casimir parameter leaves
+the strange range $(-\infty,-1)$), as required by \texttt{PROBLEM.md}.
+\item In lower-edge (Schwarzian) units, $E^{\mathrm{low}}\coloneqq2(1+\tCas)/\lambda^{2}$
+on the $\Pi$-twisted sector (Theorem~\ref{thm:radialclassical}(a)): the continuum becomes
+$[0,\infty)$ ($E^{\mathrm{low}}\to k^{2}$) and the strange tower survives at
+\begin{equation}\label{eq:strangetower}
+  E^{\mathrm{low}}\bigl(-\mu(q^{2a_{0}+2j})\bigr)
+  =\frac{2\bigl(1-\mu(q^{2a_{0}+2j})\bigr)}{\lambda^{2}}
+  \longrightarrow -(a_{0}+j)^{2}:
+\end{equation}
+the bound-state tower of the classical inverted-Liouville well. Its $-\Cas_{\mathrm{cl}}$
+values are $\tfrac14-(a_{0}+j)^{2}=\ell_j(1-\ell_j)$ with $\ell_j=a_{0}+j+\tfrac12$: the
+\emph{classical discrete-series} Casimir values, under the fusion label map
+$a=\ell-\tfrac12$ once more. Measured deviations from $-(a_{0}+j)^{2}$ at
+$a_{0}=\tfrac12$: $(-2.3\times10^{-4},-1.9\times10^{-2},-1.5\times10^{-1})$ for $j=0,1,2$
+at $q=0.9$ and $(-2.1\times10^{-6},-1.7\times10^{-4},-1.3\times10^{-3})$ at $q=0.99$;
+deviation ratio $109.9$ against the predicted $(\ln0.9/\ln0.99)^{2}=109.9$.
+\item At the same (lower) edge the \emph{discrete} tower is expelled:
+$E^{\mathrm{low}}(+\mu(q^{2\ell-1}))=2(1+\mu(q^{2\ell-1}))/\lambda^{2}
+=4/\lambda^{2}+(\ell-\tfrac12)^{2}+O(\lambda^{2})\to+\infty$ (measured: $90.33$ vs
+$4/\lambda^{2}=90.08$ at $q=0.9$; $9900.33$ vs $9900.08$ at $q=0.99$). At the upper edge
+the roles are exactly exchanged ($\Pi$-conjugation). So each classical edge theory keeps
+one tower --- which becomes its ordinary discrete series --- and expels the mirror tower to
+infinite energy; the coexistence of both towers in one self-adjoint radial operator is a
+finite-$q$ ($\lambda>0$) phenomenon with no classical counterpart.
+\item \ARGUED\ \emph{(a quantum-only window.)} The classical well
+$\tfrac14\partial^{2}_{\varphi}-pp_{R}e^{-2\varphi}$, $pp_{R}<0$, on
+$L^{2}(e^{2\varphi}d\varphi)$ admits bound states only for $\kappa>\tfrac12$
+(normalisability of $e^{(2-4\kappa)\varphi}$ at $\varphi\to+\infty$, $E=-\kappa^{2}$),
+matching the classical unitarity bound $\ell=\kappa+\tfrac12>1$; the $q$-side towers
+\eqref{eq:strangetower} include $\kappa=a_{0}+j\in(0,\tfrac12)$ members whenever
+$a_{0}<\tfrac12$, whose limits fall below that bound: eigenvalues with no classical
+counterpart even edge-locally. Not needed downstream; recorded for issue \#8.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[summary for the criterion (issue \#8)]\label{rem:radialsummary}
+The radial part of the Casimir on the DSSYK space is now explicit: the chord wedge carries
+the transfer matrix (principal continuum only); the $\epsilon=+1$ wedge carries the
+$q$-Liouville well operator $J_{-}$, whose self-adjoint realisations each hold one strange
+and one discrete tower, locked by the product rule \eqref{eq:productrule}, collapsing at
+$q\to1$ onto the classical discrete series of the respective edge with the mirror tower
+expelled. Everything is exactly $\Pi$-covariant; the only non-covariant datum remains the
+orientation of the spectral axis (which edge is ``low''), and the only unresolved freedom
+is the extension choice (issue \#26), whose conjectured resolution
+\eqref{eq:fusionspectrum} is itself $\Pi$-invariant. Any AdS/dS criterion built from the
+radial problem therefore faces the obstruction of Theorem~\ref{thm:covobstruction} in the
+sharpened form: it must break a symmetry that the radial operator, its extension family,
+its explicit eigenfunctions, and its classical limits all respect.
+\end{remark}
 
 \section{The AdS/dS criterion}
 \label{sec:criterion}
