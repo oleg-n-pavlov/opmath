@@ -527,3 +527,24 @@ and FAILED to find one — measured drift ~1e-19 = bisection precision at every 
 crossing is exact, and the check now asserts exactness. (P2) first asserted residual
 scaling O(λ₂) and FAILED with measured exponent ≈ 2.07 — the O(λ₂) Euler–Maclaurin
 corrections cancel in the symmetric phase combination; the check now asserts O(λ₂²).
+
+## 2026-08-11 — issue #9: the q→1 dictionary
+
+Subsection 7.1 of tex; `src/check_q1_limits.py` (`results/check_q1_limits.out`, all pass,
+deterministic, first run clean). The four acceptance limits of PROBLEM.md §5:
+
+- DERIVED (prop:dos): the chord Plancherel density factorises EXACTLY through Γ_{q²}
+  (verified to 1e-37) and tends to the Schwarzian density 2k̃sinh(2πk̃)/π; measured rel devs
+  0.054/0.0056/0.00056 (k̃=0.6) and 0.47/0.057/0.0058 (k̃=1.4) at q=0.9/0.99/0.999, rate
+  ratios 0.78–0.99 vs O(λ₂).
+- DERIVED (prop:besselK): from the project's own connection formula: the minimal-solution
+  ₂φ₁ confluences to Γ(1+2is̃)(u/2)^{-2is̃}I_{2is̃}(u) (devs 6.6e-3/5.8e-4/5.7e-5, rates
+  ~1.0-1.1), hence H_k(μ(q^{2is̃});q²) → 2K_{2is̃}(u)/(λ₂(q²;q²)_∞) with u = 2q^{k+1}/λ₂ —
+  the Liouville/Schwarzian Bessel-K wavefunctions (devs 0.16/0.014/0.0014 in the oscillatory
+  region with k up to 7819, and 0.089/0.0081/0.0008 at u₀=1.5; rates 1.01–1.06). Lower edge
+  = ×(-1)^k (parity).
+- (iii) principal → AdS₂: operator level in thm:radialclassical (R2), density in prop:dos.
+- (iv) strange disappearance mechanism: prop:radialq1 (R7): spectral merging into the band
+  edge (gap a²λ₂²/2) + expulsion of the mirror (4/λ²); no label-range collapse, no unitarity
+  failure; the alternating profile has no continuum limit. SI's missing classical-normaliser
+  computation is not needed for any of these limits (recorded in rem:otherlimits).

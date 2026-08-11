@@ -1,0 +1,21 @@
+check_q1_limits.py -- issue #9 (mpmath, 40 digits)
+==============================================================================
+(L1) chord Plancherel density -> Schwarzian density k sinh(2 pi k)
+  [PASS] k=0.6, q=0.9: factorisation rel dev = 8.01e-40; rhohat = 8.7273467 vs 2k sinh(2pi k)/pi = 8.2798433 (rel dev 0.054)
+  [PASS] k=0.6, q=0.99: factorisation rel dev = 1.94e-40; rhohat = 8.326093 vs 2k sinh(2pi k)/pi = 8.2798433 (rel dev 0.00559)
+  [PASS] k=0.6, q=0.999: factorisation rel dev = 1.94e-37; rhohat = 8.2844789 vs 2k sinh(2pi k)/pi = 8.2798433 (rel dev 0.00056)
+  [PASS]        limit rate: (dev ratio)/(lam2 ratio) = 0.923, 0.9932 (O(lam2) predicted ~ 1)
+  [PASS] k=1.4, q=0.9: factorisation rel dev = 9.28e-40; rhohat = 1563.4497 vs 2k sinh(2pi k)/pi = 2945.9946 (rel dev 0.469)
+  [PASS] k=1.4, q=0.99: factorisation rel dev = 9.31e-40; rhohat = 2777.5989 vs 2k sinh(2pi k)/pi = 2945.9946 (rel dev 0.0572)
+  [PASS] k=1.4, q=0.999: factorisation rel dev = 4.21e-38; rhohat = 2928.8267 vs 2k sinh(2pi k)/pi = 2945.9946 (rel dev 0.00583)
+  [PASS]        limit rate: (dev ratio)/(lam2 ratio) = 0.7832, 0.9765 (O(lam2) predicted ~ 1)
+
+(L2a) 2phi1(0,0;q^(4i stilde) q^2;q^2, lam2^2 u^2/4) -> Gamma(1+2i stilde)(u/2)^(-2i stilde) I_(2i stilde)(u)
+  [PASS] stilde=0.7, u=0.4: rel devs 0.00662/0.000577/5.7e-5 at q=0.9/0.99/0.999; rates 1.095, 1.008 (O(lam2) ~ 1)
+  [PASS] stilde=0.7, u=1.5: rel devs 0.102/0.00832/0.000818 at q=0.9/0.99/0.999; rates 1.167, 1.014 (O(lam2) ~ 1)
+
+(L2b) H_k(mu(q^(2i stilde));q^2) -> 2 K_(2i stilde)(u)/(lam2 (q^2;q^2)_inf), u = 2 q^(k+1)/lam2
+  [PASS] stilde=0.7, u0=0.4: rel devs 0.158/0.0142/0.00141 at q=0.9/0.99/0.999 (k = 29/548/7819); rates 1.063, 1.007 (O(lam2) ~ 1)
+  [PASS] stilde=0.7, u0=1.5: rel devs 0.0887/0.00809/0.000801 at q=0.9/0.99/0.999 (k = 17/416/6498); rates 1.045, 1.006 (O(lam2) ~ 1)
+
+ALL CHECKS PASSED

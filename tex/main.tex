@@ -2001,7 +2001,80 @@ dS-holography papers recorded in Section~\ref{sec:intro}, the sine-dilaton pictu
 \cite{Xu:2024vnalgebras} (type II$_{1}$ factor); the corresponding comparisons are the
 business of issue \#11.
 
-\emph{To be written under issues \#9, \#10, \#11.}
+\subsection{The $q\to1$ dictionary}
+\label{sec:q1dictionary}
+
+% Issue #9. Numerical verification: src/check_q1_limits.py
+% (results/check_q1_limits.out, all pass; checks (L1)-(L2)), plus (R2)/(R7) of Sec. 5.
+
+The four acceptance limits of \texttt{PROBLEM.md} \S5, with their status:
+
+\begin{proposition}[density of states]\label{prop:dos}
+\DERIVED\ (checks (L1).) The chord-sector Plancherel density [SI (4.11);
+Proposition~\ref{prop:planchereldata}] factorises \emph{exactly} at every $q$ through the
+$q$-Gamma function: at $\theta=\pi-\lambda_2\tilde k$,
+\begin{equation}\label{eq:dosfactorised}
+  \rho_{q}(\theta)\coloneqq\frac{(q^{2};q^{2})_{\infty}}{2\pi}
+  \bigl|(e^{2i\theta};q^{2})_{\infty}\bigr|^{2}
+  =\frac{(q^{2};q^{2})_{\infty}^{3}(1-q^{2})^{2}}{2\pi}\,
+  \frac{1}{|\Gamma_{q^{2}}(2i\tilde k)|^{2}}
+  \;\xrightarrow[q\to1]{}\;
+  \frac{(\cdots)}{2\pi}\cdot\frac{2\tilde k\sinh(2\pi\tilde k)}{\pi},
+\end{equation}
+the Schwarzian density of states, by $\Gamma_{q^{2}}\to\Gamma$ and
+$|\Gamma(2i\tilde k)|^{2}=\pi/(2\tilde k\sinh2\pi\tilde k)$. The factorisation is verified
+to $10^{-37}$ relative; the limit with relative deviations
+$0.054/0.0056/0.00056$ at $q=0.9/0.99/0.999$ ($\tilde k=0.6$) and $0.47/0.057/0.0058$
+($\tilde k=1.4$), measured rate ratios $0.78$--$0.99$ against the predicted $O(\lambda_2)$
+scaling.
+\end{proposition}
+
+\begin{proposition}[wavefunctions: Bessel $K$ from the connection formula]\label{prop:besselK}
+\DERIVED\ (checks (L2); derivation from this project's own closed forms.) Let
+$\tilde s>0$, $s=q^{2i\tilde s}$ (principal value $\mu(s)=\cos(\tilde s\lambda_2)$), and
+$u=2q^{k+1}/\lambda_2$ (the renormalised-length variable, $u=e^{-\tilde\ell/2}$ with
+$\tilde\ell=\lambda_2 k-2\ln(\lambda_2/2)+O(\lambda_2)$, cf.\ the length dictionary of
+Proposition~\ref{prop:where}). Then, as $q\to1$ at fixed $(\tilde s,u)$:
+\begin{enumerate}[label=(\alph*)]
+\item the minimal-solution kernel of Theorem~\ref{thm:strangeradial} confluences to the
+modified Bessel function,
+\begin{equation}\label{eq:Iconfluence}
+  {}_{2}\varphi_{1}\!\left(\begin{matrix}0,0\\ s^{2}q^{2}\end{matrix};q^{2},
+  \tfrac{\lambda_2^{2}u^{2}}{4}\right)\longrightarrow
+  \Gamma(1+2i\tilde s)\,(u/2)^{-2i\tilde s}\,I_{2i\tilde s}(u),
+\end{equation}
+(measured relative deviations $6.6\times10^{-3}/5.8\times10^{-4}/5.7\times10^{-5}$ at
+$q=0.9/0.99/0.999$, $u=0.4$; rates $1.10$, $1.01$ vs.\ predicted $O(\lambda_2)$);
+\item combining the two branches through the connection formula \eqref{eq:connection} and
+$\Gamma(1+\nu)\Gamma(-\nu)=-\pi/\sin\pi\nu$,
+$K_{\nu}=\tfrac{\pi}{2\sin\pi\nu}(I_{-\nu}-I_{\nu})$:
+\begin{equation}\label{eq:HtoK}
+  H_{k}\bigl(\mu(q^{2i\tilde s});q^{2}\bigr)\;\longrightarrow\;
+  \frac{2\,K_{2i\tilde s}(u)}{\lambda_2\,(q^{2};q^{2})_{\infty}},
+\end{equation}
+i.e.\ the transfer-matrix eigenvectors reduce to the Liouville/Schwarzian wavefunctions
+$K_{2is}(e^{-\tilde\ell/2})$ of SI (2.27) at the upper edge, and times $(-1)^{k}$
+(Lemma~\ref{lem:gradingchord}) at the lower/AdS edge. Measured relative deviations
+$0.16/0.014/0.0014$ ($u_{0}=0.4$, oscillatory region, $k$ up to $7819$) and
+$0.089/0.0081/0.0008$ ($u_{0}=1.5$), rates $1.01$--$1.06$ vs.\ predicted $O(\lambda_2)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[the remaining two acceptance limits]\label{rem:otherlimits}
+(iii) \emph{The principal series returns to ordinary AdS$_2$}: the radial operator
+contracts to the Liouville operator with the Schwarzian generalised eigenfunctions and
+eigenvalues (Theorem~\ref{thm:radialclassical}, checks (R2)), and the density of states is
+Proposition~\ref{prop:dos}. (iv) \emph{The strange series disappears}, with mechanism and
+rates: Proposition~\ref{prop:radialq1} (checks (R7)) --- at fixed label the eigenvalue
+merges into the band edge at distance $\approx a^{2}\lambda_{2}^{2}/2$; in edge units the
+tower survives as the ordinary discrete series of that edge while its mirror is expelled
+like $4/\lambda^{2}$; the alternating radial profile $(-1)^{k}q^{2ak}$ has no continuum
+limit as a function (Proposition~\ref{prop:criterioncases}(c)). The label range does not
+collapse and unitarity does not fail; the disappearance is spectral merging plus expulsion
+--- this is the ``rate and manner'' record requested by issue \#9. The classical
+$\mathrm{SL}(2,\R)\rtimes\Z_2$ matrix-element computation flagged by SI as missing (their
+\S2.3 footnote) is not needed for any of these limits and remains open in the literature.
+\end{remark}
 
 \section{Conclusion and open gaps}
 \label{sec:conclusion}
