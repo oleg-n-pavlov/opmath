@@ -250,6 +250,17 @@ the regenerated script is bit-identical to its own output. Policy now holding fo
 check scripts (all pure mpmath): a committed output is exactly what the committed script
 emits, reproducible bit-for-bit.
 
+## 2026-08-11 — issue #21: uncited refs.bib keys
+
+Five keys were defined in tex/refs.bib but cited nowhere in tex/main.tex, including
+Schlosser:2024matsuki — the method paper PROBLEM.md §4 rests on. All five belong in the
+document, so they are now cited where they belong rather than removed: the Section 5
+(radial part) placeholder states the fixed method with citations to Schlosser:2024matsuki,
+Isachenkov:2016superint, Isachenkov:2017integrability; the Section 7 (verification)
+placeholder states the fixed cross-check targets with citations to
+Blommaert:2024sinedilaton and Xu:2024vnalgebras. Neither sentence pre-empts issues #7 or
+#9–#11. Zero uncited keys and zero unresolved cites, verified.
+
 ## 2026-08-11 — issue #6: matrix coefficients of the strange series
 
 Section 4 of `tex/main.tex`. Sub-issues opened rather than solved inline: #13 (principal-series
