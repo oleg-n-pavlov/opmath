@@ -342,6 +342,370 @@ inclusion of principal-series bilocals is, to our knowledge, not computed anywhe
 as an open sub-question for issue \#6.
 \end{remark}
 
+\subsection{The normaliser origin of the reflection identity}
+\label{sec:normaliserorigin}
+
+% Issue #15. Connects Lemma \ref{lem:reflection} to the Z_2-grading of the dual von Neumann
+% algebra of GKK; establishes the fusion of strange and discrete series inside single
+% irreducible corepresentations of the normaliser quantum group; and derives the covariance
+% obstruction that informs issue #8. Numerical verification:
+% src/check_normaliser_grading.py (results/check_normaliser_grading.out, 72/72 checks pass;
+% cited as (G1)--(G7) below).
+
+Lemma~\ref{lem:reflection} and the normaliser structure of
+Convention~\ref{conv:normaliser} are two occurrences of one mechanism. This subsection makes
+the connection precise: the extra factor distinguishing the strange bilocal from the discrete
+bilocal is a self-adjoint unitary $\Pi$ that anticommutes with the transfer matrix ---
+the chord-sector shadow of the $\Z_2$-grading of the dual von Neumann algebra of
+\cite{Groenevelt:2009gkk} --- and at the unrescaled level the strange and discrete series are
+\emph{fused into single irreducible corepresentations} of $\SUq\rtimes\Z_2$. The structural
+consequence (Theorem~\ref{thm:covobstruction}) is an obstruction relevant to issue \#8.
+
+\begin{lemma}[the grading unitary on the chord sector]\label{lem:gradingchord}
+\PROVED\ Let $q\in(0,1)$, let $H_{\mathrm{ch}}$ be the closure of the span of the chord states
+$\{\ket{k}\}_{k\in\Z_{\ge0}}$ (an orthonormal basis, Convention~\ref{conv:chord}, boundary
+conditions $\eta=\xi=1$), and let $2q\hat\rho_{st}$ be the positive self-adjoint diagonal
+operator $2q\hat\rho_{st}\ket{k}=q^{-2k}\ket{k}$ [SI (4.13)]. Define, by the Borel functional
+calculus with the real branch of $\ln$ on $(0,\infty)$,
+\begin{equation}\label{eq:Pidef}
+  \Pi \coloneqq \bigl(2q\hat\rho_{st}\bigr)^{-\frac{i\pi}{2\ln q}},
+  \qquad z^{-\frac{i\pi}{2\ln q}}\coloneqq\exp\Bigl(-\frac{i\pi\ln z}{2\ln q}\Bigr).
+\end{equation}
+Then:
+\begin{enumerate}[label=(\roman*)]
+\item $\Pi\ket{k}=(-1)^{k}\ket{k}$; consequently $\Pi=\Pi^{*}=\Pi^{-1}$, $\Pi^{2}=1$:
+$\Pi$ is the chord-parity involution, the nontrivial character of the spectral lattice
+$q^{-2\Z_{\ge0}}$ of $2q\hat\rho_{st}$.
+\item $\Pi\,\tCas\,\Pi=-\tCas$ on $H_{\mathrm{ch}}$, hence $\Pi T\Pi=-T$ and
+$\Pi e^{\tau T}\Pi=e^{-\tau T}$ for every $\tau\in\C$
+($T=2\tCas/\sqrt{1-q^{2}}$, Convention~\ref{conv:casimir}).
+\item Coefficientwise on principal eigenvectors: with
+$v_{k}(\theta)\coloneqq H_{k}(\cos\theta;q^{2})/\sqrt{(q^{2};q^{2})_{k}}$
+(Convention~\ref{conv:casimir}), $(-1)^{k}v_{k}(\theta)=v_{k}(\pi-\theta)$ for all
+$k\ge0$ and $\theta\in[0,\pi]$; that is, $\Pi\ket{\P^{\theta}}=\ket{\P^{\pi-\theta}}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) On the eigenvalue $z=q^{-2k}$, $\ln z=-2k\ln q$, so
+$z^{-i\pi/(2\ln q)}=\exp(i\pi k)=(-1)^{k}$. The function takes values in $\{\pm1\}\subset\R$,
+so $\Pi$ is a self-adjoint unitary with $\Pi^{2}=1$.
+(ii) $\tCas$ is bounded on $H_{\mathrm{ch}}$: writing $\tCas=A+A^{*}$ with
+$A\ket{k}=\tfrac12\sqrt{1-q^{2k}}\ket{k-1}$, $\|A\|\le\tfrac12$ gives $\|\tCas\|\le1$. On
+basis vectors,
+$\Pi\tCas\Pi\ket{k}
+=(-1)^{k}\bigl(\tfrac12\sqrt{1-q^{2k+2}}(-1)^{k+1}\ket{k+1}
++\tfrac12\sqrt{1-q^{2k}}(-1)^{k-1}\ket{k-1}\bigr)=-\tCas\ket{k}$,
+and both sides are bounded, so the identity extends to $H_{\mathrm{ch}}$ by linearity and
+continuity. The exponential statement follows term by term from the (norm-convergent, since
+$T$ is bounded) power series of $e^{\tau T}$: $\Pi T^{n}\Pi=(-T)^{n}$.
+(iii) $H_{k}(-x;q^{2})=(-1)^{k}H_{k}(x;q^{2})$ by induction on $k$ from the recurrence
+$H_{k+1}(x)=2xH_{k}(x)-(1-q^{2k})H_{k-1}(x)$: it holds for $H_{0}=1$ and $H_{1}=2x$, and if it
+holds at $k-1,k$ then
+$H_{k+1}(-x)=-2xH_{k}(-x)-(1-q^{2k})H_{k-1}(-x)
+=(-1)^{k+1}\bigl(2xH_{k}(x)-(1-q^{2k})H_{k-1}(x)\bigr)=(-1)^{k+1}H_{k+1}(x)$. Apply this at
+$x=\cos\theta$, $-x=\cos(\pi-\theta)$. (Numerical confirmation to $10^{-59}$ or better:
+checks (G1)--(G3).)
+\end{proof}
+
+\begin{proposition}[factorisation of the strange bilocal; the exact content of
+Lemma~\ref{lem:reflection}]\label{prop:factorisation}
+\PROVED\ Let $q\in(0,1)$ and $\ell\in\tfrac12\Z_{>0}$, with
+$\O^{\ell},\mathcal{S}^{\ell}$ as in Convention~\ref{conv:chord}. Then:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(factorisation)} As bounded operators on $H_{\mathrm{ch}}$,
+\begin{equation}\label{eq:factorisation}
+  \mathcal{S}^{\ell}(0)=\O^{\ell}(0)\,\Pi=\Pi\,\O^{\ell}(0),
+  \qquad
+  \mathcal{S}^{\ell}(\tau)=\O^{\ell}(\tau)\;e^{\tau T}\Pi e^{-\tau T}
+  =\O^{\ell}(\tau)\,\Pi\,e^{-2\tau T}\quad(\tau\in\C).
+\end{equation}
+\item \emph{(the conjugation reading is false)} $\Pi\,\O^{\ell}(0)\,\Pi^{-1}=\O^{\ell}(0)$:
+conjugation by $\Pi$ fixes every function of $\hat\rho_{st}$, and
+$\Pi\O^{\ell}(0)\Pi^{-1}\neq\mathcal{S}^{\ell}(0)$ (they differ by the factor $(-1)^{k}$ on
+every chord state with $k$ odd). The strange bilocal is \emph{not} the discrete bilocal
+conjugated by a normaliser element; it is the discrete bilocal \emph{multiplied} by the
+grading unitary $\Pi$.
+\item \emph{(kernel identity through $\Pi$)} For $\theta_{1},\theta_{2}\in[0,\pi]$ the chord
+sums
+\begin{equation}\label{eq:kernelsums}
+  \sum_{k\ge0}v_{k}(\theta_{1})\,(-1)^{k}q^{2\ell k}\,v_{k}(\theta_{2})
+  \;=\;\sum_{k\ge0}v_{k}(\theta_{1})\,q^{2\ell k}\,v_{k}(\pi-\theta_{2})
+\end{equation}
+converge absolutely and are equal; i.e.\
+$\bra{\P^{\theta_1}}\mathcal{S}^{\ell}(0)\ket{\P^{\theta_2}}
+=\bra{\P^{\theta_1}}\O^{\ell}(0)\ket{\P^{\pi-\theta_2}}$ termwise. Combined with
+Lemma~\ref{lem:mehler} this reproduces Lemma~\ref{lem:reflection}; the identity
+\eqref{eq:kernelsums} itself is proved here without the $q$-Mehler formula.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) The Borel functional calculus of the positive self-adjoint operator $2q\hat\rho_{st}$ is
+multiplicative, and
+$z^{-\ell-\frac{i\pi}{2\ln q}}=z^{-\ell}\cdot z^{-\frac{i\pi}{2\ln q}}$ pointwise on
+$(0,\infty)$; evaluating on the spectrum, $\mathcal{S}^{\ell}(0)\ket{k}=(-1)^{k}q^{2\ell k}
+\ket{k}=\O^{\ell}(0)\Pi\ket{k}$. All three operators are diagonal in the chord basis, hence
+commute pairwise. The $\tau$-dependent statement follows by conjugating with $e^{\tau T}$
+(bounded for all $\tau\in\C$ since $T$ is bounded) and using
+$\Pi e^{-\tau T}=e^{\tau T}\Pi$ (Lemma~\ref{lem:gradingchord}(ii)).
+(b) Diagonal operators commute, so $\Pi\O^{\ell}(0)\Pi^{-1}=\O^{\ell}(0)$; on $\ket{k}$ with
+$k$ odd, $\O^{\ell}(0)\ket{k}=q^{2\ell k}\ket{k}\neq-q^{2\ell k}\ket{k}
+=\mathcal{S}^{\ell}(0)\ket{k}$.
+(c) Absolute convergence: by the explicit expansion
+$H_{k}(\cos\theta;q^{2})=\sum_{j=0}^{k}\genfrac[]{0pt}{1}{k}{j}_{q^{2}}e^{i(k-2j)\theta}$
+[KLS \cite{KLS2010} \S14.26] and
+$\genfrac[]{0pt}{1}{k}{j}_{q^{2}}\le(q^{2};q^{2})_{\infty}^{-2}$, one has
+$|H_{k}(\cos\theta;q^{2})|\le(k+1)(q^{2};q^{2})_{\infty}^{-2}$, so both series in
+\eqref{eq:kernelsums} are dominated by
+$\sum_{k}(k+1)^{2}(q^{2};q^{2})_{\infty}^{-5}\,q^{2\ell k}<\infty$. Termwise equality is
+Lemma~\ref{lem:gradingchord}(iii) applied to $v_{k}(\theta_{2})$. (Checks (G4)--(G5):
+factorisation and conjugation triviality exact; kernel sums agree to relative
+$3\times10^{-60}$ and match the closed form of
+$\K^{\O}_{q}(\theta_{1},\pi-\theta_{2})$ to relative $4\times10^{-60}$.)
+\end{proof}
+
+\begin{proposition}[the $\Z_2$-grading of the dual algebra; GKK]\label{prop:gkkgrading}
+\PROVED\ (in \cite{Groenevelt:2009gkk}; transcription, with the dictionary of
+Convention~\ref{conv:translation}; numerically verified on truncations, checks (G6).)
+Let $(M,\Delta)$ be the von Neumann algebraic quantum group $\SUq\rtimes\Z_2$ and $\hat M$ its
+dual, acting on the GNS space $\mathcal{K}$ of the Haar weight. Then:
+\begin{enumerate}[label=(\roman*)]
+\item With $\mathcal{K}_{\pm}\coloneqq\overline{\mathrm{span}}\{f_{m,p,t}:\operatorname{sgn}(pt)
+=\pm\}$ and $\hat M_{\pm}\coloneqq\{x\in\hat M: x\,\mathcal{K}_{\pm}\subseteq
+\mathcal{K}_{\pm(\mp)}\}$ one has $\hat M=\hat M_{+}\oplus\hat M_{-}$, and the Casimir
+satisfies the graded commutation relations $x\,\Omega_{\mathrm{GKK}}\subseteq
+\Omega_{\mathrm{GKK}}\,x$ for $x\in\hat M_{+}$ and $y\,\Omega_{\mathrm{GKK}}\subseteq
+-\Omega_{\mathrm{GKK}}\,y$ for $y\in\hat M_{-}$ [GKK Def.\ (defKpmandMpm), Prop.\
+(decompMintoM+andM-andgradedcommutation)]. Since $\tCas=-\Omega_{\mathrm{GKK}}$
+(Convention~\ref{conv:translation}), the same relations hold verbatim for $\tCas$.
+\item $\hat M$ is generated by $K$, $E$, $U^{+-}_{0}$, $U^{-+}_{0}$, where the two extra
+generators lie in the odd part $\hat M_{-}$ and are \emph{necessary}: $E$ and $K$ alone
+do not suffice, precisely because they commute with the Casimir while $\hat M$ does not
+[GKK Thm.\ (generatorsforhatM), Prop.\ (QppngeneratedualM), Lemma\
+(polardecompositionQppn)].
+\item On the eigenvectors $e^{\epsilon,\eta}_{m}(p,x)$ of $\Omega_{\mathrm{GKK}}$ for the
+eigenvalue $\epsilon\eta x$ in the sector $(p,m,\epsilon,\eta)$, the generators act by
+[GKK Lemma (actionsofgeneratorsoneigvetsOm), eq.\ (introprincipalseries)]
+\begin{equation}\label{eq:gkkgradingaction}
+\begin{split}
+  K\,e^{\epsilon,\eta}_{m}(p,x)&=p^{\frac12}q^{m}\,e^{\epsilon,\eta}_{m}(p,x),\qquad
+  (q^{-1}-q)\,E\,e^{\epsilon,\eta}_{m}(p,x)=q^{-m-\frac12}p^{-\frac12}
+  \sqrt{1+2\epsilon\eta xq^{2m+1}p+q^{4m+2}p^{2}}\;e^{\epsilon,\eta}_{m+1}(p,x),\\
+  U^{+-}_{0}\,e^{\epsilon,\eta}_{m}(p,x)&=\eta\,(-1)^{\upsilon(p)}\,
+  e^{\epsilon,-\eta}_{m}(p,x),\qquad
+  U^{-+}_{0}\,e^{\epsilon,\eta}_{m}(p,x)=\epsilon\,\eta^{\chi(p)}(-1)^{m}\,
+  e^{-\epsilon,\eta}_{m}(p,x),
+\end{split}
+\end{equation}
+where $\chi(p)=\log_{q}p$ and $\upsilon(p)=k$ for $p=q^{2k}$ or $p=q^{2k-1}$. In particular
+both $U^{+-}_{0}$ and $U^{-+}_{0}$ flip the sign $\epsilon\eta$, hence map
+$\Omega_{\mathrm{GKK}}$-eigenvectors for $\lambda$ to eigenvectors for $-\lambda$; they
+commute with $K$; on the principal corepresentation space
+$\mathcal{L}_{p,x}=\bigoplus_{\epsilon,\eta}\ell^{2}_{\epsilon,\eta}(p,x)$ they are unitary
+and satisfy $(U^{+-}_{0})^{2}=(U^{-+}_{0})^{2}=-1$; and conjugation by them maps the
+$E$-action to the $(\epsilon\eta\mapsto-\epsilon\eta)$-twisted action, with an extra factor
+$-1$ for $U^{-+}_{0}$ (the $(-1)^{m}$ in \eqref{eq:gkkgradingaction} --- the same parity
+twist as $\Pi$, in the $K$-weight index). (Checks (G6a)--(G6d): all verified to
+$1.5\times10^{-59}$ or exactly, at $(q,\chi(p))=(0.6,0)$ and $(0.8,1)$.)
+\end{enumerate}
+\end{proposition}
+
+\begin{theorem}[fusion of strange and discrete series in the normaliser quantum group]
+\label{thm:fusion}
+\PROVED\ (in \cite{Groenevelt:2009gkk}, Prop.\ (discretesubrepresinregrepr) and eq.\
+(sudecompdiscretesubrepresinregrepr); label computation and transcription ours, numerically
+verified, checks (G7).) Let $q\in(0,1)$, $p\in q^{\Z}$, and $x=\mu(\lambda)$ with
+$\lambda\in-q^{2\Z+1}p\cup q^{2\Z+1}p$, $|\lambda|>1$; define $j,l\in\Z$ by
+$|\lambda|=q^{1-2j}p^{-1}=q^{1+2l}p$ (equivalently $l=-j-\chi(p)$) and
+\begin{equation}\label{eq:fusionlabel}
+  \ell\coloneqq j+\tfrac12\chi(p)\in\tfrac12\Z,\qquad
+  q^{2\ell-1}=|\lambda|^{-1},\qquad |\lambda|>1\iff\ell\ge1 .
+\end{equation}
+Then $(p,x)$ determines an irreducible discrete-series corepresentation $W_{p,x}$ of
+$\SUq\rtimes\Z_2$ inside the left regular corepresentation, and as a $\Uq$-module
+\begin{equation}\label{eq:fusion}
+  W_{p,x}\big|_{\Uq}\;\cong\;\pi^{S}_{\ell-\frac12,\,\epsilon(p)}\;\oplus\;D^{-}_{\ell}
+  \;\oplus\;D^{+}_{\ell},
+  \qquad \epsilon(p)=\tfrac12\chi(p)\bmod 1,
+\end{equation}
+with $\tCas=-\mu(q^{2\ell-1})$ on the strange summand and $\tCas=+\mu(q^{2\ell-1})$ on both
+discrete summands. Moreover:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(exhaustiveness)} $W\cong\bigoplus_{p\in q^{\Z}}\bigl(\int_{-1}^{1}W_{p,x}\,dx
+\oplus\bigoplus_{x\in\sigma_{d}(\Omega_{p})}W_{p,x}\bigr)$ [GKK Thm.\
+(decompositionofleftregularcorep)], and the corepresentations in the continuous part
+restrict to direct sums of two principal series [GKK Rmk.\
+(propintroprincipalseriescorepresentation)]. Hence \emph{every} occurrence of a strange
+series in the Plancherel decomposition of $L^{2}_{q}(\mathrm{SU}(1,1)\rtimes\Z_2)$ lies
+inside a single irreducible corepresentation \eqref{eq:fusion} whose other
+$\Uq$-constituents are $D^{\pm}_{\ell}$ with $a=\ell-\tfrac12$ --- \emph{exactly} the label
+substitution $\ell\to\ell+\tfrac{i\pi}{2\ln q}$, $a=\ell-\tfrac12$, by which
+\cite{Schouten:2025dssyk} generate the strange series (Convention~\ref{conv:series}).
+\item \emph{(the odd generators realise the exchange)} In the case $x>0$ the strange
+summand is the block $(\epsilon,\eta)=(+,+)$ (all $m\in\Z$), and $U^{+-}_{0}$ maps the
+$D^{+}_{\ell}$ summand (block $(+,-)$, $m\ge j$) isometrically into it, while $U^{-+}_{0}$
+maps the $D^{-}_{\ell}$ summand (block $(-,+)$, $m\le l$) isometrically into it; restricted
+to $W_{p,x}$ they are partial isometries. The cases $x<0$ are identical with the roles of
+the blocks permuted [GKK Prop.\ (discretesubrepresinregrepr), cases (ii)--(iii)].
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof of the label computation and the transcription]
+GKK state the decomposition (in their conventions, with their labels) as
+$\pi^{S}_{\frac12(\chi(p)-1)+j,\,\epsilon(p)}\oplus D^{-}_{-\frac12\chi(p)-l}\oplus
+D^{+}_{\frac12\chi(p)+j}$. From $l=-j-\chi(p)$ (which follows from
+$q^{1-2j}p^{-1}=q^{1+2l}p$), the $D^{-}$ label is
+$-\tfrac12\chi(p)-l=j+\tfrac12\chi(p)=\ell$, equal to the $D^{+}$ label, and the strange
+label is $a=\tfrac12(\chi(p)-1)+j=\ell-\tfrac12$. The Casimir values: on the strange block
+$\Omega_{\mathrm{GKK}}=+|x|=\mu(q^{2a})$ with $q^{2a}=q^{2j-1}p=|\lambda|^{-1}$, and on the
+discrete blocks $\Omega_{\mathrm{GKK}}=-|x|=-\mu(q^{1-2\ell})$; translation by
+$\tCas=-\Omega_{\mathrm{GKK}}$ gives the values stated. The identification of the blocks
+with the printed matrix elements [GKK eqs.\ (strangeserrep), (posdiscrserrep),
+(negdiscrserrep)] under the index maps $n+\epsilon(p)=m+\tfrac12\chi(p)$ (strange block),
+$n=m-j$ ($D^{+}$ block) and $n=l-m$ ($D^{-}$ block) is a direct computation with the
+factorisation $1+2\epsilon\eta xq^{2m+1}p+q^{4m+2}p^{2}
+=(1+\epsilon\eta q^{2m+1}p\lambda)(1+\epsilon\eta q^{2m+1}p\lambda^{-1})$; it is carried
+out numerically to $4\times10^{-61}$ relative for all three blocks at
+$(q,\chi(p),j)=(0.6,0,2),(0.8,1,1),(0.7,2,3)$ (checks (G7), including the vanishing of the
+lower-edge factor $1-q^{2m+2-2j}$ at $m=j-1$, which is what makes the one-sided blocks
+invariant). Part (b) is \eqref{eq:gkkgradingaction} restricted to $W_{p,x}$, where
+$e^{\epsilon,-\eta}_{m}(p,x)$, resp.\ $e^{-\epsilon,\eta}_{m}(p,x)$, is zero whenever the
+corresponding eigenvalue is not in the discrete spectrum of the target sector [GKK,
+definition of $e^{\epsilon,\eta}_{m}(p,x)$ in Sec.\ (ssec:discreteseries)].
+\end{proof}
+
+\begin{remark}[GKK's own summary]\label{rem:gkkquote}
+\cite{Groenevelt:2009gkk} state the phenomenon verbatim in their introduction: ``However, in
+the quantum group case the discrete series are no longer split up into a positive discrete
+series and a negative discrete series.'' Theorem~\ref{thm:fusion} is the precise form: the
+normaliser fuses $D^{+}_{\ell}$, $D^{-}_{\ell}$ \emph{and} $\pi^{S}_{\ell-1/2}$ into one
+irreducible corepresentation. Classically the normaliser fuses only $D^{+}_{\ell}\oplus
+D^{-}_{\ell}$ (an L-packet, as \cite{Schouten:2025dssyk} \S2.3 note); the adjunction of the
+strange constituent is the quantum novelty.
+\end{remark}
+
+\begin{lemma}[essential uniqueness of $\Pi$]\label{lem:uniqueness}
+\PROVED\ Let $V$ be a unitary operator on $H_{\mathrm{ch}}$ with $V\tCas=-\tCas V$. Then
+$V=\Pi f(\tCas)$ for some Borel function $f$ with $|f|=1$ almost everywhere with respect to
+the spectral measure of $\tCas$ at $\ket{0}$. In particular $\Pi$ is the unique
+self-adjoint-unitary implementation of the grading on the chord sector up to a spectral
+phase.
+\end{lemma}
+
+\begin{proof}
+$\Pi V$ commutes with $\tCas$: $\Pi V\tCas=-\Pi\tCas V=\tCas\Pi V$ by
+Lemma~\ref{lem:gradingchord}(ii). By Proposition~\ref{prop:chordprincipal}, $\tCas$ on
+$H_{\mathrm{ch}}$ is unitarily equivalent to multiplication by $x$ on
+$L^{2}([-1,1],\nu)$ with $\nu$ the (absolutely continuous) $q^{2}$-Hermite orthogonality
+measure and cyclic vector $1$. A bounded operator $B$ on $L^{2}(\nu)$ commuting with
+multiplication by $x$ commutes with multiplication by any polynomial, hence
+$B(g)=B(1)\cdot g$ first for polynomials $g$ and then, by continuity of $B$ and density,
+for all $g\in L^{2}(\nu)\cap L^{\infty}(\nu)$; $h\coloneqq B(1)$ satisfies
+$\|hg\|_{2}\le\|B\|\,\|g\|_{2}$ for all such $g$, which forces $|h|\le\|B\|$ a.e.\ (apply it
+to indicators of the sets $\{|h|>\|B\|+\epsilon\}$), so $B=M_{h}$ with
+$h\in L^{\infty}(\nu)$. Thus $\Pi V=f(\tCas)$; unitarity of $\Pi V$ gives $|f|=1$
+$\nu$-a.e., and $V=\Pi f(\tCas)$ since $\Pi^{2}=1$.
+\end{proof}
+
+\begin{remark}[what is \emph{not} established: $\Pi$ as a rescaled limit]\label{rem:pilimit}
+\GAP{16}\ Lemma~\ref{lem:gradingchord} and Proposition~\ref{prop:gkkgrading} identify $\Pi$
+with the normaliser grading \emph{structurally}: $\Pi$ anticommutes with $\tCas$ on the chord
+sector exactly as the odd part $\hat M_{-}$ anticommutes with $\tCas$ on the GNS space, and
+by Lemma~\ref{lem:uniqueness} it is the essentially unique such unitary. What is not
+established is the \emph{limit} identification: whether $\Pi$ is the $r\to\infty$ rescaled
+limit (SI (4.2)) of a concrete element of $\hat M_{-}$ (for instance of $U^{-+}_{0}$ in the
+appropriate sector, whose $(-1)^{m}$ factor in \eqref{eq:gkkgradingaction} is the same
+parity twist). SI's rescaling is performed on states and on the spherical element, not on
+$\hat M_{-}$; issue \#16 records this gap. No statement below depends on it.
+\end{remark}
+
+\begin{definition}[normaliser-covariant assignment]\label{def:covariant}
+Let $\mathcal{R}$ be the set of irreducible admissible unitary $*$-representations of $\Uq$
+(Convention~\ref{conv:series}). An \emph{assignment} is a map $C$ from $\mathcal{R}$ to an
+arbitrary set of values (e.g.\ $\{\mathrm{AdS},\mathrm{dS},\ldots\}$). $C$ is
+\emph{normaliser-covariant} if $C(\pi)=C(\pi')$ whenever $\pi$ and $\pi'$ occur as
+$\Uq$-constituents of one and the same irreducible unitary corepresentation of
+$\SUq\rtimes\Z_2$ in the left regular corepresentation.
+\end{definition}
+
+\begin{theorem}[covariance obstruction]\label{thm:covobstruction}
+\PROVED\ Let $C$ be any normaliser-covariant assignment. Then for every
+$\ell\in\tfrac12\Z_{\ge1}$, with $\epsilon=0$ for integer $\ell$ and $\epsilon=\tfrac12$ for
+half-odd $\ell$,
+\begin{equation}\label{eq:covobstruction}
+  C\bigl(\pi^{S}_{\ell-\frac12,\,\epsilon}\bigr)=C\bigl(D^{+}_{\ell}\bigr)
+  =C\bigl(D^{-}_{\ell}\bigr).
+\end{equation}
+In particular no normaliser-covariant assignment separates the strange family at the
+Plancherel labels $a=\ell-\tfrac12\in\tfrac12\Z_{>0}$ from the discrete family: a criterion
+that classifies the discrete series as ``AdS type'' and the strange series as ``dS type''
+cannot be normaliser-covariant.
+\end{theorem}
+
+\begin{proof}
+Fix $\ell$. For integer $\ell$ take $p=1$ ($\chi(p)=0$), $j=\ell$; for half-odd $\ell$ take
+$p=q$ ($\chi(p)=1$), $j=\ell-\tfrac12$. In both cases $\lambda=q^{1-2j}p^{-1}=q^{1-2\ell}>1$,
+so Theorem~\ref{thm:fusion} applies with $x=\mu(\lambda)$ and produces an irreducible
+corepresentation $W_{p,x}$ whose $\Uq$-constituents are precisely
+$\pi^{S}_{\ell-1/2,\epsilon(p)}$, $D^{-}_{\ell}$ and $D^{+}_{\ell}$; covariance forces
+\eqref{eq:covobstruction}. The parenthetical range statement: by
+Theorem~\ref{thm:fusion}(a) the strange labels occurring in the Plancherel decomposition are
+exactly $a=\ell-\tfrac12$, $\ell\in\tfrac12\Z_{\ge1}$, i.e.\ $a\in\tfrac12\Z_{>0}$
+(Convention~\ref{conv:plancherel}).
+\end{proof}
+
+\begin{corollary}[radial-problem version]\label{cor:radialparity}
+\PROVED\ Let $\omega\in\R$ and consider the chord-lattice radial equation
+\eqref{eq:radialrecurrence} of Section~\ref{sec:matrixcoeffs}. The parity map
+$(c_{k})_{k\ge0}\mapsto((-1)^{k}c_{k})_{k\ge0}$ is an involutive linear bijection from the
+solution space at $\omega$ onto the solution space at $-\omega$ which preserves absolute
+values pointwise --- hence preserves square-summability of the normalised sequences, decay
+and growth rates, minimality of solutions, and maps the regular solution at $\omega$ (the one
+with $c_{-1}=0$) to the regular solution at $-\omega$. Consequently any AdS/dS criterion
+that is a function of parity-invariant data of the radial problem assigns the same type to
+the spectral values $\omega=\mu(q^{2\ell-1})$ (discrete) and $\omega=-\mu(q^{2\ell-1})$
+(strange).
+\end{corollary}
+
+\begin{proof}
+If $2\omega c_{k}=c_{k+1}+(1-q^{2k})c_{k-1}$ for all $k\ge1$, then $c'_{k}=(-1)^{k}c_{k}$
+satisfies $2(-\omega)c'_{k}=(-1)^{k+1}2\omega c_{k}
+=(-1)^{k+1}c_{k+1}+(1-q^{2k})(-1)^{k-1}c_{k-1}=c'_{k+1}+(1-q^{2k})c'_{k-1}$. The map squares
+to the identity and $|c'_{k}|=|c_{k}|$; $c_{-1}=0$ iff $c'_{-1}=0$. All the listed
+properties depend on the sequences only through absolute values or through the vanishing of
+$c_{-1}$.
+\end{proof}
+
+\begin{remark}[reading: a candidate obstruction for Claim~\ref{claim:cgeo}, and the
+consequence for issue \#8]\label{rem:obstructionreading}
+\ARGUED\ Theorem~\ref{thm:covobstruction} is an obstruction of exactly the kind admissible
+as outcome 3 of \texttt{PROBLEM.md} \S6, \emph{conditional on a covariance requirement}: if
+the criterion sought in issue \#8 is required to be intrinsic to the quantum group structure
+that \cite{Schouten:2025dssyk} argue is forced (``the reduction to the DSSYK model works
+exclusively at the level of the normaliser''), then it is normaliser-covariant, and by
+Theorem~\ref{thm:covobstruction} it \emph{cannot} classify the strange family as dS against
+an AdS discrete family. Any criterion validating Claim~\ref{claim:cgeo} must therefore
+break the $\Z_2$-grading, i.e.\ use data beyond the normaliser-invariant structure. The only
+grading-breaking datum in the DSSYK setting identified so far is the orientation of the
+spectral axis --- which sign of $\tCas$ is ``low energy'' --- and that is precisely what the
+external dS proposal of Definition~\ref{def:ds}(a) supplies; a criterion using it
+distinguishes the families trivially (by the sign of $\tCas$), but its content then reduces
+to the hypothesis of Claim~\ref{claim:camp}. Three further findings of this project point
+the same way: (1) the chord sector contains no strange \emph{states}
+(Proposition~\ref{prop:chordprincipal}), so no intrinsic spectral datum of the DSSYK sector
+sees the strange family directly; (2) the connection formula degenerates exactly at the
+Plancherel labels $a\in\tfrac12\Z_{>0}$ (Theorem~\ref{thm:strangeradial}(c)), the same
+resonance structure as for the discrete family, not a new one; (3) no continuous parameter
+crosses anything (Remark~\ref{rem:discreteness}). Issue \#8 is accordingly reformulated (see
+its comment trail; the body edit is recorded there verbatim and is pending repository write
+permissions, issue \#17): its primary task is now to \emph{construct the
+obstruction or refute it} --- either exhibit a physically justified, grading-breaking
+criterion whose justification does not merely restate the dS identification, or establish
+that every reasonable criterion is covariant, which by Theorem~\ref{thm:covobstruction}
+refutes Claim~\ref{claim:cgeo} as an intrinsic-geometry statement.
+\end{remark}
+
 \subsection{What the paper proves and what it argues}
 \label{sec:provedvsargued}
 
@@ -685,7 +1049,9 @@ $\Cas=-2\bigl(\mu(q^{2a})+1\bigr)/(q-q^{-1})^{2}=-\bigl(q^{a}+q^{-a}\bigr)^{2}/(
 and admissible; the normaliser extension acts by the $\Z_2$-grading operators
 $U^{+-}_{0},U^{-+}_{0}$ of \cite{Groenevelt:2009gkk} which map $\tCas\mapsto-\tCas$, i.e.\
 exchange the strange family with the discrete family and the principal band with itself
-[SI \S3.3].
+[SI \S3.3]; the precise statements, including the fusion of $\pi^{S}_{\ell-1/2}$ with
+$D^{\pm}_{\ell}$ into a single irreducible corepresentation, are
+Proposition~\ref{prop:gkkgrading} and Theorem~\ref{thm:fusion}.
 \end{proposition}
 
 \subsection{Radial coefficients on the chord lattice}

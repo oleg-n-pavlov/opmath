@@ -147,6 +147,62 @@ series membership enters only through the spectral value Ω̃ (strange ⇔ Ω̃ 
 principal band). Any interpolation mechanism through strange *states* of the transfer matrix is
 excluded.
 
+## 2026-08-11 — issue #15: the normaliser origin of the reflection identity
+
+New subsection of `tex/main.tex` §1 (`sec:normaliserorigin`), connecting Lemma 1.5 to the
+Z₂-grading of GKK's dual von Neumann algebra. Sources re-read from the arXiv LaTeX (GKK
+0905.2830v2 and SI 2512.10101v2), not from paraphrases.
+
+Results (tags as in the tex):
+- PROVED (lem:gradingchord): the extra factor in SI's strange bilocal (4.18) is
+  Π = (2qρ̂_st)^{-iπ/(2 ln q)} = chord parity (-1)^k — the nontrivial character of the
+  spectral lattice q^{-2Z} — a self-adjoint unitary with ΠΩ̃Π = -Ω̃ and Π|P^θ⟩ = |P^{π-θ}⟩.
+- PROVED (prop:factorisation): S^ℓ(0) = O^ℓ(0)Π. The answer to "is Lemma 1.5 the statement
+  that S^ℓ is O^ℓ conjugated by a normaliser element?" is NO: conjugation by Π fixes O^ℓ(0)
+  (diagonal operators commute); the correct statement is the FACTORISATION through the
+  grading unitary. The reflection identity in chord-sum form is now proved without q-Mehler.
+- PROVED (in GKK; transcription + label computation, thm:fusion): for every ℓ ∈ ½Z_{≥1} the
+  strange and discrete series are FUSED into a single irreducible corepresentation of the
+  normaliser quantum group: W_{p,x}|_{U_q} ≅ π^S_{ℓ-½,ε(p)} ⊕ D⁻_ℓ ⊕ D⁺_ℓ — with exactly
+  SI's label map a = ℓ - ½. Every strange occurrence in the Plancherel decomposition is of
+  this form (GKK's decomposition theorem + principal corepresentations contain no strange
+  constituents). GKK's own verbatim summary: "the discrete series are no longer split up
+  into a positive discrete series and a negative discrete series."
+- PROVED (thm:covobstruction): any AdS/dS criterion covariant under the normaliser grading
+  assigns the same type to π^S_{ℓ-½} and D^±_ℓ. Radial-problem version
+  (cor:radialparity): the parity map intertwines the chord-lattice radial problems at ω and
+  -ω preserving all normalisability data. ARGUED (rem:obstructionreading): this is a
+  candidate obstruction for Claim C-geo; the only grading-breaking datum identified so far
+  is the orientation of the spectral axis, i.e. the external dS proposal itself. Issue #8
+  reformulated accordingly (comment on #8; body edit pending permissions, see below).
+- GAP (issue #16): whether Π is the literal r→∞ rescaled limit of a concrete element of
+  M̂₋ (SI's rescaling is done on states and ρ̂_st, not on the dual algebra). The structural
+  identification (anticommutation + essential uniqueness, lem:uniqueness via simplicity of
+  the chord spectrum) does not depend on it.
+
+Numerics: `src/check_normaliser_grading.py`, 72/72 checks pass
+(`results/check_normaliser_grading.out`); worst deviations ~1.5e-59 on 60-digit arithmetic.
+Failed first attempts, recorded per CONTRIBUTING.md §5:
+- (G7) first run FAILED at (q,χ,j)=(0.6,0,2) with deviation 1.37e-48 against tol 1e-50: the
+  coefficient arrays grow like q^{-2m} (size ~1e13), so an absolute tolerance was wrong;
+  comparisons made relative, after which the same points pass at ≤4e-61.
+- (G4) the "conjugation reading is false" check was first written as a MINIMUM of absolute
+  differences over odd k, which decays like q^{2ℓk} and FAILED (2.7e-11, 6.6e-5 at the two
+  sample points) — a check-design error, not a mathematics error: the correct invariant is
+  the relative difference |ΠOΠ⁻¹ - S|/|S| = 2 on odd k, which passes exactly (deviation 0).
+
+Environment facts recorded:
+- LaTeX cannot be compiled locally: pdflatex fails at `\usepackage{mathtools}` (TeX Live too
+  old; `tlmgr install` cross-release error). Document integrity verified instead by a
+  label/ref/cite/environment consistency check (no duplicate labels, no unresolved refs, no
+  cites missing from refs.bib, all environments balanced). A committed checker script is
+  planned with the CI work.
+- The working GitHub account (`olegnpavlov`) turned out to have read-only access:
+  `git push` → 403, issue-body edits → permission denied, `gap` label on #16 silently
+  dropped at creation. Issue #17 opened for the owner. Commits are made locally on the
+  tracked branch and will be pushed when access is granted; scope changes are recorded as
+  explicit issue comments (done for #8); gap issues carry "Gap:" in the title.
+
 ## 2026-08-11 — issue #6: matrix coefficients of the strange series
 
 Section 4 of `tex/main.tex`. Sub-issues opened rather than solved inline: #13 (principal-series
