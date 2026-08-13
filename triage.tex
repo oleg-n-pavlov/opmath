@@ -1,0 +1,50 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+% Epistemic tags, identical to tex/main.tex / CONTRIBUTING.md section 4.
+\newcommand{\PROVED}{{\color{ForestGreen}\textsc{[proved]}}}
+\newcommand{\DERIVED}{{\color{teal}\textsc{[derived]}}}
+\newcommand{\ARGUED}{{\color{orange}\textsc{[argued]}}}
+\newcommand{\CONJ}{{\color{violet}\textsc{[conjectured]}}}
+\newcommand{\tCas}{\tilde\Omega}
+\newcommand{\K}{\mathcal{K}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\loc}[1]{{\small[#1]}}
+
+\begin{document}
+
+\textbf{Triage sheet --- machine attack on the strange-series AdS$\leftrightarrow$dS question of arXiv:2512.10101 (v2).}
+
+Candidate findings of an unreviewed machine-generated project (repository \texttt{oleg-n-pavlov/opmath}; statement numbers below refer to its \texttt{tex/main.tex}, 33 pp.). Asked of you: which items, if any, merit a closer look; ordered cheapest-to-check first. Tags: \PROVED; \DERIVED{} $=$ calculated, not independently checked; \ARGUED; \CONJ. Notation is your paper's, plus $\mu(y)=\tfrac12(y+y^{-1})$.
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=5pt,topsep=4pt]
+
+\item \textbf{Two suspected misprints in v2 (4.19).} The $\Gamma_{q^{2}}$-argument shift is printed as $+i\pi/\ln q$, twice (exponent and middle member); consistency with (4.18) and the \S4.3 substitution $\ell\mapsto\ell+\tfrac{i\pi}{2\ln q}$ requires $+i\pi/(2\ln q)$ --- under the printed full-period shift the $q$-gamma ratio would not vanish. The vanishing conclusion is unaffected; (4.20) as printed is confirmed. \DERIVED{} \loc{\texttt{lit/notes/2512.10101.md} \S7; note in Prop.~1.6}
+
+\item \textbf{Exact finite-$q$ reflection identity.} For all $q$, $\ell\in\tfrac12\Z_{>0}$, $\theta_i$: $\K^{\mathcal S}_{q}(\theta_1,\theta_2)=\K^{\mathcal O}_{q}(\theta_1,\pi-\theta_2)$ --- the strange equal-time kernel is the discrete one with one argument reflected through the band centre. Hence (4.20) is an identity at every $q$, no limit needed; the (4.19) vanishing gets an explicit counting bound (per factor $(3/7)^{N}$, $N\sim\ln2/(2|\ln q|)$, that part proved). \DERIVED{} \loc{Lemma 1.5, Prop.~1.6}
+
+\item \textbf{Exact marginal line and band-centre crossing for complex-weight bilocals.} For chord weights $t^{k}$, $0<|t|<1$, the cross-edge/same-edge modulus ratio is $\equiv1$ on $\arg t=\pm\tfrac\pi2$ at \emph{every} $q$ (and, as $q\to1$: suppressed for $|\arg t|<\tfrac\pi2$, enhanced beyond, strange ray $\arg t=\pi$ extremal); on the principal circle $t=q^{1+2ib}$ the crossing sits at $b_{\max}/2$, spectral image $\theta=\tfrac\pi2$ exactly --- the band centre, i.e.\ the centre-dS locus (2310.16994) and the sine-dilaton curvature flip (2404.03535). \PROVED{} \loc{Thm.~6.8, Lemma 6.7; Rmks.~7.5--7.6}
+
+\item \textbf{$q$-Askey $\alpha<-1$ bound states sit at strange Casimir values.} The finite bound-state towers of the $q$-Askey-deformed chord Hamiltonians of 2605.13956 at deformation $\alpha<-1$ are exactly $\tCas=-\mu(|\alpha|e^{-2\lambda l})<-1$, the strange range, log-periodically spaced (one line of arithmetic from their \S2). Unremarked there; ``apparently new'' is this project's own literature-search conclusion. \DERIVED{} \loc{Rmk.~7.4}
+
+\item \textbf{Covariance obstruction.} Any assignment $C$ constant on the $U_q(\mathfrak{su}(1,1))$-constituents of each irreducible corepresentation of $\mathrm{SU}_q(1,1)\rtimes\Z_2$ in the regular corepresentation satisfies $C(\pi^{S}_{\ell-1/2,\epsilon})=C(D^{+}_{\ell})=C(D^{-}_{\ell})$ for all $\ell\in\tfrac12\Z_{\ge1}$, by GKK's fusion $W_{p,x}|_{U_q}\cong\pi^{S}_{\ell-\frac12,\epsilon}\oplus D^{-}_{\ell}\oplus D^{+}_{\ell}$: a criterion typing strange $=$ dS against discrete $=$ AdS cannot be normaliser-covariant. \PROVED{} \loc{Thm.~1.21; fusion transcribed from 0905.2830 as Thm.~1.16}
+
+\item \textbf{Radial part of the Casimir on the reduced space.} Slice reduction leaves exactly two operators: the chord transfer matrix ($\chi\xi>0$; no strange states there) and, on the other wedge, a Jacobi operator on $\ell^{2}(\Z)$ with deficiency indices $(1,1)$ (an operator of Koelink, math/0305385; parameter identification ours). Each self-adjoint extension carries one discrete-type and one strange-type eigenvalue tower locked by $y_{1}y_{2}\in-q^{2\Z}$ (Abel's theorem); the $\Pi$-invariant extensions occur exactly at the Plancherel labels $2a_{0}\in\Z$, with spectrum $\{\pm\mu(q^{2a_{0}+2j})\}_{j}$ --- GKK's fusion pairing $a=\ell-\tfrac12$ realised spectrally. \PROVED{} (reduction, indices) / \DERIVED{} (product rule, fusion extension) \loc{Prop.~5.1, Thms.~5.7, 5.9, Cor.~5.10}
+
+\item \textbf{Verdict on the open question.} Geometric form refuted: every intrinsic criterion is normaliser-covariant, hence obstructed by item 5 (realised concretely in item 6), and the one grading-breaking datum, the spectral orientation, places the \emph{strange} tower at the AdS edge; no quantity crosses as $a$ varies. Amplitude form holds under edge-dS (2411.16922 / 2505.08116) --- it is items 2--3 --- and fails under centre-dS (2310.16994). The AdS$\leftrightarrow$dS bridge the framework supports is the grading $\Pi$ itself. \PROVED{} (intrinsic class) / \DERIVED{} (oriented and amplitude classes) \loc{Thm.~6.5}
+
+\end{enumerate}
+
+\textbf{Status.} No human has read any of this. The numerics (60-digit, committed outputs reproduce bit-for-bit) only self-check the project's own formulas. Items 5 and 7 stand or fall with the covariance requirement stated in 5. The load-bearing inputs --- the fusion theorem and the strange-series matrix elements --- are transcribed from 0905.2830, not re-derived; and 0905.2830's stated principal-series Casimir eigenvalue $\mu(q^{2ib})$ contradicts its own printed matrix elements ($-\mu(q^{2ib})$), resolved here numerically in favour of the matrix elements \loc{Conv.~2.8}. All novelty markers are the project's own literature search, nothing more.
+
+\textbf{The ask:} which of 1--7, if any, is worth your time. ``None'' is a complete answer.
+
+\end{document}

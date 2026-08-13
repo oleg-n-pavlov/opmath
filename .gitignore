@@ -16,6 +16,10 @@ tex/*.vrb
 
 # The final compiled PDF is tracked (issue #12); rebuild artefacts above stay ignored.
 
+# Triage sheet at repository root: PDF tracked, build artefacts ignored.
+triage.aux
+triage.log
+
 # Python
 __pycache__/
 *.py[cod]
